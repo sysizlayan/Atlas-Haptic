@@ -1,0 +1,108 @@
+Application is running with Unicode string encoding.
+DUMMY - pro_set_input_devices_allowed
+DUMMY - putxyres
+pglSetStatus: Pgl Session Initialize
+DUMMY - putxyres
+uit_get_visual_style_low:  Style is PTC Creo 1 (INFO MESSAGE)
+check_exec_file_accessible_():  C:\Program Files\PTC\Creo 1.0\Common Files\M020\\x86e_win64\obj\SWConvert.exe accessible (INFO MESSAGE)
+browser_get_type_sysdep:  type = 1 (INFO MESSAGE)
+GalleryBaseWdg::GalleryBaseWdg:  Activate command of 'ProCmdDwgTblFromGallery' should be type uiCmdTypeNone (INFO MESSAGE)
+GalleryBaseWdg::GalleryBaseWdg:  Activate command of 'ProCmdCEFormatsGallery' should be type uiCmdTypeNone (INFO MESSAGE)
+GalleryBaseWdg::GalleryBaseWdg:  Activate command of 'ProCmdCEFltFormatsGallery' should be type uiCmdTypeNone (INFO MESSAGE)
+uit_CmdUiLoadIfNeeded:  The size of image 'mechanism_large' is not valid ('32x32') in short resource 'procmdutilappmech.res' (INFO MESSAGE)
+uit_CmdUiLoadIfNeeded:  The size of image 'animation_large' is not valid ('32x32') in short resource 'procmdutilappanim.res' (INFO MESSAGE)
+uit_CmdUiLoadIfNeeded:  The size of image 'welding_large' is not valid ('32x32') in short resource 'procmdutilappasmweld.res' (INFO MESSAGE)
+uit_CmdUiLoadIfNeeded:  The size of image 'welding_large' is not valid ('32x32') in short resource 'procmdutilappprtweld.res' (INFO MESSAGE)
+uit_CmdUiLoadIfNeeded:  The size of image 'piping_large' is not valid ('32x32') in short resource 'procmdutilapppipe.res' (INFO MESSAGE)
+uit_CmdUiLoadIfNeeded:  The size of image 'cabling_large' is not valid ('32x32') in short resource 'procmdutilappcable.res' (INFO MESSAGE)
+uit_CmdUiLoadIfNeeded:  The size of image 'mold_cast_large' is not valid ('32x32') in short resource 'procmdutilappmoldcast.res' (INFO MESSAGE)
+uit_CmdUiLoadIfNeeded:  The size of image 'mold_layout_large' is not valid ('32x32') in short resource 'procmdutilappasmmoldlayout.res' (INFO MESSAGE)
+uit_CmdUiLoadIfNeeded:  The size of image 'drawing_app_large.bif' is not valid ('32x32') in short resource 'procmdutilappdwgstd.res' (INFO MESSAGE)
+uit_CmdUiLoadIfNeeded:  The size of image 'legacy_drawing_associator_large.bif' is not valid ('32x32') in short resource 'procmdutilappdwglgcy.res' (INFO MESSAGE)
+uit_CmdUiLoadIfNeeded:  The size of image 'drw_template_view_large.bif' is not valid ('32x32') in short resource 'procmdutilappdwgtmplt.res' (INFO MESSAGE)
+uit_CmdUiLoadIfNeeded:  The size of image 'piping_large.bif' is not valid ('32x32') in short resource 'procmdutilappdwgpipe.res' (INFO MESSAGE)
+ProCmdSelBufferAttrSet():  Can't to find the command: ProCmdFaceted (INFO MESSAGE)
+ProCmdSelBufferAttrSet():  Selection Buffer Attribute loaded 41 commands (INFO MESSAGE)
+GalleryBaseWdg::GalleryBaseWdg:  Activate command of 'ProCmdMankSelGalPostr' should be type uiCmdTypeNone (INFO MESSAGE)
+UitGroupItem::initVertCells:  The maximum group height has been increased to 73 (INFO MESSAGE)
+pfa_set_content_hints:  leaving PRO_ribbon_db.rbn alone (INFO MESSAGE)
+ugc_check_version_dbtype:  file 67 != expected 7 (INFO MESSAGE)
+pfa_set_content_hints:  leaving PRO_ribbon_db.rbn alone (INFO MESSAGE)
+pfa_set_content_hints:  leaving PRO_cmd_groups_db.rbn alone (INFO MESSAGE)
+ugc_check_version_dbtype:  file 67 != expected 7 (INFO MESSAGE)
+pfa_set_content_hints:  leaving PRO_cmd_groups_db.rbn alone (INFO MESSAGE)
+uit_CmdUiLoadIfNeeded:  The size of image 'dtl_options_large' is not valid ('32x32') in short resource 'procmddwgproperties.res' (INFO MESSAGE)
+uit_CmdUiLoadIfNeeded:  The size of image 'options_large.bif' is not valid ('32x32') in short resource 'procmdribbonoptionsdlg.res' (INFO MESSAGE)
+pfa_set_content_hints:  leaving config.fav alone (INFO MESSAGE)
+pfa_set_content_hints:  leaving config.his alone (INFO MESSAGE)
+ResizeControlWdg::resizeContainerHorz:  Can't resize the control bar properly (INFO MESSAGE)
+uit_get_visual_style_low:  Style is PTC Creo 1 (INFO MESSAGE)
+pglSetStatus: PglWindowEndNoGraphics: Not in nographics mode.
+
+ run mode = 2
+update_help_center_path:  Non-Html Help Center Path ignored ->  (INFO MESSAGE)
+update_help_center_path:  Help Center Path is set as -> https://www.ptc.com/cs/help/creo_hc/creo10_hc (INFO MESSAGE)
+cadds5_link_app_path_name():  NuTCRACKER is not installed (INFO MESSAGE)
+pro_locate_colormap ()
+located color definition C:\Program Files\PTC\Creo 1.0\Common Files\M020\graphic-library\appearances\appearance.dmt
+pro_locate_colormap ()
+located color definition C:\Program Files\PTC\Creo 1.0\Common Files\M020\graphic-library\appearances\global.dmt
+pro_locate_colormap ()
+located Default color definition C:\Program Files\PTC\Creo 1.0\Common Files\M020\graphic-library\appearances\default.dmt
+PFSTMakeTypeString:  no zip found (INFO MESSAGE)
+AdbPage::buildSizeStateTable:  Can't build Size State Table for page 'home_File' (INFO MESSAGE)
+IntfSettingsHandlerById:  uninitialized 0 (INFO MESSAGE)
+IntfSettingsHandlerById:  uninitialized 3 (INFO MESSAGE)
+IntfSettingsHandlerById:  uninitialized 0 (INFO MESSAGE)
+IntfSettingsHandlerById:  uninitialized 3 (INFO MESSAGE)
+IntfSettingsHandlerById:  uninitialized 0 (INFO MESSAGE)
+IntfSettingsHandlerById:  uninitialized 3 (INFO MESSAGE)
+DlgImptNewModel:  using values from profile (INFO MESSAGE)
+ dbkey_get : invalid call, key = 0
+ dbkey_get : invalid call, key = 0
+uit_CmdUiLoadIfNeeded:  The size of image 'annotation_convertor_large.bif' is not valid ('32x32') in short resource 'procmdacstart.res' (INFO MESSAGE)
+AdbPage::updateResizePriority:  Can't set Resize priority  for group 'FormatInLayout' in page page_Layout (INFO MESSAGE)
+AdbPage::updateResizePriority:  Can't set Resize priority  for group 'InsertInLayout' in page page_Layout (INFO MESSAGE)
+AdbPage::updateResizePriority:  Can't set Resize priority  for group 'group_Visibility375853960' in page page_Layout (INFO MESSAGE)
+AdbPage::updateResizePriority:  Can't set Resize priority  for group 'DocumentInLayout' in page page_Layout (INFO MESSAGE)
+AdbPage::updateResizePriority:  Can't set Resize priority  for group 'FormatInAnnotate_inh385598576' in page page_Layout (INFO MESSAGE)
+AdbPage::updateResizePriority:  Can't set Resize priority  for group 'FormatInLayout' in page page_Layout (INFO MESSAGE)
+AdbPage::updateResizePriority:  Can't set Resize priority  for group 'InsertInLayout' in page page_Layout (INFO MESSAGE)
+AdbPage::updateResizePriority:  Can't set Resize priority  for group 'group_Visibility375853960' in page page_Layout (INFO MESSAGE)
+AdbPage::updateResizePriority:  Can't set Resize priority  for group 'DocumentInLayout' in page page_Layout (INFO MESSAGE)
+AdbPage::updateResizePriority:  Can't set Resize priority  for group 'FormatInAnnotate_inh385598576' in page page_Layout (INFO MESSAGE)
+ dbkey_get : invalid call, key = 0
+ dbkey_get : invalid call, key = 13
+ dbkey_get : invalid call, key = 14
+ dbkey_get : invalid call, key = 15
+ dbkey_get : invalid call, key = 16
+ dbkey_get : invalid call, key = 17
+ dbkey_get : invalid call, key = 18
+ dbkey_get : invalid call, key = 19
+ dbkey_get : invalid call, key = 20
+ dbkey_get : invalid call, key = 21
+ dbkey_get : invalid call, key = 22
+ dbkey_get : invalid call, key = 23
+ dbkey_get : invalid call, key = 24
+ dbkey_get : invalid call, key = 25
+ dbkey_get : invalid call, key = 26
+ dbkey_get : invalid call, key = 27
+dtl_load_fonts:  (Re)loading fonts (INFO MESSAGE)
+dtl_load_fonts:  Model id 0, type 33, font id 1, name filled.ndx (INFO MESSAGE)
+update_dwg_view_model:  View does not belong to drawing (INFO MESSAGE)
+dtl_load_fonts:  (Re)loading fonts (INFO MESSAGE)
+dtl_load_fonts:  Model id 0, type 4, font id 1, name filled.ndx (INFO MESSAGE)
+W-promenu_on_button can not find DRAWING-Export
+W-promenu_on_button can not find DRAWING-Dwg Models
+W-promenu_on_button can not find DRAWING-Info
+dtl_load_fonts:  Model id 0, type 4, font id 1, name filled.ndx (INFO MESSAGE)
+dtl_context_set_current_context:  setting to page_Layout (INFO MESSAGE)
+dtl_load_fonts:  Model id 0, type 33, font id 1, name filled.ndx (INFO MESSAGE)
+update_dwg_view_model:  View does not belong to drawing (INFO MESSAGE)
+dtl_load_fonts:  Model id 0, type 4, font id 1, name filled.ndx (INFO MESSAGE)
+dtl_load_fonts:  Model id 0, type 33, font id 1, name filled.ndx (INFO MESSAGE)
+update_dwg_view_model:  View does not belong to drawing (INFO MESSAGE)
+dtl_load_fonts:  Model id 0, type 4, font id 1, name filled.ndx (INFO MESSAGE)
+dtl_load_fonts:  Model id 0, type 33, font id 1, name filled.ndx (INFO MESSAGE)
+update_dwg_view_model:  View does not belong to drawing (INFO MESSAGE)
+dtl_load_fonts:  Model id 0, type 4, font id 1, name filled.ndx (INFO MESSAGE)

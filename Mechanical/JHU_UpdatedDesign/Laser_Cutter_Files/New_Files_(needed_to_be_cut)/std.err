@@ -1,0 +1,59 @@
+%UIMSG-USER-ERROR, Failed to preload image chkbtnsel_green_ball_large.bif
+%UIMSG-USER-ERROR, Failed to preload image chkbtnsel_search_large.bif
+%UIMSG-APPLICATION-ERROR, Parent message_status_container resizing child txt_messages (0,3) (1125x22) to be partially viewable in (0,0) (982x25)
+%UIMSG-APPLICATION-ERROR, Parent message_status_container resizing child lbl_help (0,0) (1095x25) to be partially viewable in (0,0) (982x25)
+%UIMSG-APPLICATION-ERROR, Failed to modify component: PHTLeft.PHFolders.TB_Shortcuts, in device: main_dlg_w1
+%UIMSG-APPLICATION-ERROR, Cannot programmatically inquire attribute: _SelectedNames, of component: appl_menu.left_pane.open_casc@main_dlg_w1
+%UIMSG-APPLICATION-ERROR, Failed to inquire of component: appl_menu.left_pane.open_casc, in device: main_dlg_w1
+%UIMSG-APPLICATION-ERROR, Failed to modify component: Ph_left.TB_Shortcuts, in device: file_open
+%UIMSG-APPLICATION-ERROR, Attempt to select non-existent entry: , in RadioGroup: Representation@impt_new_model
+%UIMSG-APPLICATION-ERROR, Failed to modify component: Representation, in device: impt_new_model
+%UIMSG-APPLICATION-ERROR, No component name specified for ui_set_action
+%UIMSG-APPLICATION-ERROR, Could not find component: Layou2, in device: impt_new_model, for modify
+%UIMSG-APPLICATION-ERROR, Could not find component: Ph_list.Filelist, in device: file_open, to do operation
+%UIMSG-APPLICATION-ERROR, Cannot programmatically inquire attribute: _SelectedNames, of component: PushButton3@impt_new_model
+%UIMSG-APPLICATION-ERROR, Failed to inquire of component: PushButton3, in device: impt_new_model
+%UIMSG-USER-ERROR, Failed to preload image chkbtnsel_sel_ibox16x16.bif
+%UIMSG-USER-ERROR, Failed to preload image chkbtnsel_sel_acbox16x16.bif
+%UIMSG-USER-ERROR, Failed to preload image chkbtnsel_sel_ellipse16x16.bif
+%UIMSG-USER-ERROR, Failed to preload image chkbtnsel_sel_poly16x16.bif
+%UIMSG-USER-ERROR, Failed to preload image chkbtnsel_sel_pbrush16x16.bif
+%UIMSG-USER-ERROR, Failed to preload image chkbtnsel_shaded_edges16x16.bif
+%UIMSG-USER-ERROR, Failed to preload image chkbtnsel_rtr_floor16x16.bif
+%UIMSG-USER-ERROR, Failed to preload image chkbtnsel_shaded16x16.bif
+%UIMSG-USER-ERROR, Failed to preload image chkbtnsel_nohidden16x16.bif
+%UIMSG-USER-ERROR, Failed to preload image chkbtnsel_hidden16x16.bif
+%UIMSG-USER-ERROR, Failed to preload image chkbtnsel_wireframe16x16.bif
+%UIMSG-APPLICATION-ERROR, Cannot programmatically inquire attribute: _SelectedNames, of component: OK_Button@import_2d_dlg
+%UIMSG-APPLICATION-ERROR, Failed to inquire of component: OK_Button, in device: import_2d_dlg
+%UIMSG-APPLICATION-ERROR, Could not find component: newtree, in device: newtree, for inquire
+%UIMSG-APPLICATION-ERROR, Failed to do operation 2033 to component: PHTLeft.AssyTree, in device: main_dlg_w1
+%UIMSG-APPLICATION-ERROR, Could not find component: Selobj_bin, in device: rmb_popup, for modify
+%UIMSG-APPLICATION-ERROR, No component name specified for ui_modify
+%UIMSG-USER-ERROR, Component named 'Separator2@main_dlg_w1' is not unique
+%UIMSG-APPLICATION-ERROR, Component 'PHTLeft.SecondaryTreeSash@main_dlg_w1' is being resized when UI_redraw_Attr = FALSE
+%UIMSG-APPLICATION-ERROR, Component 'PHTLeft.SecondaryTreeSash@main_dlg_w1' is being resized when UI_redraw_Attr = FALSE
+%UIMSG-APPLICATION-ERROR, Failed to modify component: switcher_lay_buttons_lay_ph.scroll_page_left, in device: main_dlg_w1
+%UIMSG-APPLICATION-ERROR, Failed to modify component: switcher_lay_buttons_lay_ph.scroll_page_right, in device: main_dlg_w1
+%UIMSG-APPLICATION-ERROR, Failed to modify component: switcher_lay_buttons_lay_ph.pshGoFirst, in device: main_dlg_w1
+%UIMSG-APPLICATION-ERROR, Failed to modify component: switcher_lay_buttons_lay_ph.pshGoPrevious, in device: main_dlg_w1
+%UIMSG-APPLICATION-ERROR, Failed to modify component: switcher_lay_buttons_lay_ph.pshGoNext, in device: main_dlg_w1
+%UIMSG-APPLICATION-ERROR, Failed to modify component: switcher_lay_buttons_lay_ph.pshGoLast, in device: main_dlg_w1
+%UIMSG-USER-ERROR, Cursor image "new" has no hotspot
+%UIMSG-APPLICATION-ERROR, Parent switcher_lay_buttons_lay_ph.tab_container resizing child switcher_lay_buttons_lay_ph.page_0 (0,-1) (76x22) to be partially viewable in (0,0) (711x22)
+%UIMSG-APPLICATION-ERROR, Parent switcher_lay_buttons_lay_ph.tab_container resizing child switcher_lay_buttons_lay_ph.page_0 (0,-1) (76x22) to be partially viewable in (0,0) (711x22)
+%UIMSG-APPLICATION-ERROR, Parent switcher_lay_buttons_lay_ph.tab_container resizing child switcher_lay_buttons_lay_ph.page_0 (0,-1) (76x22) to be partially viewable in (0,0) (711x22)
+%UIMSG-APPLICATION-ERROR, Parent switcher_lay_buttons_lay_ph.tab_container resizing child switcher_lay_buttons_lay_ph.page_0 (0,-1) (76x22) to be partially viewable in (0,0) (711x22)
+%UIMSG-APPLICATION-ERROR, Parent switcher_lay_buttons_lay_ph.tab_container resizing child switcher_lay_buttons_lay_ph.page_0 (0,-1) (76x22) to be partially viewable in (0,0) (711x22)
+%UIMSG-APPLICATION-ERROR, Parent switcher_lay_buttons_lay_ph.tab_container resizing child switcher_lay_buttons_lay_ph.page_0 (0,-1) (76x22) to be partially viewable in (0,0) (711x22)
+%UIMSG-APPLICATION-ERROR, Cannot programmatically inquire attribute: _SelectedNames, of component: main_dlg_w1@main_dlg_w1
+%UIMSG-APPLICATION-ERROR, Failed to inquire of component: main_dlg_w1, in device: main_dlg_w1
+%UIMSG-APPLICATION-ERROR, Cannot programmatically inquire attribute: _SelectedNames, of component: TitleClosePushButton@main_dlg_w1
+%UIMSG-APPLICATION-ERROR, Failed to inquire of component: TitleClosePushButton, in device: main_dlg_w1
+%UIMSG-APPLICATION-ERROR, Cannot programmatically inquire attribute: _SelectedNames, of component: no@UI Message Dialog
+%UIMSG-APPLICATION-ERROR, Failed to inquire of component: no, in device: UI Message Dialog
+%UIMSG-APPLICATION-ERROR, Could not find device: main_dlg, to exit
+%UIMSG-APPLICATION-ERROR, Cannot programmatically inquire attribute: _SelectedNames, of component: TitleClosePushButton@main_dlg_w1
+%UIMSG-APPLICATION-ERROR, Failed to inquire of component: TitleClosePushButton, in device: main_dlg_w1
+%UIMSG-APPLICATION-ERROR, Cannot programmatically inquire attribute: _SelectedNames, of component: yes@UI Message Dialog
+%UIMSG-APPLICATION-ERROR, Failed to inquire of component: yes, in device: UI Message Dialog
