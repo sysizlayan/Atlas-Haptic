@@ -5,20 +5,28 @@
  *      Author: Yigit
  */
 #include "main.h"
-#include "time.h"
+#include "time.hpp"
+#include "Peripherals/uarts.h"
+#include "Peripherals/buttons.hpp"
+#include "Peripherals/leds.hpp"
+#include "Peripherals/QEI.hpp"
 
+uint32_t systemClock;
 int main(void)
 {
     // CLOCK SET and FPU enabling
-    SysCtlClockSet(SYSCTL_USE_PLL | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ|SYSCTL_SYSDIV_2_5);//80Mhz Clock
-    FPUEnable();//Enable FPU
-    FPULazyStackingEnable();//Enable FPU stacking while interrupt
-
+    systemClock = SysCtlClockFreqSet((SYSCTL_XTAL_25MHZ |
+                                SYSCTL_OSC_MAIN |
+                                SYSCTL_USE_PLL |
+                                SYSCTL_CFG_VCO_480),
+                                120000000);
+    FPUEnable();    //Enable FPU
+    FPULazyStackingEnable();    //Enable FPU stacking while interrupt
     initTime();
-    while(true)
-    {
+    uart_stdio_init(115200);
 
+    while (true)
+    {
     }
-    return 0;
 }
 

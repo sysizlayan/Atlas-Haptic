@@ -5,10 +5,11 @@
  *      Author: Yigit
  */
 
-#ifndef LEDS_H_
-#define LEDS_H_
-#define LED0_PIN
+#ifndef LEDS_HPP_
+#define LEDS_HPP_
+
 #include "main.h"
+
 class _tm4c1294xl_leds
 {
 private:
@@ -21,8 +22,8 @@ public:
     _tm4c1294xl_leds(void);
     void openLed(uint8_t ledIndex);
     void closeLed(uint8_t ledIndex);
+    bool getLedState(uint8_t ledIndex);
 };
 
-
-
-#endif /* LEDS_H_ */
+extern _tm4c1294xl_leds tm4c1294xl_leds;
+#endif /* LEDS_HPP_ */

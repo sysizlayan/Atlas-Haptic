@@ -5,8 +5,8 @@
  *      Author: Yigit
  */
 
-#ifndef UARTINITIALIZATION_H_
-#define UARTINITIALIZATION_H_
+#ifndef UARTS_H_
+#define UARTS_H_
 
 #include "main.h"
 void uart_stdio_init(uint32_t baudrate);

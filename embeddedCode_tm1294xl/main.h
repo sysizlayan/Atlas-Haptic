@@ -5,14 +5,25 @@
  *      Author: Yigit
  */
 
-#ifndef MAIN_H_
-#define MAIN_H_
+#ifndef MAIN_HPP_
+#define MAIN_HPP_
 
 #include <stdbool.h>          // included to use boolean data type
 #include <math.h>             // standard C math library
 #include <stdint.h>           // C99 variable types
 #include <stdio.h>            // standard C input output library
 #include <string.h>
+
+#define LOWEST_PRIORITY 0xE0 // Higher the priority number, lower the priority
+#define PRIORITY_0 0x00
+#define PRIORITY_1 0x40
+#define PRIORITY_2 0x60
+#define PRIORITY_3 0x80
+#define PRIORITY_4 0xA0
+#define PRIORITY_5 0xC0
+#define PRIORITY_6 0xE0
+#define HIGHEST_PRIORITY 0x00
+#define MPU6050_ADDRESS 0x68
 
 #include "inc/hw_gpio.h"
 #include "inc/hw_types.h"
@@ -38,22 +49,6 @@
 #include "driverlib/timer.h"
 #include "utils/uartstdio.h"
 
-#define LOWEST_PRIORITY 0xE0 // Higher the priority number, lower the priority
-#define PRIORITY_0 0x00
-#define PRIORITY_1 0x40
-#define PRIORITY_2 0x60
-#define PRIORITY_3 0x80
-#define PRIORITY_4 0xA0
-#define PRIORITY_5 0xC0
-#define PRIORITY_6 0xE0
-#define HIGHEST_PRIORITY 0x00
-#define MPU6050_ADDRESS 0x68
+extern uint32_t systemClock;
 
-typedef struct _meas
-{
-    float fposition;
-    float fgyroVelocity;
-    uint32_t ui32measurementInstance;
-} measurement;
-
-#endif /* MAIN_H_ */
+#endif /* MAIN_HPP_ */

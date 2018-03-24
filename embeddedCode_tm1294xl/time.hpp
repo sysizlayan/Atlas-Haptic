@@ -1,12 +1,12 @@
 /*
- * time.h
+ * time.hpp
  *
  *  Created on: 24 Mar 2018
  *      Author: Yigit
  */
 
-#ifndef TIME_H_
-#define TIME_H_
+#ifndef TIME_HPP_
+#define TIME_HPP_
 #include "main.h"
 
 static volatile uint32_t counter;
@@ -18,4 +18,4 @@ uint32_t millis(void);
 uint32_t micros(void);
 
 
-#endif /* TIME_H_ */
+#endif /* TIME_HPP_ */
