@@ -11,7 +11,17 @@
 #include "pedalVariables.h"
 
 extern char delimStr[]; //Delimiters
-extern char *timePointer, *positionPointer, *velocityPointer,*filteredPositionPointer,*massPositionPointer,*massVelocityPointer;
+extern char *timePointer,
+            *pedalPositionPointer,
+            *pedalVelocityPointer,
+            *filteredPedalPositionPointer,
+            *linearPedalPositionPointer,
+            *linearPedalVelocityPointer,
+            *massPositionPointer,
+            *massVelocityPointer,
+            *totalForcePointer,
+            *springForcePointer,
+            *damperForcePointer;
 
 void initializePrintPointers(void);
 

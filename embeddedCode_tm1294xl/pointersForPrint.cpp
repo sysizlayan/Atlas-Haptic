@@ -7,17 +7,33 @@
 #include "pointersForPrint.h"
 
 char delimStr[] = { '$', '$', '*', '*', '\n' }; //Delimiters
-char *timePointer, *positionPointer, *velocityPointer, *filteredPositionPointer,
-        *massPositionPointer, *massVelocityPointer;
+char *timePointer,
+            *pedalPositionPointer,
+            *pedalVelocityPointer,
+            *filteredPedalPositionPointer,
+            *linearPedalPositionPointer,
+            *linearPedalVelocityPointer,
+            *massPositionPointer,
+            *massVelocityPointer,
+            *totalForcePointer,
+            *springForcePointer,
+            *damperForcePointer;
 
 void initializePrintPointers(void)
 {
     //For uart communication!
-    timePointer = (char*) &g_ui32measurementTime;
-    positionPointer = (char*) &g_fposition;
-    velocityPointer = (char*) &g_fgyroVelocity;
-    filteredPositionPointer = (char*) &g_fposition_filtered_plus;
-    massPositionPointer = (char*) &g_fMassPosition;
-    massVelocityPointer = (char*) &g_fMassVelocity;
+    timePointer                     = (char*) &g_ui32measurementTime;
+    pedalPositionPointer            = (char*) &g_fposition;
+    pedalVelocityPointer            = (char*) &g_fgyroVelocity;
+    filteredPedalPositionPointer    = (char*) &g_fposition_filtered_plus;
+    linearPedalPositionPointer      = (char*) &g_fpedalLinearPosition;
+    linearPedalVelocityPointer      = (char*) &g_fpedalLinearVelocity;
+
+    massPositionPointer             = (char*) &g_fMassPosition;
+    massVelocityPointer             = (char*) &g_fMassVelocity;
+
+    totalForcePointer               = (char*) &g_ftotalForce;
+    springForcePointer              = (char*) &g_fspringForce;
+    damperForcePointer              = (char*) &g_fdamperForce;
 }
 

@@ -7,9 +7,27 @@
 
 #ifndef MPU6050_HPP_
 #define MPU6050_HPP_
+#include <math.h>
 
 #include "main.h"
+#include "time.hpp"
+
+#include "sensorlib/hw_mpu6050.h"
+
+#include "Peripherals/uarts.h"
+#include "Peripherals/buttons.hpp"
+#include "Peripherals/leds.hpp"
+#include "Peripherals/QEI.hpp"
+#include "Peripherals/I2C.h"
+
+#include "pointersForPrint.h"
+#include "pedalVariables.h"
+#include "simulationVariables.h"
+
+
 #define MPU6050_ADDRESS 0x68
+#define DEGREE_TO_RADIAN 0.0174532925f
+#define HOW_MANY_SAMPLES_FOR_BIAS 1000
 
 void initMPU6050();
 void GPIOEHandler6050(void);

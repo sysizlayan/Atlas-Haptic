@@ -22,7 +22,9 @@ extern volatile float g_fposition_filtered_minus;
 extern volatile float g_fP_minus;
 extern volatile float g_fP_plus;
 
-extern volatile float pedalLinearPosition, pedalLinearVelocity;
+extern volatile float g_fpedalLinearPosition;
+extern volatile float g_fpedalLinearVelocity;
+
 
 // Constants for kalman filter
 extern const float g_fdelta_t;

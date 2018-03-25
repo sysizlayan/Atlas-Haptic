@@ -15,6 +15,7 @@ extern volatile float g_fMassVelocity;
 
 extern volatile float g_fMassPosition_prev;
 extern volatile float g_fMassVelocity_prev;
+extern volatile float g_fspringForce, g_fdamperForce, g_ftotalForce;
 
 extern const float k_spring; // N/cm
 extern const float M_mass; // kg
@@ -30,9 +31,6 @@ extern const float B_0_1;
 extern const float B_1_0;
 extern const float B_1_1;
 extern const float R_pedal; //cm
-
-// Calculated Variables
-extern float g_fspringForce, g_fdamperForce, g_ftotalForce;
 
 
 #endif /* SIMULATIONVARIABLES_H_ */

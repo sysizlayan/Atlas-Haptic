@@ -5,7 +5,7 @@
  *      Author: Yigit
  */
 
-
+#include "simulationVariables.h"
 
 //Simulated Variables
 volatile float g_fMassPosition;
@@ -13,6 +13,8 @@ volatile float g_fMassVelocity;
 
 volatile float g_fMassPosition_prev = 0.0f;
 volatile float g_fMassVelocity_prev = 0.0f;
+
+volatile float g_fspringForce, g_fdamperForce, g_ftotalForce;
 
 const float k_spring = 1000.0f; // N/cm
 const float M_mass = 0.1f; // kg
@@ -29,5 +31,3 @@ const float B_1_0 = 0.720691344620985f;
 const float B_1_1 = 0.014413826892420f;
 const float R_pedal = 0.17f; //cm
 
-// Calculated Variables
-float g_fspringForce, g_fdamperForce, g_ftotalForce;
