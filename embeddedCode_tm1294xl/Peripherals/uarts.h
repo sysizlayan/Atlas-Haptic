@@ -10,6 +10,7 @@
 
 #include "main.h"
 #include "utils/uartstdio.h"
+
 void uart_stdio_init(uint32_t baudrate);
 
 #endif /* UARTS_H_ */
