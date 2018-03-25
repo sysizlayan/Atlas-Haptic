@@ -10,6 +10,8 @@
 #include "Peripherals/buttons.hpp"
 #include "Peripherals/leds.hpp"
 #include "Peripherals/QEI.hpp"
+#include "Peripherals/I2C.h"
+
 
 uint32_t systemClock;
 int main(void)
@@ -24,6 +26,7 @@ int main(void)
     FPULazyStackingEnable();    //Enable FPU stacking while interrupt
     initTime();
     uart_stdio_init(115200);
+    initI2C();
 
     while (true)
     {

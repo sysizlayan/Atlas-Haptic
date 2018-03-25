@@ -23,7 +23,8 @@
 #define PRIORITY_5 0xC0
 #define PRIORITY_6 0xE0
 #define HIGHEST_PRIORITY 0x00
-#define MPU6050_ADDRESS 0x68
+
+#define g_ui32measurementInstance g_ui32measurementTime
 
 #include "inc/hw_gpio.h"
 #include "inc/hw_types.h"
