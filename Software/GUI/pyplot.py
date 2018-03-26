@@ -5,7 +5,7 @@ import numpy as np
 from struct import *
 
 
-portName = 'COM3'
+portName = 'COM5'
 baudRate = 230400
 position_pedal = 0
 position_mass = 0
@@ -13,8 +13,8 @@ prev_position_pedal = 0
 prev_position_mass = 0
 
 numberOfHorizontalPixelsOnWindow = 400
-numberOfVerticalPixelsOnWindow = 600
-numberOfVerticalPixelsOnScreen = 768 # 768 # pixel
+numberOfVerticalPixelsOnWindow = 900
+numberOfVerticalPixelsOnScreen = 1080 # 768 # pixel
 screenHeight = 0.18 # 18  # cm
 screenConstant = numberOfVerticalPixelsOnScreen/screenHeight
 pedalLength = 0.17  # cm
@@ -62,12 +62,11 @@ class myThread(threading.Thread):
                    # (time, filteredPedalPosition, massPosition, pedalVelocity, massVelocity) = unpack('<Iffff', line)  # little endian unsigned integer
                    # print("READ: Time:{0} Pedal_Pos:{1:.6}, Mass_Pos:{2:.6}, Pedal_Vel:{3:.6}, Mass_Vel:{4:.6}\n".format(time,filteredPedalPosition,massPosition,pedalVelocity,massVelocity))
 
-                   (time, filteredPedalPosition, massPosition) = unpack('<Iff',line)  # little endian unsigned integer
-                   print("READ: Time:{0} Pedal_Pos:{1:.6}, Mass_Pos:{2:.6}\n".format(time, filteredPedalPosition, massPosition))
-
+                   (time, linearPedalPosition, massPosition) = unpack('<Iff',line)  # little endian unsigned integer
+                   print("READ: Time:{0} Pedal_Pos:{1:.6}, Mass_Pos:{2:.6}\n".format(time, linearPedalPosition, massPosition))
                    # position_pedal = pedalLength * filteredPedalPosition * screenConstant
                    # position_pedal = pedalLength * np.sin(np.deg2rad(filteredPedalPosition)) * screenConstant # 768/18
-                   position_pedal = filteredPedalPosition * screenConstant
+                   position_pedal = linearPedalPosition * screenConstant
                    position_mass = massPosition * screenConstant
                    # print("CORR: Time:{0} Pedal: {1:.6} Mass:{2:.6}\n".format(time,position_pedal,position_mass))
 
