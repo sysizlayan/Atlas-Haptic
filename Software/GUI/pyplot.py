@@ -6,12 +6,12 @@ from struct import *
 
 
 portName = 'COM5'
-baudRate = 230400
+baudRate = 460800
 position_pedal = 0
 position_mass = 0
 prev_position_pedal = 0
 prev_position_mass = 0
-
+prev_time = 0
 numberOfHorizontalPixelsOnWindow = 400
 numberOfVerticalPixelsOnWindow = 900
 numberOfVerticalPixelsOnScreen = 1080 # 768 # pixel
@@ -45,6 +45,7 @@ class myThread(threading.Thread):
        global crashed
        global prev_position_pedal
        global prev_position_mass
+       global prev_time
        while(not crashed):
            try:
                temp = ser.read_until(b'$$')
@@ -52,23 +53,15 @@ class myThread(threading.Thread):
                line = ser.read_until(b'**')
                line = line[0: len(line) - 2]
                # print(len(line))
-               if len(line) == 12:
-                   # (time, filteredPosition, velocity) = unpack('<Iff', line)  # little endian unsigned integer
-                   # print("Time:{0} Pos: {1:.6} Vel:{2:.6}\n".format(time,filteredPosition,velocity))
-                   # fileStreamer.write("{0},{1:.6},{2:.6}\n".format(time, filteredPosition, velocity))
-
-
-                   # 18cm vertical -> 768 pixel
-                   # (time, filteredPedalPosition, massPosition, pedalVelocity, massVelocity) = unpack('<Iffff', line)  # little endian unsigned integer
-                   # print("READ: Time:{0} Pedal_Pos:{1:.6}, Mass_Pos:{2:.6}, Pedal_Vel:{3:.6}, Mass_Vel:{4:.6}\n".format(time,filteredPedalPosition,massPosition,pedalVelocity,massVelocity))
-
-                   (time, linearPedalPosition, massPosition) = unpack('<Iff',line)  # little endian unsigned integer
-                   print("READ: Time:{0} Pedal_Pos:{1:.6}, Mass_Pos:{2:.6}\n".format(time, linearPedalPosition, massPosition))
-                   # position_pedal = pedalLength * filteredPedalPosition * screenConstant
-                   # position_pedal = pedalLength * np.sin(np.deg2rad(filteredPedalPosition)) * screenConstant # 768/18
+               if len(line) == 20:
+                   # (time, linearPedalPosition, massPosition, linearPedalVelocity, massVelocity, totalForce) = unpack('<Ifffff',line)  # little endian unsigned integer
+                   # print("Time:{0} Pedal_Pos:{1:.3}, Mass_Pos:{2:.3} Pedal_Vel:{3:.3}, Mass_Vel:{4:.3} Total_Force:{5:.3}\n".format(time, linearPedalPosition, massPosition, linearPedalVelocity, massVelocity, totalForce))
+				   
+                   (time, linearPedalPosition, massPosition, linearPedalVelocity, massVelocity) = unpack('<Iffff',line)  # little endian unsigned integer
+                   print("Delta_Time:{0} Pedal_Pos:{1:.2}, Mass_Pos:{2:.2} Pedal_Vel:{3:.2}, Mass_Vel:{4:.2}\n".format(time-prev_time, round(linearPedalPosition,2), round(massPosition,2), round(linearPedalVelocity, 2), round(massVelocity,2)))
+                   prev_time = time
                    position_pedal = linearPedalPosition * screenConstant
                    position_mass = massPosition * screenConstant
-                   # print("CORR: Time:{0} Pedal: {1:.6} Mass:{2:.6}\n".format(time,position_pedal,position_mass))
 
                    # threadLock.acquire()
 

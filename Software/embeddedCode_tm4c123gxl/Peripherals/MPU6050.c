@@ -69,8 +69,6 @@ void GPIOEHandler6050(void)
 {
     float error;
     float K;
-    float pedalLinearPosition, pedalLinearVelocity;
-    float springForce, damperForce, totalForce;
 
     GPIOIntClear(GPIO_PORTE_BASE, GPIO_PIN_3); //clear corresponding interrupts
 
@@ -124,9 +122,9 @@ void GPIOEHandler6050(void)
         // End Kalman Filter
         /////////////////////////////////////////////////////////////////
 
-        pedalLinearPosition = R_pedal
+        g_fpedalLinearPosition = R_pedal
                 * sinf(g_fposition_filtered_plus * DEGREE_TO_RADIAN);
-        pedalLinearVelocity =
+        g_fpedalLinearVelocity =
                 R_pedal
                         * cosf(g_fposition_filtered_plus * DEGREE_TO_RADIAN) * g_fgyroVelocity * DEGREE_TO_RADIAN;
 
@@ -135,42 +133,38 @@ void GPIOEHandler6050(void)
         /////////////////////////////////////////////////////////////////
         g_fMassPosition = A_0_0 * g_fMassPosition_prev
                 + A_0_1 * g_fMassVelocity_prev;
-        g_fMassPosition = g_fMassPosition + B_0_0 * pedalLinearPosition
-                + B_0_1 * pedalLinearVelocity;
+        g_fMassPosition = g_fMassPosition + B_0_0 * g_fpedalLinearPosition
+                + B_0_1 * g_fpedalLinearVelocity;
 
         g_fMassVelocity = A_1_0 * g_fMassPosition_prev
                 + A_1_1 * g_fMassVelocity_prev;
-        g_fMassVelocity = g_fMassVelocity + B_1_0 * pedalLinearPosition
-                + B_1_1 * pedalLinearVelocity;
+        g_fMassVelocity = g_fMassVelocity + B_1_0 * g_fpedalLinearPosition
+                + B_1_1 * g_fpedalLinearVelocity;
 
         g_fMassPosition_prev = g_fMassPosition;
         g_fMassVelocity_prev = g_fMassVelocity;
 
-        springForce = (pedalLinearPosition - g_fMassPosition);     //* k_spring;
-        springForce = springForce * k_spring;
-        damperForce = (pedalLinearVelocity - g_fMassVelocity);     //* b_damper;
-        damperForce = damperForce * b_damper;
-        totalForce = springForce + damperForce;
-        if (totalForce < 0)
-            totalForce = -1 * totalForce;
+        g_fspringForce = (g_fpedalLinearPosition - g_fMassPosition) * k_spring;
+        g_fdamperForce = (g_fpedalLinearVelocity - g_fMassVelocity) * b_damper;
+        g_ftotalForce = g_fspringForce + g_fdamperForce;
+
+        if (g_ftotalForce < 0)
+            g_ftotalForce = -1 * g_ftotalForce;
 
         /////////////////////////////////////////////////////////////////
         // Transmission with the computer
         /////////////////////////////////////////////////////////////////
         UARTwrite(delimStr, 2); // Begin delimiter
+
         UARTwrite(timePointer, 4); //Transmit time instance
-        //UARTwrite(positionPointer,4); //Transmit position as byte stream
-//        UARTwrite(filteredPositionPointer,4); //Transmit filtered position as byte stream
-        UARTwrite((const char*) (&pedalLinearPosition), 4);
-        UARTwrite(massPositionPointer, 4); //Transmit mass position as byte stream
 
-        /*UARTwrite((const char*)(&totalForce),4);
+        UARTwrite(linearPedalPositionPointer, 4);
+        UARTwrite(massPositionPointer, 4);
 
-         UARTwrite((const char*)(&pedalLinearVelocity),4); // Transmit mass velocity as byte stream
-         UARTwrite(massVelocityPointer,4); // Transmit mass velocity as byte stream
+        UARTwrite(linearPedalVelocityPointer, 4);
+        UARTwrite(massVelocityPointer, 4);
 
-         UARTwrite((const char*)(&springForce),4);
-         UARTwrite((const char*)(&damperForce),4);*/
+        //UARTwrite(totalForcePointer, 4);
 
         UARTwrite(delimStr + 2, 3); // End delimiter and newline
         //////////////////////////////////////////////////////////////////
