@@ -77,7 +77,7 @@ void GPIOEHandler6050(void)
     ////////////////////////////////////////////////////////////
     i2cReadData(MPU6050_ADDRESS, MPU6050_O_GYRO_ZOUT_H, buf, 2);
     g_i32gyro_readingZ_raw = (int16_t) ((buf[0] << 8) | buf[1]);
-    g_ui32measurementTime = micros();
+
     g_fgyroVelocity = (float) g_i32gyro_readingZ_raw / resolution;
 
     i2cRead(MPU6050_ADDRESS, 0x3A); // Clear MPU6050 interrupt
@@ -151,6 +151,8 @@ void GPIOEHandler6050(void)
         if (g_ftotalForce < 0)
             g_ftotalForce = -1 * g_ftotalForce;
 
+
+        g_ui32measurementTime = millis();
         /////////////////////////////////////////////////////////////////
         // Transmission with the computer
         /////////////////////////////////////////////////////////////////

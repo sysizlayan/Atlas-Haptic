@@ -11,7 +11,7 @@ volatile float g_fposition;
 volatile float g_fgyroVelocity;
 volatile float g_fpulse_velocity;
 volatile float g_fposition_prev;
-volatile float g_ui32measurementTime;
+volatile uint32_t g_ui32measurementTime;
 
 
 //Calculated Variables

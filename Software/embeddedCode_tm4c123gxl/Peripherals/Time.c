@@ -6,16 +6,17 @@
 #include "driverlib/sysctl.h"
 #include "driverlib/systick.h"
 
-static volatile uint32_t counter;
+uint32_t counter;
 
-static void SycTickHandler(void)
+static void syscTickHandler(void)
 {
     counter++;
 }
 
-void initTime(void) {
-    SysTickPeriodSet(SysCtlClockGet() / 1000000UL); // 1000 for milliseconds & 1000000 for microseconds
-    SysTickIntRegister(SycTickHandler);
+void initTime(void)
+{
+    SysTickPeriodSet(80); // 1000 for milliseconds & 1000000 for microseconds
+    SysTickIntRegister(syscTickHandler);
     SysTickIntEnable();
     SysTickEnable();
 }

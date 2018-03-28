@@ -6,7 +6,7 @@ from struct import *
 
 
 portName = 'COM5'
-baudRate = 460800
+baudRate = 921600
 position_pedal = 0
 position_mass = 0
 prev_position_pedal = 0
@@ -58,7 +58,7 @@ class myThread(threading.Thread):
                    # print("Time:{0} Pedal_Pos:{1:.3}, Mass_Pos:{2:.3} Pedal_Vel:{3:.3}, Mass_Vel:{4:.3} Total_Force:{5:.3}\n".format(time, linearPedalPosition, massPosition, linearPedalVelocity, massVelocity, totalForce))
 				   
                    (time, linearPedalPosition, massPosition, linearPedalVelocity, massVelocity) = unpack('<Iffff',line)  # little endian unsigned integer
-                   print("Delta_Time:{0} Pedal_Pos:{1:.2}, Mass_Pos:{2:.2} Pedal_Vel:{3:.2}, Mass_Vel:{4:.2}\n".format(time-prev_time, round(linearPedalPosition,2), round(massPosition,2), round(linearPedalVelocity, 2), round(massVelocity,2)))
+                   print("Delta_Time:{0} Pedal_Pos:{1:.2}, Mass_Pos:{2:.2} Pedal_Vel:{3:.2}, Mass_Vel:{4:.2}\n".format(time - prev_time, round(linearPedalPosition,2), round(massPosition,2), round(linearPedalVelocity, 2), round(massVelocity,2)))
                    prev_time = time
                    position_pedal = linearPedalPosition * screenConstant
                    position_mass = massPosition * screenConstant

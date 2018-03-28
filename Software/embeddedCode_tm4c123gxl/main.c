@@ -57,7 +57,7 @@ int main(void)
     // UART0 stdio initialization
     //
     //UART0, main usb connection in launchpad, as stdio source
-    uart_stdio_init(460800);
+    uart_stdio_init(921600);
 
     //
     // Initialize i2c module

@@ -8,12 +8,13 @@
 #ifndef PEDALVARIABLES_H_
 #define PEDALVARIABLES_H_
 
+#include <stdint.h>
 //Measured Variables
 extern volatile float g_fposition;
 extern volatile float g_fgyroVelocity;
 extern volatile float g_fpulse_velocity;
 extern volatile float g_fposition_prev;
-extern volatile float g_ui32measurementTime;
+extern volatile uint32_t g_ui32measurementTime;
 
 
 //Calculated Variables
