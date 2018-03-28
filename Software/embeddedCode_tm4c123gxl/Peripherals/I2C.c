@@ -13,7 +13,7 @@
  Kristian Sloth Lauszus
  Web      :  http://www.lauszus.com
  e-mail   :  lauszus@gmail.com
-*/
+ */
 
 #include "main.h"
 #include "I2C.h"
@@ -35,6 +35,23 @@ void initI2C(void)
     I2CMasterInitExpClk(I2C1_BASE, SysCtlClockGet(), true); // Enable and set frequency to 400 kHz
 
     SysCtlDelay(2); // Insert a few cycles after enabling the I2C to allow the clock to be fully activated
+
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_I2C0); // Enable I2C1 peripheral
+    SysCtlDelay(2); // Insert a few cycles after enabling the peripheral to allow the clock to be fully activated
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB); // Enable GPIOA peripheral
+    SysCtlDelay(2); // Insert a few cycles after enabling the peripheral to allow the clock to be fully activated
+
+    // Use alternate function
+    GPIOPinConfigure(GPIO_PB2_I2C0SCL);
+    GPIOPinConfigure(GPIO_PB3_I2C0SDA);
+
+    GPIOPinTypeI2CSCL(GPIO_PORTB_BASE, GPIO_PIN_2); // Use pin with I2C SCL peripheral
+    GPIOPinTypeI2C(GPIO_PORTB_BASE, GPIO_PIN_3); // Use pin with I2C peripheral
+
+    I2CMasterInitExpClk(I2C0_BASE, SysCtlClockGet(), true); // Enable and set frequency to 400 kHz
+
+    SysCtlDelay(2); // Insert a few cycles after enabling the I2C to allow the clock to be fully activated
+
 }
 
 void i2cWrite(uint8_t addr, uint8_t regAddr, uint8_t data)
@@ -49,30 +66,37 @@ void i2cWriteData(uint8_t addr, uint8_t regAddr, uint8_t *data, uint8_t length)
 
     I2CMasterDataPut(I2C1_BASE, regAddr); // Place address into data register
     I2CMasterControl(I2C1_BASE, I2C_MASTER_CMD_BURST_SEND_START); // Send start condition
-    while (I2CMasterBusy(I2C1_BASE)); // Wait until transfer is done
+    while (I2CMasterBusy(I2C1_BASE))
+        ; // Wait until transfer is done
 
-    for (i = 0; i < length - 1; i++) {
+    for (i = 0; i < length - 1; i++)
+    {
         I2CMasterDataPut(I2C1_BASE, data[i]); // Place data into data register
         I2CMasterControl(I2C1_BASE, I2C_MASTER_CMD_BURST_SEND_CONT); // Send continues condition
-        while (I2CMasterBusy(I2C1_BASE)); // Wait until transfer is done
+        while (I2CMasterBusy(I2C1_BASE))
+            ; // Wait until transfer is done
     }
 
     I2CMasterDataPut(I2C1_BASE, data[length - 1]); // Place data into data register
     I2CMasterControl(I2C1_BASE, I2C_MASTER_CMD_BURST_SEND_FINISH); // Send finish condition
-    while (I2CMasterBusy(I2C1_BASE)); // Wait until transfer is done
+    while (I2CMasterBusy(I2C1_BASE))
+        ; // Wait until transfer is done
 }
 
-uint8_t i2cRead(uint8_t addr, uint8_t regAddr) {
+uint8_t i2cRead(uint8_t addr, uint8_t regAddr)
+{
     I2CMasterSlaveAddrSet(I2C1_BASE, addr, false); // Set to write mode
 
     I2CMasterDataPut(I2C1_BASE, regAddr); // Place address into data register
     I2CMasterControl(I2C1_BASE, I2C_MASTER_CMD_SINGLE_SEND); // Send data
-    while (I2CMasterBusy(I2C1_BASE)); // Wait until transfer is done
+    while (I2CMasterBusy(I2C1_BASE))
+        ; // Wait until transfer is done
 
     I2CMasterSlaveAddrSet(I2C1_BASE, addr, true); // Set to read mode
 
     I2CMasterControl(I2C1_BASE, I2C_MASTER_CMD_SINGLE_RECEIVE); // Tell master to read data
-    while (I2CMasterBusy(I2C1_BASE)); // Wait until transfer is done
+    while (I2CMasterBusy(I2C1_BASE))
+        ; // Wait until transfer is done
     return I2CMasterDataGet(I2C1_BASE); // Read data
 }
 
@@ -83,21 +107,26 @@ void i2cReadData(uint8_t addr, uint8_t regAddr, uint8_t *data, uint8_t length)
 
     I2CMasterDataPut(I2C1_BASE, regAddr); // Place address into data register
     I2CMasterControl(I2C1_BASE, I2C_MASTER_CMD_SINGLE_SEND); // Send data
-    while (I2CMasterBusy(I2C1_BASE)); // Wait until transfer is done
+    while (I2CMasterBusy(I2C1_BASE))
+        ; // Wait until transfer is done
 
     I2CMasterSlaveAddrSet(I2C1_BASE, addr, true); // Set to read mode
 
     I2CMasterControl(I2C1_BASE, I2C_MASTER_CMD_BURST_RECEIVE_START); // Send start condition
-    while (I2CMasterBusy(I2C1_BASE)); // Wait until transfer is done
+    while (I2CMasterBusy(I2C1_BASE))
+        ; // Wait until transfer is done
     data[0] = I2CMasterDataGet(I2C1_BASE); // Place data into data register
 
-    for (i = 1; i < length - 1; i++) {
+    for (i = 1; i < length - 1; i++)
+    {
         I2CMasterControl(I2C1_BASE, I2C_MASTER_CMD_BURST_RECEIVE_CONT); // Send continues condition
-        while (I2CMasterBusy(I2C1_BASE)); // Wait until transfer is done
+        while (I2CMasterBusy(I2C1_BASE))
+            ; // Wait until transfer is done
         data[i] = I2CMasterDataGet(I2C1_BASE); // Place data into data register
     }
 
     I2CMasterControl(I2C1_BASE, I2C_MASTER_CMD_BURST_RECEIVE_FINISH); // Send finish condition
-    while (I2CMasterBusy(I2C1_BASE)); // Wait until transfer is done
+    while (I2CMasterBusy(I2C1_BASE))
+        ; // Wait until transfer is done
     data[length - 1] = I2CMasterDataGet(I2C1_BASE); // Place data into data register
 }

@@ -3,8 +3,9 @@
 #include "utils/uartstdio.h"
 #include "math.h"
 
-#define  NUMBER_OF_BIAS_SAMPLES 1000
-
+#define  NUMBER_OF_BIAS_SAMPLES 10
+#define MCP4725_ADDR 0x62
+#define WRITE_VOLTAGE_DAC 0x40
 bool isGyroCalibrated = false;
 
 int32_t g_i32gyro_readingZ_raw;
@@ -19,6 +20,10 @@ extern encoderReader g_sQEI1;
 
 uint8_t buf[2];
 
+uint16_t forceToBeWritten;
+uint8_t dac1, dac2;
+void writeDAC(uint8_t dac1, uint8_t dac2);
+
 void initMPU6050()
 {
     uint8_t i2cBuffer[5]; // Buffer for I2C data
@@ -30,7 +35,7 @@ void initMPU6050()
     while (i2cBuffer[0] != MPU6050_WHO_AM_I_MPU6050);
 
     i2cWrite(MPU6050_ADDRESS, MPU6050_O_PWR_MGMT_1,
-             MPU6050_PWR_MGMT_1_DEVICE_RESET);
+    MPU6050_PWR_MGMT_1_DEVICE_RESET);
     delay(100);
     while (i2cRead(MPU6050_ADDRESS, MPU6050_O_PWR_MGMT_1)
             & MPU6050_PWR_MGMT_1_DEVICE_RESET)
@@ -55,7 +60,7 @@ void initMPU6050()
     HWREG(GPIO_PORTE_BASE + GPIO_O_CR) = 0x1F;
     ROM_GPIOPinTypeGPIOInput(GPIO_PORTE_BASE, GPIO_PIN_3);
     ROM_GPIOPadConfigSet(GPIO_PORTE_BASE, GPIO_PIN_3, GPIO_STRENGTH_8MA,
-                         GPIO_PIN_TYPE_STD);
+    GPIO_PIN_TYPE_STD);
 
     ROM_GPIOIntTypeSet(GPIO_PORTE_BASE, GPIO_PIN_3, GPIO_FALLING_EDGE); //for pin 0,4 enable falling edge interrupt
     GPIOIntRegister(GPIO_PORTE_BASE, GPIOEHandler6050); //portf_int_handler is the interrupt handler
@@ -150,9 +155,16 @@ void GPIOEHandler6050(void)
 
         if (g_ftotalForce < 0)
             g_ftotalForce = -1 * g_ftotalForce;
+        forceToBeWritten = (uint16_t) (g_ftotalForce * 1);
+        forceToBeWritten = forceToBeWritten << 4;
 
+        dac1 = forceToBeWritten >> 8;
 
-        g_ui32measurementTime = millis();
+        dac2 = (forceToBeWritten & 0x00FF);
+
+        writeDAC(dac1, dac2);
+
+        g_ui32measurementTime = micros();
         /////////////////////////////////////////////////////////////////
         // Transmission with the computer
         /////////////////////////////////////////////////////////////////
@@ -185,5 +197,28 @@ void GPIOEHandler6050(void)
         }
         biasSampleCount++;
     }
+}
+void writeDAC(uint8_t dac1, uint8_t dac2)
+{
+    I2CMasterSlaveAddrSet(I2C0_BASE, MCP4725_ADDR, false); // Set to write mode
+
+    I2CMasterDataPut(I2C0_BASE, WRITE_VOLTAGE_DAC); // Place address into data register
+    I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_BURST_SEND_START); // Send start condition
+    while (I2CMasterBusy(I2C0_BASE))
+    {
+    }
+
+    I2CMasterDataPut(I2C0_BASE, dac1); // Place data into data register
+    I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_BURST_SEND_CONT); // Send continues condition
+    while (I2CMasterBusy(I2C0_BASE))
+    {
+    }
+
+    I2CMasterDataPut(I2C0_BASE, dac2); // Place data into data register
+    I2CMasterControl(I2C0_BASE, I2C_MASTER_CMD_BURST_SEND_FINISH); // Send finish condition
+    while (I2CMasterBusy(I2C0_BASE))
+    {
+    }
+
 }
 #endif
