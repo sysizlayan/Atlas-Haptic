@@ -152,9 +152,11 @@ void GPIOEHandler6050(void)
         g_fspringForce = (g_fpedalLinearPosition - g_fMassPosition) * k_spring;
         g_fdamperForce = (g_fpedalLinearVelocity - g_fMassVelocity) * b_damper;
         g_ftotalForce = g_fspringForce + g_fdamperForce;
+        g_ftotalForce = g_ftotalForce * 10;
 
         if (g_ftotalForce < 0)
             g_ftotalForce = -1 * g_ftotalForce;
+
         forceToBeWritten = (uint16_t) (g_ftotalForce * 1);
         forceToBeWritten = forceToBeWritten << 4;
 

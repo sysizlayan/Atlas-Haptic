@@ -5,7 +5,7 @@ import numpy as np
 from struct import *
 
 
-portName = 'COM5'
+portName = 'COM3'
 baudRate = 460800
 position_pedal = 0
 position_mass = 0
@@ -13,8 +13,8 @@ prev_position_pedal = 0
 prev_position_mass = 0
 prev_time = 0
 numberOfHorizontalPixelsOnWindow = 400
-numberOfVerticalPixelsOnWindow = 900
-numberOfVerticalPixelsOnScreen = 1080 # 768 # pixel
+numberOfVerticalPixelsOnWindow = 600
+numberOfVerticalPixelsOnScreen = 768 # pixel
 screenHeight = 0.18 # 18  # cm
 screenConstant = numberOfVerticalPixelsOnScreen/screenHeight
 pedalLength = 0.17  # cm

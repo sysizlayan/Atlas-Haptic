@@ -10,7 +10,7 @@
 #include "./Peripherals/VelocityTimer.h"
 #include "./Peripherals/uarts.h"
 #include "./Peripherals/MPU6050.h"
-#include "./Peripherals/mcp4725.h"
+//#include "./Peripherals/mcp4725.h"
 #include "./Peripherals/I2C.h"
 #include "./Peripherals/hapticFeedbackTimer.h"
 
