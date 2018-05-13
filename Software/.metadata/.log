@@ -110,3 +110,6 @@ java.lang.Exception
 !ENTRY org.eclipse.cdt.dsf.gdb 4 5012 2018-05-13 21:46:16.119
 !MESSAGE Error in initializing ST-Link device.
 Reason: (2) ST-Link DLL error.
+
+!ENTRY com.atollic.truestudio.productmanager 1 0 2018-05-13 22:15:31.984
+!MESSAGE Unloading product manager
