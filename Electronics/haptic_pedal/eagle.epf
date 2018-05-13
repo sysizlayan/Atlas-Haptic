@@ -348,8 +348,8 @@ UsedLibraryUrn="urn:adsk.eagle:library:174"
 UsedLibraryUrn="urn:adsk.eagle:library:175"
 UsedLibraryUrn="urn:adsk.eagle:library:176"
 UsedLibraryUrn="urn:adsk.eagle:library:177"
-UsedLibrary="C:/EAGLE 8.7.1/lbr/ti-tiva.lbr"
 UsedLibrary="C:/EAGLE 8.7.1/lbr/Texas Instruments_By_element14_Batch_1.lbr"
+UsedLibrary="C:/EAGLE 8.7.1/lbr/ti-tiva.lbr"
 
 [Win_1]
 Type="Board Editor"
