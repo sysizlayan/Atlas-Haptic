@@ -89,7 +89,7 @@ int main(void)
 
 
     //GIVE GREEN LIGHT! :D
-    GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_3,GPIO_PIN_3); // make PF2 HIGH to open transistor
+    GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_3,GPIO_PIN_3);
     delay(1000);
     //IntMasterEnable();
     while(true)

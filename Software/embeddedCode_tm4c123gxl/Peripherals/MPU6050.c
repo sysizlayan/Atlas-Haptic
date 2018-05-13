@@ -3,7 +3,7 @@
 #include "utils/uartstdio.h"
 #include "math.h"
 
-#define  NUMBER_OF_BIAS_SAMPLES 10
+#define  NUMBER_OF_BIAS_SAMPLES 1000
 #define MCP4725_ADDR 0x62
 #define WRITE_VOLTAGE_DAC 0x40
 bool isGyroCalibrated = false;
@@ -152,10 +152,17 @@ void GPIOEHandler6050(void)
         g_fspringForce = (g_fpedalLinearPosition - g_fMassPosition) * k_spring;
         g_fdamperForce = (g_fpedalLinearVelocity - g_fMassVelocity) * b_damper;
         g_ftotalForce = g_fspringForce + g_fdamperForce;
-        g_ftotalForce = g_ftotalForce * 10;
+        g_ftotalForce = g_ftotalForce *15 + 1900;
 
-        if (g_ftotalForce < 0)
+        /*if (g_ftotalForce < 0)
+        {
+            GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1,GPIO_PIN_1);
             g_ftotalForce = -1 * g_ftotalForce;
+        }
+        else
+        {
+            GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1,~GPIO_PIN_1);
+        }*/
 
         forceToBeWritten = (uint16_t) (g_ftotalForce * 1);
         forceToBeWritten = forceToBeWritten << 4;
