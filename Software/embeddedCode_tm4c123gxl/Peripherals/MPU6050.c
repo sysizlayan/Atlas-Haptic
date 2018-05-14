@@ -129,14 +129,13 @@ void GPIOEHandler6050(void)
 
         g_fpedalLinearPosition = R_pedal
                 * sinf(g_fposition_filtered_plus * DEGREE_TO_RADIAN);
-        g_fpedalLinearVelocity =
-                R_pedal
-                        * cosf(g_fposition_filtered_plus * DEGREE_TO_RADIAN) * g_fgyroVelocity * DEGREE_TO_RADIAN;
+        g_fpedalLinearVelocity = R_pedal
+                * cosf(g_fposition_filtered_plus * DEGREE_TO_RADIAN) * g_fgyroVelocity * DEGREE_TO_RADIAN;
 
         /////////////////////////////////////////////////////////////////
         // SPRING MASS SIMULATION
         /////////////////////////////////////////////////////////////////
-        g_fMassPosition = A_0_0 * g_fMassPosition_prev
+        /*g_fMassPosition = A_0_0 * g_fMassPosition_prev
                 + A_0_1 * g_fMassVelocity_prev;
         g_fMassPosition = g_fMassPosition + B_0_0 * g_fpedalLinearPosition
                 + B_0_1 * g_fpedalLinearVelocity;
@@ -152,7 +151,7 @@ void GPIOEHandler6050(void)
         g_fspringForce = (g_fpedalLinearPosition - g_fMassPosition) * k_spring;
         g_fdamperForce = (g_fpedalLinearVelocity - g_fMassVelocity) * b_damper;
         g_ftotalForce = g_fspringForce + g_fdamperForce;
-        g_ftotalForce = g_ftotalForce *15 + 1900;
+        g_ftotalForce = g_ftotalForce *15 + 1900;*/
 
         /*if (g_ftotalForce < 0)
         {
@@ -164,7 +163,8 @@ void GPIOEHandler6050(void)
             GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1,~GPIO_PIN_1);
         }*/
 
-        forceToBeWritten = (uint16_t) (g_ftotalForce * 1);
+        calculateMassStatesAndForces();
+        forceToBeWritten = (uint16_t) (g_ssimulatedForces.totalForce);
         forceToBeWritten = forceToBeWritten << 4;
 
         dac1 = forceToBeWritten >> 8;

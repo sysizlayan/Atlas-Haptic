@@ -5,16 +5,13 @@
  *      Author: Yigit
  */
 
-#include "simulationVariables.h"
+#include "simulationVariables_forSpringMassDamper.h"
 
 //Simulated Variables
-volatile float g_fMassPosition;
-volatile float g_fMassVelocity;
+volatile massStates_typedef g_ssimulatedMassStates;
+volatile massStates_typedef g_ssimulatedMassStates_prev;
 
-volatile float g_fMassPosition_prev = 0.0f;
-volatile float g_fMassVelocity_prev = 0.0f;
-
-volatile float g_fspringForce, g_fdamperForce, g_ftotalForce;
+volatile forces_typedef g_ssimulatedForces;
 
 const float k_spring = 1000.0f; // N/cm
 const float M_mass = 0.1f; // kg

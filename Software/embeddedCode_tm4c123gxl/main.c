@@ -17,7 +17,7 @@
 #include "sensorlib/hw_mpu6050.h"
 
 #include "pedalVariables.h"
-#include "simulationVariables.h"
+#include "simulationVariables_forSpringMassDamper.h"
 #include "pointersForPrint.h"
 
 #include "haptic_feedback.h"

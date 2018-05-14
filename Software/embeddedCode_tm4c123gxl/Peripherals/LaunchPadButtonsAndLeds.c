@@ -6,18 +6,7 @@
  */
 #include "LaunchPadButtonsAndLeds.h"
 #include "haptic_feedback.h"
-
-extern float g_fMassPosition;
-extern float g_fMassVelocity;
-
-extern float g_fMassPosition_prev;
-extern float g_fMassVelocity_prev;
-
-//Measured Variables
-extern float g_fposition;
-extern float g_fgyroVelocity;
-extern float g_fpulse_velocity;
-extern float g_fposition_prev;
+#include "simulationVariables_forSpringMassDamper.h"
 
 //Calculated Variables
 extern float g_fposition_filtered_plus;
@@ -34,11 +23,15 @@ void portf_int_handler()
     if(status&0x01) //PF0 interrupt
     {
         QEIPositionSet(QEI1_BASE, 0);
-        g_fMassPosition = 0.0f;
-        g_fMassVelocity = 0.0f;
-        g_fMassPosition_prev = 0.0f;
-        g_fMassVelocity_prev = 0.0f;
+        g_ssimulatedMassStates.massPosition = 0.0f;
+        g_ssimulatedMassStates.massVelocity = 0.0f;
 
+        g_ssimulatedMassStates_prev.massPosition = 0.0f;
+        g_ssimulatedMassStates_prev.massVelocity = 0.0f;
+
+        g_ssimulatedForces.damperForce = 0.0f;
+        g_ssimulatedForces.springForce = 0.0f;
+        g_ssimulatedForces.totalForce = 0.0f;
 
         g_fposition_filtered_plus = 0.0f;
         g_fposition_filtered_minus = 0.0f;

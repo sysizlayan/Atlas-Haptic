@@ -29,11 +29,11 @@ void initializePrintPointers(void)
     linearPedalPositionPointer      = (char*) &g_fpedalLinearPosition;
     linearPedalVelocityPointer      = (char*) &g_fpedalLinearVelocity;
 
-    massPositionPointer             = (char*) &g_fMassPosition;
-    massVelocityPointer             = (char*) &g_fMassVelocity;
+    massPositionPointer             = (char*) &(g_ssimulatedMassStates.massPosition);
+    massVelocityPointer             = (char*) &(g_ssimulatedMassStates.massVelocity);
 
-    totalForcePointer               = (char*) &g_ftotalForce;
-    springForcePointer              = (char*) &g_fspringForce;
-    damperForcePointer              = (char*) &g_fdamperForce;
+    totalForcePointer               = (char*) &(g_ssimulatedForces.totalForce);
+    springForcePointer              = (char*) &(g_ssimulatedForces.springForce);
+    damperForcePointer              = (char*) &(g_ssimulatedForces.damperForce);
 }
 

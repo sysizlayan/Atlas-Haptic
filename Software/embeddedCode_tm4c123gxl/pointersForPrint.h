@@ -7,7 +7,7 @@
 
 #ifndef POINTERSFORPRINT_H_
 #define POINTERSFORPRINT_H_
-#include "simulationVariables.h"
+#include "simulationVariables_forSpringMassDamper.h"
 #include "pedalVariables.h"
 
 extern char delimStr[]; //Delimiters

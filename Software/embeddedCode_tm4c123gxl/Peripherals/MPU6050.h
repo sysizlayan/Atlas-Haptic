@@ -13,7 +13,8 @@ extern "C" {
 #include "QEI.h"
 
 #include "pedalVariables.h"
-#include "simulationVariables.h"
+#include "simulationVariables_forSpringMassDamper.h"
+#include "massStatesCalculation.h"
 #include "pointersForPrint.h"
 
 #define MPU9250_WHO_AM_I_MPU9250 0x71

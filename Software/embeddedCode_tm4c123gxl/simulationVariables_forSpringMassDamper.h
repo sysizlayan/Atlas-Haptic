@@ -8,14 +8,25 @@
 #ifndef SIMULATIONVARIABLES_H_
 #define SIMULATIONVARIABLES_H_
 
+#define FORCE_GAIN 15
+#define FORCE_BIAS 1900
 
 //Simulated Variables
-extern volatile float g_fMassPosition;
-extern volatile float g_fMassVelocity;
+typedef struct _massStates
+{
+    volatile float massPosition;
+    volatile float massVelocity;
+} massStates_typedef;
 
-extern volatile float g_fMassPosition_prev;
-extern volatile float g_fMassVelocity_prev;
-extern volatile float g_fspringForce, g_fdamperForce, g_ftotalForce;
+typedef struct _forces
+{
+    volatile float springForce, damperForce, totalForce;
+} forces_typedef;
+
+extern volatile massStates_typedef g_ssimulatedMassStates;
+extern volatile massStates_typedef g_ssimulatedMassStates_prev;
+
+extern volatile forces_typedef g_ssimulatedForces;
 
 extern const float k_spring; // N/cm
 extern const float M_mass; // kg
