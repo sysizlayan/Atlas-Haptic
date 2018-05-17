@@ -4,20 +4,14 @@ import threading
 import numpy as np
 from struct import *
 
-portName = 'COM3'
+portName = 'COM5'
 baudRate = 460800
 position_pedal = 0
-position_mass = 0
+position_target = 0
+velocity_pedal = 0
+velocity_target = 0
 prev_position_pedal = 0
 prev_position_mass = 0
-prev_time = 0
-numberOfHorizontalPixelsOnWindow = 400
-numberOfVerticalPixelsOnWindow = 600
-numberOfVerticalPixelsOnScreen = 768  # pixel
-screenHeight = 0.18  # 18  # cm
-screenConstant = numberOfVerticalPixelsOnScreen / screenHeight
-pedalLength = 0.17  # cm
-# windowHeight = screenHeight*numberOfVerticalPixelsOnWindow/numberOfVerticalPixelsOnScreen
 
 crashed = False
 threadLock = threading.Lock()
@@ -41,12 +35,12 @@ class myThread(threading.Thread):
         self.threadID = threadID
 
     def run(self):
-        global position_pedal
-        global position_mass
         global crashed
-        global prev_position_pedal
-        global prev_position_mass
-        global prev_time
+        global position_pedal
+        global position_target
+        global velocity_pedal
+        global velocity_target
+
         while (not crashed):
             try:
                 temp = ser.read_until(b'$$')
@@ -55,17 +49,15 @@ class myThread(threading.Thread):
                 line = line[0: len(line) - 2]
                 # print(len(line))
                 if len(line) == 20:
-                    # (time, linearPedalPosition, massPosition, linearPedalVelocity, massVelocity, totalForce) = unpack('<Ifffff',line)  # little endian unsigned integer
-                    # print("Time:{0} Pedal_Pos:{1:.3}, Mass_Pos:{2:.3} Pedal_Vel:{3:.3}, Mass_Vel:{4:.3} Total_Force:{5:.3}\n".format(time, linearPedalPosition, massPosition, linearPedalVelocity, massVelocity, totalForce))
+                    # little endian unsigned integer
+                    (time, position_pedal, position_target, velocity_pedal, velocity_target) = unpack('<Iffff',line)
 
-                    (time, linearPedalPosition, massPosition, linearPedalVelocity, massVelocity) = unpack('<Iffff',
-                                                                                                          line)  # little endian unsigned integer
-                    print("Delta_Time:{0} Pedal_Pos:{1:.2}, Mass_Pos:{2:.2} Pedal_Vel:{3:.2}, Mass_Vel:{4:.2}\n".format(
-                        time - prev_time, round(linearPedalPosition, 2), round(massPosition, 2),
-                        round(linearPedalVelocity, 2), round(massVelocity, 2)))
-                    prev_time = time
-                    position_pedal = linearPedalPosition * screenConstant
-                    position_mass = massPosition * screenConstant
+                    # print("Time:{0} Pedal_Pos:{1:.2}, Target_Pos:{2:.2} Pedal_Vel:{3:.2}, Target_Vel:{4:.2}\n"
+                    #     .format(time,
+                    #             round(position_pedal, 2),
+                    #             round(position_target, 2),
+                    #             round(velocity_pedal, 2),
+                    #             round(velocity_target, 2)))
 
                     # threadLock.acquire()
 
@@ -82,7 +74,6 @@ class myThread(threading.Thread):
                 break
         print('exiting thread')
 
-
 thread1 = myThread(1)
 
 black = (0, 0, 0)
@@ -90,17 +81,15 @@ white = (255, 255, 255)
 
 clock = pygame.time.Clock()
 pedalImg = pygame.image.load('pedal.png')
-massImg = pygame.image.load('mass.png')
+pedal_img_rect = pedalImg.get_rect()
+targetImg = pygame.image.load('target.png')
+target_img_rect = targetImg.get_rect()
 
 pedalWidth, pedalHeigth = pedalImg.get_rect().size
-massWidth, massHeigth = massImg.get_rect().size
+massWidth, massHeigth = targetImg.get_rect().size
 
-gameDisplay = pygame.display.set_mode((pedalWidth, numberOfVerticalPixelsOnWindow))
-pygame.display.set_caption('Pedal')
-
-x_pedal = 0
-x_mass = massWidth / 2
-y = numberOfVerticalPixelsOnWindow / 2
+gameDisplay = pygame.display.set_mode([600, 600])
+pygame.display.set_caption('Target Tracking')
 
 thread1.start()
 while not crashed:
@@ -111,8 +100,20 @@ while not crashed:
     gameDisplay.fill(white)
 
     threadLock.acquire()
-    gameDisplay.blit(pedalImg, (x_pedal, numberOfVerticalPixelsOnWindow / 2 + position_pedal))
-    gameDisplay.blit(massImg, (x_mass, numberOfVerticalPixelsOnWindow / 2 + position_mass))
+
+    pedal = pygame.transform.rotate(pedalImg, position_pedal-90)
+    pedal_rect = pedal.get_rect()
+    pedal_rect.center = pedal_img_rect.center
+    pedal_rect= pedal_rect.move(0, 300)
+    target = pygame.transform.rotate(targetImg, position_target - 90)
+    target_rect = target.get_rect()
+    target_rect.center = target_img_rect.center
+    target_rect = target_rect.move(172, 300)
+    print(pedal_rect.center,target_rect.center)
+
+    gameDisplay.blit(pedal, pedal_rect)
+    gameDisplay.blit(target, target_rect)
+
     threadLock.release()
     pygame.display.update()
 

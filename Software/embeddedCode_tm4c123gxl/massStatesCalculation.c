@@ -31,21 +31,40 @@ void calculateMassStatesAndForces()
     + B_1_0 * g_fpedalLinearPosition
     + B_1_1 * g_fpedalLinearVelocity;
 
-#elif defined(massTracking)
+#elif defined(tracking_linear)
     timeVar = TWO_PI * MOVEMENT_FREQ;
     omega = timeVar * millis() / 1000;
 
     g_ssimulatedMassStates.massPosition = 0.05f * sinf(omega);
 
     g_ssimulatedMassStates.massVelocity = 0.05f * timeVar * DEGREE_TO_RADIAN * cosf(omega);
+#elif defined(tracking_circular)
+    timeVar = TWO_PI * MOVEMENT_FREQ;
+    omega = timeVar * millis() / 1000;
+
+    g_ssimulatedMassStates.massPosition = 45 * sinf(omega);
+
+    g_ssimulatedMassStates.massVelocity = 45 * timeVar * DEGREE_TO_RADIAN
+            * cosf(omega);
 #else
 #endif
 
-    g_ssimulatedMassStates_prev.massPosition = g_ssimulatedMassStates.massPosition;
-    g_ssimulatedMassStates_prev.massVelocity = g_ssimulatedMassStates.massVelocity;
+    g_ssimulatedMassStates_prev.massPosition =
+            g_ssimulatedMassStates.massPosition;
+    g_ssimulatedMassStates_prev.massVelocity =
+            g_ssimulatedMassStates.massVelocity;
 
-    g_ssimulatedForces.springForce = (g_fpedalLinearPosition - g_ssimulatedMassStates.massPosition) * k_spring;
-    g_ssimulatedForces.damperForce = (g_fpedalLinearVelocity - g_ssimulatedMassStates.massVelocity) * b_damper;
-
-    g_ssimulatedForces.totalForce = (g_ssimulatedForces.springForce + g_ssimulatedForces.damperForce) * FORCE_GAIN + FORCE_BIAS;
+#if !defined(tracking_circular)
+    g_ssimulatedForces.springForce = (g_fpedalLinearPosition
+            - g_ssimulatedMassStates.massPosition) * k_spring;
+    g_ssimulatedForces.damperForce = (g_fpedalLinearVelocity
+            - g_ssimulatedMassStates.massVelocity) * b_damper;
+#else
+    g_ssimulatedForces.springForce = (g_fposition_filtered_plus
+            - g_ssimulatedMassStates.massPosition) * k_spring;
+    g_ssimulatedForces.damperForce = (g_fgyroVelocity
+            - g_ssimulatedMassStates.massVelocity) * b_damper;
+#endif
+    g_ssimulatedForces.totalForce = (g_ssimulatedForces.springForce
+            + g_ssimulatedForces.damperForce) * FORCE_GAIN + FORCE_BIAS;
 }

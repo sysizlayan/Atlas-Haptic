@@ -126,42 +126,42 @@ void GPIOEHandler6050(void)
         /////////////////////////////////////////////////////////////////
         // End Kalman Filter
         /////////////////////////////////////////////////////////////////
-
+#ifndef tracking_circular
         g_fpedalLinearPosition = R_pedal
-                * sinf(g_fposition_filtered_plus * DEGREE_TO_RADIAN);
+        * sinf(g_fposition_filtered_plus * DEGREE_TO_RADIAN);
         g_fpedalLinearVelocity = R_pedal
-                * cosf(g_fposition_filtered_plus * DEGREE_TO_RADIAN) * g_fgyroVelocity * DEGREE_TO_RADIAN;
-
+        * cosf(g_fposition_filtered_plus * DEGREE_TO_RADIAN) * g_fgyroVelocity * DEGREE_TO_RADIAN;
+#endif
         /////////////////////////////////////////////////////////////////
         // SPRING MASS SIMULATION
         /////////////////////////////////////////////////////////////////
         /*g_fMassPosition = A_0_0 * g_fMassPosition_prev
-                + A_0_1 * g_fMassVelocity_prev;
-        g_fMassPosition = g_fMassPosition + B_0_0 * g_fpedalLinearPosition
-                + B_0_1 * g_fpedalLinearVelocity;
+         + A_0_1 * g_fMassVelocity_prev;
+         g_fMassPosition = g_fMassPosition + B_0_0 * g_fpedalLinearPosition
+         + B_0_1 * g_fpedalLinearVelocity;
 
-        g_fMassVelocity = A_1_0 * g_fMassPosition_prev
-                + A_1_1 * g_fMassVelocity_prev;
-        g_fMassVelocity = g_fMassVelocity + B_1_0 * g_fpedalLinearPosition
-                + B_1_1 * g_fpedalLinearVelocity;
+         g_fMassVelocity = A_1_0 * g_fMassPosition_prev
+         + A_1_1 * g_fMassVelocity_prev;
+         g_fMassVelocity = g_fMassVelocity + B_1_0 * g_fpedalLinearPosition
+         + B_1_1 * g_fpedalLinearVelocity;
 
-        g_fMassPosition_prev = g_fMassPosition;
-        g_fMassVelocity_prev = g_fMassVelocity;
+         g_fMassPosition_prev = g_fMassPosition;
+         g_fMassVelocity_prev = g_fMassVelocity;
 
-        g_fspringForce = (g_fpedalLinearPosition - g_fMassPosition) * k_spring;
-        g_fdamperForce = (g_fpedalLinearVelocity - g_fMassVelocity) * b_damper;
-        g_ftotalForce = g_fspringForce + g_fdamperForce;
-        g_ftotalForce = g_ftotalForce *15 + 1900;*/
+         g_fspringForce = (g_fpedalLinearPosition - g_fMassPosition) * k_spring;
+         g_fdamperForce = (g_fpedalLinearVelocity - g_fMassVelocity) * b_damper;
+         g_ftotalForce = g_fspringForce + g_fdamperForce;
+         g_ftotalForce = g_ftotalForce *15 + 1900;*/
 
         /*if (g_ftotalForce < 0)
-        {
-            GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1,GPIO_PIN_1);
-            g_ftotalForce = -1 * g_ftotalForce;
-        }
-        else
-        {
-            GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1,~GPIO_PIN_1);
-        }*/
+         {
+         GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1,GPIO_PIN_1);
+         g_ftotalForce = -1 * g_ftotalForce;
+         }
+         else
+         {
+         GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1,~GPIO_PIN_1);
+         }*/
 
         calculateMassStatesAndForces();
         forceToBeWritten = (uint16_t) (g_ssimulatedForces.totalForce);
@@ -180,13 +180,19 @@ void GPIOEHandler6050(void)
         UARTwrite(delimStr, 2); // Begin delimiter
 
         UARTwrite(timePointer, 4); //Transmit time instance
-
+#if  !defined(tracking_circular)
         UARTwrite(linearPedalPositionPointer, 4);
-        UARTwrite(massPositionPointer, 4);
+        UARTwrite(targetPositionPointer, 4);
 
         UARTwrite(linearPedalVelocityPointer, 4);
-        UARTwrite(massVelocityPointer, 4);
+        UARTwrite(targetVelocityPointer, 4);
+#else
+        UARTwrite(filteredPedalPositionPointer, 4);
+        UARTwrite(targetPositionPointer, 4);
 
+        UARTwrite(pedalVelocityPointer, 4);
+        UARTwrite(targetVelocityPointer, 4);
+#endif
         //UARTwrite(totalForcePointer, 4);
 
         UARTwrite(delimStr + 2, 3); // End delimiter and newline
