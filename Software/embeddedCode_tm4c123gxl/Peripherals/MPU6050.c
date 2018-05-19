@@ -173,7 +173,7 @@ void GPIOEHandler6050(void)
 
         writeDAC(dac1, dac2);
 
-        g_ui32measurementTime = micros();
+        g_ui32measurementTime++; // this will correspond to millis also
         /////////////////////////////////////////////////////////////////
         // Transmission with the computer
         /////////////////////////////////////////////////////////////////

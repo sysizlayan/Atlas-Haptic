@@ -19,8 +19,6 @@
 #include "pedalVariables.h"
 #include "simulationVariables_forSpringMassDamper.h"
 #include "pointersForPrint.h"
-
-#include "haptic_feedback.h"
 #include "printFloat.h"
 
 

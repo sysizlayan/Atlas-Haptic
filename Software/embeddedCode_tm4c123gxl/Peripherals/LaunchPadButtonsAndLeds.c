@@ -5,14 +5,14 @@
  *      Author: Yigit
  */
 #include "LaunchPadButtonsAndLeds.h"
-#include "haptic_feedback.h"
 #include "simulationVariables_forSpringMassDamper.h"
+#include "pedalVariables.h"
 
 //Calculated Variables
-extern float g_fposition_filtered_plus;
+/*extern float g_fposition_filtered_plus;
 extern float g_fposition_filtered_minus;
 extern float g_fP_minus;
-extern float g_fP_plus;
+extern float g_fP_plus;*/
 
 void portf_int_handler()
 {
@@ -23,6 +23,9 @@ void portf_int_handler()
     if(status&0x01) //PF0 interrupt
     {
         QEIPositionSet(QEI1_BASE, 0);
+
+        g_ui32measurementTime = 0;
+
         g_ssimulatedMassStates.massPosition = 0.0f;
         g_ssimulatedMassStates.massVelocity = 0.0f;
 
@@ -41,7 +44,7 @@ void portf_int_handler()
     }
     if(status&0x10) //PF4 interrupt
     {
-        give_feedback();
+
     }
 }
 void portf_init()
