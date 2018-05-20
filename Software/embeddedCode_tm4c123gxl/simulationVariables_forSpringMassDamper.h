@@ -8,7 +8,7 @@
 #ifndef SIMULATIONVARIABLES_H_
 #define SIMULATIONVARIABLES_H_
 
-#define FORCE_GAIN -0.015
+#define FORCE_GAIN -0.018
 #define FORCE_BIAS 1900
 
 //Simulated Variables

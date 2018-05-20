@@ -15,7 +15,7 @@ prev_position_mass = 0
 
 crashed = False
 threadLock = threading.Lock()
-# fileStreamer = open('lastReadData.csv','w')
+fileStreamer = open('lastReadData.csv','w')
 ser = serial.Serial()
 try:
     ser.port = portName
@@ -52,13 +52,13 @@ class myThread(threading.Thread):
                     # little endian unsigned integer
                     (time, position_pedal, position_target, velocity_pedal, velocity_target) = unpack('<Iffff',line)
 
-                    # print("Time:{0} Pedal_Pos:{1:.2}, Target_Pos:{2:.2} Pedal_Vel:{3:.2}, Target_Vel:{4:.2}\n"
-                    #     .format(time,
-                    #             round(position_pedal, 2),
-                    #             round(position_target, 2),
-                    #             round(velocity_pedal, 2),
-                    #             round(velocity_target, 2)))
-
+                    print("Time:{0} Pedal_Pos:{1:.2}, Target_Pos:{2:.2} Pedal_Vel:{3:.2}, Target_Vel:{4:.2}\n"
+                        .format(time,
+                                round(position_pedal, 2),
+                                round(position_target, 2),
+                                round(velocity_pedal, 2),
+                                round(velocity_target, 2)))
+                    fileStreamer.write(time,position_pedal,position_target,velocity_pedal,velocity_target)
                     # threadLock.acquire()
 
                     # threadLock.release()
@@ -109,7 +109,7 @@ while not crashed:
     target_rect = target.get_rect()
     target_rect.center = target_img_rect.center
     target_rect = target_rect.move(172, 300)
-    print(pedal_rect.center,target_rect.center)
+    # print(pedal_rect.center,target_rect.center)
 
     gameDisplay.blit(pedal, pedal_rect)
     gameDisplay.blit(target, target_rect)

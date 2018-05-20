@@ -8,7 +8,7 @@
 #include "massStatesCalculation.h"
 #include "math.h"
 #define TWO_PI 6.28318530718f
-#define MOVEMENT_FREQ 0.5f
+#define MOVEMENT_FREQ 0.55f
 #define DEGREE_TO_RADIAN 0.0174532925f
 
 void calculateMassStatesAndForces()
@@ -40,7 +40,7 @@ void calculateMassStatesAndForces()
     g_ssimulatedMassStates.massVelocity = 0.05f * timeVar * DEGREE_TO_RADIAN * cosf(omega);
 #elif defined(tracking_circular)
     timeVar = TWO_PI * MOVEMENT_FREQ;
-    omega = timeVar * millis() / 1000;
+    omega = timeVar * g_ui32measurementTime / 1000; //millis() / 1000;
 
     g_ssimulatedMassStates.massPosition = 45 * sinf(omega);
 
