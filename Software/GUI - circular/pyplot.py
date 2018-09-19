@@ -5,7 +5,7 @@ import numpy as np
 from struct import *
 
 portName = 'COM5'
-baudRate = 460800
+baudRate = 1000000
 position_pedal = 0
 position_target = 0
 velocity_pedal = 0
@@ -15,7 +15,7 @@ prev_position_mass = 0
 
 crashed = False
 threadLock = threading.Lock()
-fileStreamer = open('lastReadData.csv','w')
+# fileStreamer = open('lastReadData.csv','w')
 ser = serial.Serial()
 try:
     ser.port = portName
@@ -58,7 +58,7 @@ class myThread(threading.Thread):
                                 round(position_target, 2),
                                 round(velocity_pedal, 2),
                                 round(velocity_target, 2)))
-                    fileStreamer.write(time,position_pedal,position_target,velocity_pedal,velocity_target)
+                    # fileStreamer.write(time,position_pedal,position_target,velocity_pedal,velocity_target)
                     # threadLock.acquire()
 
                     # threadLock.release()
