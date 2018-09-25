@@ -1,0 +1,13 @@
+/*
+ * pedalVariables.cpp
+ *
+ *  Created on: 25 Mar 2018
+ *      Author: Yigit
+ */
+#include <simulation/pedalVariables.h>
+
+pedalVariables_t pedalVariables;
+void initEstimator()
+{
+
+}

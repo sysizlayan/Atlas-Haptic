@@ -2,8 +2,8 @@ import serial
 from struct import *
 #import threading
 
-portName = 'COM5'
-baudRate = 230400
+portName = 'COM4'
+baudRate = 1000000
 position = 0.0
 filteredPosition = 0.0
 velocity = 0.0
@@ -47,8 +47,8 @@ while(not crashed and ser.is_open):
                 # print(type(time))
                 # position = unpack('<f',line[6:10])  # little endian float
                 # velocity = unpack('<f',line[10:14])  # little endian float
-            print("Time:{0} Pos: {1:.6} Vel:{2:.6} FiltPos:{3:.6}\n".format(time, position, velocity, filteredPosition))
-            fileStreamer.write("{0},{1:.6},{2:.6},{3:.6}\n".format(time, position, velocity, filteredPosition))
+            print("Time:{0} Pos: {1:.3f} Vel: {2:.3f} Pos_f: {3:.3f}\n".format(time, round(position, 3), round(velocity, 3), round(filteredPosition,3)))
+            fileStreamer.write("{0},{1:.3f},{2:.4f},{3:.4f}\n".format(time, round(position, 3), round(velocity, 4), round(filteredPosition,4)))
         else:
             print(line)
             # print("Delimiter Error!")

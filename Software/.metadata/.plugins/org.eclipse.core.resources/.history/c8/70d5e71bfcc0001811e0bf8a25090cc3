@@ -1,0 +1,14 @@
+/*
+ * pedalVariables.cpp
+ *
+ *  Created on: 25 Mar 2018
+ *      Author: Yigit
+ */
+#include <simulation/pedalVariables.h>
+
+pedalVariables_t pedalVariables;
+void initEstimator()
+{
+	pedalVariables.kalmanConstants.Q_model = 0.000557542f;
+	pedalVariables.kalmanConstants.R_encoder =
+}

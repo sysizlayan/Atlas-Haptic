@@ -74,6 +74,9 @@
 #define RMII_TXD1_GPIO_Port GPIOB
 #define LD3_Pin GPIO_PIN_14
 #define LD3_GPIO_Port GPIOB
+#define MPU6050_INT_Pin GPIO_PIN_15
+#define MPU6050_INT_GPIO_Port GPIOB
+#define MPU6050_INT_EXTI_IRQn EXTI15_10_IRQn
 #define COMPUTER_RX_Pin GPIO_PIN_8
 #define COMPUTER_RX_GPIO_Port GPIOD
 #define COMPUTER_TX_Pin GPIO_PIN_9
@@ -82,9 +85,6 @@
 #define USB_PowerSwitchOn_GPIO_Port GPIOG
 #define USB_OverCurrent_Pin GPIO_PIN_7
 #define USB_OverCurrent_GPIO_Port GPIOG
-#define MPU6050_INT_Pin GPIO_PIN_6
-#define MPU6050_INT_GPIO_Port GPIOC
-#define MPU6050_INT_EXTI_IRQn EXTI9_5_IRQn
 #define USB_SOF_Pin GPIO_PIN_8
 #define USB_SOF_GPIO_Port GPIOA
 #define USB_VBUS_Pin GPIO_PIN_9

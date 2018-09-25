@@ -1,3 +1,4 @@
+
 /**
   ******************************************************************************
   * @file           : main.c
@@ -38,6 +39,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32f7xx_hal.h"
+#include "dma.h"
 #include "i2c.h"
 #include "tim.h"
 #include "usart.h"
@@ -52,8 +54,8 @@
 #include <stdbool.h>
 #include "flagSet.h"
 #include "hw_MPU6050.h"
+#include "MPU6050.h"
 
-#define MPU6050_ADDRESS MPU6050_WHO_AM_I_MPU6050<<1
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -73,6 +75,9 @@ void SystemClock_Config(void);
 
 /* USER CODE BEGIN 0 */
 hapticFlagSet_t hapticFlagSet;
+float targetPositions[60000];
+float targetVelocities[60000];
+char asd[] = {'H','E','L','L','O','\r','\n'};
 /* USER CODE END 0 */
 
 /**
@@ -104,68 +109,28 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_USART3_UART_Init();
   MX_USB_OTG_FS_PCD_Init();
   MX_I2C1_Init();
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
+  HAL_NVIC_DisableIRQ(EXTI15_10_IRQn);
 
+  initEstimator();
+  initMPU6050();
+  HAL_TIM_Encoder_Start(&htim1,TIM_CHANNEL_ALL);
   memset(&hapticFlagSet, 0, sizeof(hapticFlagSet));
 
-  uint8_t who_am_i;
-  if(HAL_I2C_Mem_Read(&hi2c1, MPU6050_ADDRESS, MPU6050_O_WHO_AM_I, I2C_MEMADD_SIZE_8BIT, &who_am_i, sizeof(who_am_i), 100) == HAL_OK)
-  {
-	  if(who_am_i == MPU6050_WHO_AM_I_MPU6050)
-	  {
-		  HAL_GPIO_WritePin(LD2_GPIO_Port,LD2_Pin,GPIO_PIN_SET);
-		  HAL_Delay(1000);
-		  HAL_GPIO_WritePin(LD2_GPIO_Port,LD2_Pin,GPIO_PIN_RESET);
-		  hapticFlagSet.isIMUDiscovered= true;
-	  }
-  }
-  HAL_Delay(1000);
-  int statusCounter = 0;
-  uint8_t i2cBuffer[5];
-  if(hapticFlagSet.isIMUDiscovered)
-  {
-	  i2cBuffer[0] = MPU6050_PWR_MGMT_1_DEVICE_RESET;
-	  if(HAL_I2C_Mem_Write(&hi2c1,MPU6050_ADDRESS, MPU6050_O_PWR_MGMT_1, I2C_MEMADD_SIZE_8BIT, i2cBuffer, 1, 100) == HAL_OK)
-	  {
-		  HAL_Delay(100);
-		  i2cBuffer[0] = 0x00;
-		  if(HAL_I2C_Mem_Write(&hi2c1,MPU6050_ADDRESS, MPU6050_O_PWR_MGMT_1, I2C_MEMADD_SIZE_8BIT, i2cBuffer, 1, 100) == HAL_OK)
-			  statusCounter++;
-		  i2cBuffer[0] = 0x07; //SMPRT_DIV = 7 , ODR =1Khz
-		  i2cBuffer[1] = MPU6050_CONFIG_DLPF_CFG_260_256; // //MPU6050_CONFIG_DLPF_CFG_184_188; // 184 Hz filter
-		  i2cBuffer[2] = MPU6050_GYRO_CONFIG_FS_SEL_1000; // +-1000deg/s
-		  if(HAL_I2C_Mem_Write(&hi2c1, MPU6050_ADDRESS, MPU6050_O_SMPLRT_DIV, I2C_MEMADD_SIZE_8BIT, i2cBuffer, 3, 200) == HAL_OK)
-		  {
-			  HAL_GPIO_WritePin(LD2_GPIO_Port,LD2_Pin,GPIO_PIN_SET);
-			  HAL_Delay(1000);
-			  HAL_GPIO_WritePin(LD2_GPIO_Port,LD2_Pin,GPIO_PIN_RESET);
-			  HAL_Delay(1000);
-		  }
-		  i2cBuffer[0] = MPU6050_INT_PIN_CFG_INT_LEVEL
-		              | MPU6050_INT_PIN_CFG_INT_RD_CLEAR
-		              | MPU6050_INT_PIN_CFG_LATCH_INT_EN;
-		  i2cBuffer[1] = MPU6050_INT_ENABLE_DATA_RDY_EN; // data ready interrupt
-		  if(HAL_I2C_Mem_Write(&hi2c1, MPU6050_ADDRESS, MPU6050_O_SMPLRT_DIV, I2C_MEMADD_SIZE_8BIT, i2cBuffer, 2, 200) == HAL_OK)
-		  {
-			  HAL_GPIO_WritePin(LD2_GPIO_Port,LD2_Pin,GPIO_PIN_SET);
-			  HAL_Delay(1000);
-			  HAL_GPIO_WritePin(LD2_GPIO_Port,LD2_Pin,GPIO_PIN_RESET);
-			  HAL_Delay(1000);
-		  }
-	  }
-  }
+  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  printf("%d\r\n", (int)htim1.Instance->CNT);
-	  HAL_Delay(1000);
+
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
@@ -247,7 +212,7 @@ void SystemClock_Config(void)
   HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);
 
   /* SysTick_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(SysTick_IRQn, 0, 0);
+  HAL_NVIC_SetPriority(SysTick_IRQn, 15, 0);
 }
 
 /* USER CODE BEGIN 4 */
@@ -257,17 +222,24 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 	{
 		HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
 	}
+	else if(GPIO_Pin == MPU6050_INT_Pin)
+	{
+		hapticLoop();
+	}
 	else
 	{
 		__NOP();
 	}
 }
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
+{
 
+}
 int __io_putchar(int ch)
 {
- uint8_t c[1];
- c[0] = ch & 0x00FF;
- HAL_UART_Transmit(&huart3, &*c, 1, 10);
+ uint8_t c;
+ c = ch & 0x00FF;
+ HAL_UART_Transmit_DMA(&huart3, &c, 1);
  return ch;
 }
 

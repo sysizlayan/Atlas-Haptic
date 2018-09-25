@@ -1,0 +1,43 @@
+/*
+ * pedalVariables.h
+ *
+ *  Created on: 25 Mar 2018
+ *      Author: Yigit
+ */
+
+#ifndef PEDALVARIABLES_H_
+#define PEDALVARIABLES_H_
+
+#include <stdint.h>
+
+typedef struct _measuredVars
+{
+	float position;
+	float gyroVelocity;
+	float positionPrevious;
+} measuredVariables_t;
+
+typedef struct _estimatedVars
+{
+	float positionFilterPlus;
+	float positionFilterMinus;
+	float P_Minus;
+	float P_Plus;
+} estimatedVariables_t;
+
+typedef struct _kalmanConstants
+{
+	float delta_t;
+	float Q_model;
+	float R_encoder;
+} kalmanConstants_t;
+
+typedef struct _pedalVars
+{
+	measuredVariables_t measuredVariables;
+	estimatedVariables_t estimatedVariables;
+	kalmanConstants_t kalmanConstants;
+} pedalVariables_t;
+
+extern pedalVariables_t pedalVariables;
+#endif /* PEDALVARIABLES_H_ */
