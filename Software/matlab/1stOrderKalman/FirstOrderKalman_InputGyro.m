@@ -5,8 +5,11 @@ clc;
 global N
 global dt
 global angPos
+global angPos_decreased
 global gyro_angVel
 global t
+
+angPos_underTest = angPos_decreased;
 
 K_array = [];
 K=0;
@@ -20,18 +23,18 @@ x_hat=zeros(1,N);
 
 P_plus=r_enc;
 
-x_hat_plus=angPos(1);
+x_hat_plus=angPos_underTest(1);
 for k=2:N
     x_hat_minus = x_hat_plus+dt*gyro_angVel(k);  % system model output
     P_minus = P_plus + q_model;  % Covarience prediction
     
     %% Measurement Update
-    if(angPos(k-1) == angPos(k)) % If the position did not change
+    if(angPos_underTest(k-1) == angPos_underTest(k)) % If the position did not change
         x_hat_plus = x_hat_minus;
         P_plus = P_minus;
     else
         y = x_hat_minus;  % output of the system
-        y_err = angPos(k) - y; % error of the angle
+        y_err = angPos_underTest(k) - y; % error of the angle
 
         K = P_minus/(P_minus+r_enc);  % Kalman gain
         x_hat_plus = x_hat_minus + K * y_err;
@@ -46,6 +49,8 @@ filtered_angPos = x_hat;
 figure
 plot(t,filtered_angPos);
 hold on
+plot(t,angPos_underTest);
+hold on
 plot(t,angPos)
-legend('Kalman Output','Measurement')
+legend('Kalman Output','Measurement, decreased', "Actual Measurement")
 title('Angular Position')
