@@ -113,7 +113,6 @@ void hapticLoop(void)
 		gyroReadingRaw = (int16_t) (((uint16_t)outBuffer[0] << 8) | outBuffer[1]);
 		// Float conversion
 		gyroReading = (float)gyroReadingRaw / gyroResolution;
-		HAL_I2C_Mem_Read(&hi2c1, MPU6050_ADDRESS, MPU6050_O_INT_STATUS, I2C_MEMADD_SIZE_8BIT, outBuffer, 1, 10);
 	}
 
 	// Encoder Reading
@@ -122,7 +121,7 @@ void hapticLoop(void)
 
 	if(encoderReading > 180 && encoderReading <= 360)
 		encoderReading =  encoderReading - 360.0f;
-
+	pedalVariables.measuredVariables.positionPrevious = pedalVariables.measuredVariables.position;
 	switch(hapticDeviceState)
 	{
 	case BEGIN:
@@ -180,11 +179,25 @@ void hapticLoop(void)
 		HAL_UART_Transmit(&huart3, &(pedalVariables.measuredVariables.position), 4, 10);
 		HAL_UART_Transmit(&huart3, &(pedalVariables.measuredVariables.gyroVelocity), 4, 10);
 		HAL_UART_Transmit(&huart3, &(pedalVariables.estimatedVariables.positionFilterPlus), 4, 10);
+
+		/*HAL_UART_Transmit(&huart3, &(pedalVariables.estimatedVariables.positionFilterPlus), 4, 10);
+
+		HAL_UART_Transmit(&huart3, &(pedalVariables.estimatedVariables.positionFilterPlus), 4, 10);
+
+		HAL_UART_Transmit(&huart3, &(pedalVariables.estimatedVariables.positionFilterPlus), 4, 10);
+
+		HAL_UART_Transmit(&huart3, &(pedalVariables.estimatedVariables.positionFilterPlus), 4, 10);*/
+
+		//HAL_UART_Transmit(&huart3, &(pedalVariables.estimatedVariables.positionFilterPlus), 4, 10);
+
+		//HAL_UART_Transmit(&huart3, &(pedalVariables.estimatedVariables.positionFilterPlus), 4, 10);
+
 		HAL_UART_Transmit(&huart3, endDelimiter, 2, 10);
 		break;
 	case STOPPED:
 		break;
 	}
+	HAL_I2C_Mem_Read(&hi2c1, MPU6050_ADDRESS, MPU6050_O_INT_STATUS, I2C_MEMADD_SIZE_8BIT, outBuffer, 1, 10);
 }
 void writeToDAC(uint8_t dac1, uint8_t dac2)
 {

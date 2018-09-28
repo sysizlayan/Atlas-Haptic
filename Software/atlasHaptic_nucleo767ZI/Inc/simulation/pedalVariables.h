@@ -12,17 +12,17 @@
 
 typedef struct _measuredVars
 {
-	float position;
-	float gyroVelocity;
-	float positionPrevious;
+	volatile float position;
+	volatile float gyroVelocity;
+	volatile float positionPrevious;
 } measuredVariables_t;
 
 typedef struct _estimatedVars
 {
-	float positionFilterPlus;
-	float positionFilterMinus;
-	float P_Minus;
-	float P_Plus;
+	volatile float positionFilterPlus;
+	volatile float positionFilterMinus;
+	volatile float P_Minus;
+	volatile float P_Plus;
 } estimatedVariables_t;
 
 typedef struct _kalmanConstants
@@ -34,9 +34,9 @@ typedef struct _kalmanConstants
 
 typedef struct _pedalVars
 {
-	measuredVariables_t measuredVariables;
-	estimatedVariables_t estimatedVariables;
-	kalmanConstants_t kalmanConstants;
+	volatile measuredVariables_t measuredVariables;
+	volatile estimatedVariables_t estimatedVariables;
+	volatile kalmanConstants_t kalmanConstants;
 } pedalVariables_t;
 
 void initEstimator(void);
