@@ -48,12 +48,12 @@
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
 #include <errno.h>
+#include <haptic.h>
 #include <sys/unistd.h> // STDOUT_FILENO, STDERR_FILENO
 #include <string.h>
 #include <stdbool.h>
 #include "flagSet.h"
 #include "hw_MPU6050.h"
-#include "MPU6050.h"
 
 /* USER CODE END Includes */
 
@@ -61,7 +61,7 @@
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
-
+uint8_t hapticDeviceState;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -114,6 +114,7 @@ int main(void)
   MX_TIM1_Init();
   MX_I2C2_Init();
   /* USER CODE BEGIN 2 */
+  i2c_discover(&hi2c2, 0, 255, 0, 255);
   HAL_NVIC_DisableIRQ(EXTI15_10_IRQn);
 
   initEstimator();

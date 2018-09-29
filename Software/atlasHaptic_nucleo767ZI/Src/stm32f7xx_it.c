@@ -36,7 +36,6 @@
 #include "stm32f7xx_it.h"
 
 /* USER CODE BEGIN 0 */
-#include "MPU6050.h"
 
 /* USER CODE END 0 */
 
