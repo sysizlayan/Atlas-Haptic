@@ -3,7 +3,7 @@ from struct import *
 #import threading
 
 portName = 'COM4'
-baudRate = 1000000
+baudRate = 2000000
 position = 0.0
 filteredPosition = 0.0
 velocity = 0.0

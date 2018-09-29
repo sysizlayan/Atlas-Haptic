@@ -37,9 +37,9 @@ xlabel('time(s)')
 ylabel('$$\dot{\theta} (^\circ /s)$$','Interpreter','latex')
 title('Angular Velocity')
 
-set(experiment,'PaperPositionMode','auto');         
-set(experiment,'PaperOrientation','landscape');
-set(experiment,'Position',[50 50 1200 800]);
-print(experiment, '-dpdf', strcat('./Figures/measurement_',num2str(measurement_number),'.pdf'))
+% set(experiment,'PaperPositionMode','auto');         
+% set(experiment,'PaperOrientation','landscape');
+% set(experiment,'Position',[50 50 1200 800]);
+% print(experiment, '-dpdf', strcat('./Figures/measurement_',num2str(measurement_number),'.pdf'))
 
 % saveas(experiment,strcat('./Figures/measurement_',num2str(measurement_number),'.pdf'),'pdf');

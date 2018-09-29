@@ -4,14 +4,15 @@ import threading
 import numpy as np
 from struct import *
 
-portName = 'COM5'
-baudRate = 1000000
+portName = 'COM4'
+baudRate = 2000000
 position_pedal = 0
 position_target = 0
 velocity_pedal = 0
 velocity_target = 0
 prev_position_pedal = 0
 prev_position_mass = 0
+unfiltered_position = 0
 
 crashed = False
 threadLock = threading.Lock()
@@ -40,6 +41,7 @@ class myThread(threading.Thread):
         global position_target
         global velocity_pedal
         global velocity_target
+        global unfiltered_position
 
         while (not crashed):
             try:
@@ -48,9 +50,9 @@ class myThread(threading.Thread):
                 line = ser.read_until(b'**')
                 line = line[0: len(line) - 2]
                 # print(len(line))
-                if len(line) == 20:
+                if len(line) == 24:
                     # little endian unsigned integer
-                    (time, position_pedal, position_target, velocity_pedal, velocity_target) = unpack('<Iffff',line)
+                    (time, unfiltered_position, position_pedal, velocity_pedal, position_target, velocity_target) = unpack('<Ifffff',line)
 
                     print("Time:{0} Pedal_Pos:{1:.2}, Target_Pos:{2:.2} Pedal_Vel:{3:.2}, Target_Vel:{4:.2}\n"
                         .format(time,

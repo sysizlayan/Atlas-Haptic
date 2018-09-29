@@ -99,10 +99,12 @@ void hapticLoop(void)
 	static float 	gyroBias 		= 0;
 	static uint32_t gyroBiasSamples = 0;
 
+
 	float error, kalmanGain;
 	int32_t gyroReadingRaw;
 	float gyroReading = 0;
 	float encoderReading = 0;
+	uint16_t forceToBeWritten;
 
 	uint8_t outBuffer[32];
 
@@ -142,6 +144,8 @@ void hapticLoop(void)
 		break;
 	case RUNNING:
 		loopCount++;
+		if(loopCount%100 == 0)
+			HAL_GPIO_TogglePin(LD2_GPIO_Port,LD2_Pin);
 		// Subtract the bias
 		gyroReading -= gyroBias;
 		pedalVariables.measuredVariables.gyroVelocity = gyroReading;
@@ -173,12 +177,21 @@ void hapticLoop(void)
 		}
 
 		calculateMassStatesAndForces(loopCount);
+		forceToBeWritten = (uint16_t) (g_ssimulatedForces.totalForce);
+
+		dac1 = forceToBeWritten/16;
+
+		dac2 = (forceToBeWritten %16) << 4;
+
+		writeToDAC(dac1, dac2);
 
 		HAL_UART_Transmit(&huart3, beginDelimiter, 2, 10);
 		HAL_UART_Transmit(&huart3, &loopCount, 4, 10);
 		HAL_UART_Transmit(&huart3, &(pedalVariables.measuredVariables.position), 4, 10);
-		HAL_UART_Transmit(&huart3, &(pedalVariables.measuredVariables.gyroVelocity), 4, 10);
 		HAL_UART_Transmit(&huart3, &(pedalVariables.estimatedVariables.positionFilterPlus), 4, 10);
+		HAL_UART_Transmit(&huart3, &(pedalVariables.measuredVariables.gyroVelocity), 4, 10);
+		HAL_UART_Transmit(&huart3, &(g_ssimulatedMassStates.massPosition), 4, 10);
+		HAL_UART_Transmit(&huart3, &(g_ssimulatedMassStates.massVelocity), 4, 10);
 
 		/*HAL_UART_Transmit(&huart3, &(pedalVariables.estimatedVariables.positionFilterPlus), 4, 10);
 
@@ -201,5 +214,7 @@ void hapticLoop(void)
 }
 void writeToDAC(uint8_t dac1, uint8_t dac2)
 {
+	uint8_t buf[2] ={dac1, dac2};
 
+	HAL_I2C_Mem_Write(&hi2c2, MCP4725_ADDR,	WRITE_VOLTAGE_DAC, I2C_MEMADD_SIZE_8BIT, buf, 2, 10);
 }

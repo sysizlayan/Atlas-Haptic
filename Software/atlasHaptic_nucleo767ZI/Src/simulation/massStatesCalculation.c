@@ -20,11 +20,11 @@ float testFreqs[] = {1.884955592154f,
                      6.283185307180f,
                      6.911503837898f};
 
-float testMags[] = {9.0f,
-                     9.0f,
-                     9.0f,
-                     9.0f,
-                     9.0f};
+float testMags[] = {0.0f,
+                     0.0f,
+                     0.0f,
+                     0.0f,
+                     45.0f};
 
 float testTimeConsts[] = {0.0328986813f,
                           0.0548311355f,
