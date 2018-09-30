@@ -1,0 +1,9 @@
+Measurement 5 contains biased measurements. Unbuffered uart causes large latency. Latency is between reports--> UART latency is added.
+
+Measurement 6 may be biased, not sure. latency is between each gyro interrupt, latency is not averaged, actual deltaT.
+
+Measurement 7, unbiased, latency is averaged.
+
+Measurement 8, encoder position is filtered with 3rd order moving average filter.
+
+Measurement 9, encoder position is filtered with 4th order moving average filter.
