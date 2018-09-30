@@ -1,9 +1,9 @@
 global N
-global dt
-global angPos
-global gyro_angVel
+global pedal
 global t
-global angVel_fromEncoder
+
+angPos = pedal.position_unfiltered;
+gyro_angVel = pedal.velocity;
 
 prevMeasInstance = 1;
 angVel_fromEncoder = zeros(N,1);
@@ -19,6 +19,7 @@ for i=2:N
         angVel_fromEncoder(i) = estimatedVelocity;
     end
 end
+pedal.velocityFromEncoder = angVel_fromEncoder;
 
 figure
 plot(t,angVel_fromEncoder, t, gyro_angVel)

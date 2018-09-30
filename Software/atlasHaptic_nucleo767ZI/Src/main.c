@@ -114,7 +114,7 @@ int main(void)
   MX_TIM1_Init();
   MX_I2C2_Init();
   /* USER CODE BEGIN 2 */
-  i2c_discover(&hi2c2, 0, 255, 0, 255);
+  //i2c_discover(&hi2c2, 0, 255, 0, 255);
   HAL_NVIC_DisableIRQ(EXTI15_10_IRQn);
 
   initEstimator();

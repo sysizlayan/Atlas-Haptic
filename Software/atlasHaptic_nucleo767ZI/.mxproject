@@ -1,7 +1,7 @@
 [PreviousGenFiles]
-HeaderPath=C:/Users/Yigit/Desktop/workspace/Atlas-Haptic/Software/atlasHaptic_nucleo767ZI/Inc
+HeaderPath=C:/Users/Yigit/Desktop/workspace_v7/Atlas_Haptic/Software/atlasHaptic_nucleo767ZI/Inc
 HeaderFiles=gpio.h;eth.h;i2c.h;tim.h;usart.h;usb_otg.h;stm32f7xx_it.h;stm32f7xx_hal_conf.h;main.h;dma.h;
-SourcePath=C:/Users/Yigit/Desktop/workspace/Atlas-Haptic/Software/atlasHaptic_nucleo767ZI/Src
+SourcePath=C:/Users/Yigit/Desktop/workspace_v7/Atlas_Haptic/Software/atlasHaptic_nucleo767ZI/Src
 SourceFiles=gpio.c;eth.c;i2c.c;tim.c;usart.c;usb_otg.c;stm32f7xx_it.c;stm32f7xx_hal_msp.c;main.c;dma.c;
 
 [PreviousLibFiles]

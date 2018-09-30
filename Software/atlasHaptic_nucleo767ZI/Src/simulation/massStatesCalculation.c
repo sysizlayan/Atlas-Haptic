@@ -20,17 +20,11 @@ float testFreqs[] = {1.884955592154f,
                      6.283185307180f,
                      6.911503837898f};
 
-float testMags[] = {0.0f,
-                     0.0f,
-                     0.0f,
-                     0.0f,
-                     45.0f};
-
-float testTimeConsts[] = {0.0328986813f,
-                          0.0548311355f,
-                          0.0877298168f,
-                          0.1096622710f,
-                          0.1206284981f};
+float testMags[] = {9.0f,
+                     9.0f,
+                     9.0f,
+                     9.0f,
+                     9.0f};
 void calculateMassStatesAndForces(uint32_t measurementTime)
 {
 
@@ -47,11 +41,12 @@ void calculateMassStatesAndForces(uint32_t measurementTime)
                                         + testMags[3] * sinf(testFreqs[3]*timeSecs)
                                         + testMags[4] * sinf(testFreqs[4]*timeSecs);
     //g_ssimulatedMassStates.massVelocity = 45 * timeVar * DEGREE_TO_RADIAN * cosf(omega);
-    g_ssimulatedMassStates.massVelocity = testMags[0] * testTimeConsts[0] * cosf(testFreqs[0]*timeSecs)
-                                        + testMags[1] * testTimeConsts[1] * cosf(testFreqs[1]*timeSecs)
-                                        + testMags[2] * testTimeConsts[2] * cosf(testFreqs[2]*timeSecs)
-                                        + testMags[3] * testTimeConsts[3] * cosf(testFreqs[3]*timeSecs)
-                                        + testMags[4] * testTimeConsts[4] * cosf(testFreqs[4]*timeSecs);
+    g_ssimulatedMassStates.massVelocity = testMags[0] * testFreqs[0] * cosf(testFreqs[0]*timeSecs)
+                                        + testMags[1] * testFreqs[1] * cosf(testFreqs[1]*timeSecs)
+                                        + testMags[2] * testFreqs[2] * cosf(testFreqs[2]*timeSecs)
+                                        + testMags[3] * testFreqs[3] * cosf(testFreqs[3]*timeSecs)
+                                        + testMags[4] * testFreqs[4] * cosf(testFreqs[4]*timeSecs);
+
 
     g_ssimulatedMassStates_prev.massPosition =
             g_ssimulatedMassStates.massPosition;

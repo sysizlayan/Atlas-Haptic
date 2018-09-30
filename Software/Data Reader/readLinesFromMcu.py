@@ -42,13 +42,14 @@ while(not crashed and ser.is_open):
         # print(line[0],line[1],line[14],line[15])
         # if(len(line) == 14 and line[0] == 36 and line[1]== 35 and line[14] == 35 and line[15] == 36):
         #     print(len(line))
-        if len(line) == 16:
-            (time, position, velocity, filteredPosition) = unpack('<Ifff', line)  # little endian unsigned integer
+        if len(line) == 24:
+            (time, unfiltered_position, position_pedal, velocity_pedal, position_target, velocity_target) = unpack(
+                '<Ifffff', line)
                 # print(type(time))
                 # position = unpack('<f',line[6:10])  # little endian float
                 # velocity = unpack('<f',line[10:14])  # little endian float
-            print("Time:{0} Pos: {1:.3f} Vel: {2:.3f} Pos_f: {3:.3f}\n".format(time, round(position, 3), round(velocity, 3), round(filteredPosition,3)))
-            fileStreamer.write("{0},{1:.3f},{2:.4f},{3:.4f}\n".format(time, round(position, 3), round(velocity, 4), round(filteredPosition,4)))
+            print("Time:{0} Pos_P: {2:.2f} Vel_P: {3:.2f} Pos_T: {4:.2f} Vel_T: {5:.2f}\n".format(time, round(unfiltered_position, 2), round(position_pedal, 2), round(velocity_pedal, 2), round(position_target, 2), round(velocity_target,2)))
+            fileStreamer.write("{0},{1:.2f},{2:.4f},{3:.4f},{4:.4f},{5:.4f}\n".format(time, round(unfiltered_position, 2), round(position_pedal, 4), round(velocity_pedal, 4), round(position_target, 4), round(velocity_target,4)))
         else:
             print(line)
             # print("Delimiter Error!")
