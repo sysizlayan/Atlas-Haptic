@@ -1,6 +1,7 @@
 Debug\
 Debug/
 *.tree
+Software\.metadata/
 *.tree
 *.index
 *.pdom
@@ -8,6 +9,7 @@ Debug/
 *.log
 *.index
 *.tree
+*.xml
 Software/.metadata/.log
 Software/.metadata/.mylyn/.tasks.xml.zip
 Software/.metadata/.mylyn/tasks.xml.zip
