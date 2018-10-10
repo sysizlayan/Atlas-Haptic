@@ -11,7 +11,7 @@ global pedal
 
 N = length(pedal.position_unfiltered);
 
-z = [pedal.position_unfiltered'; pedal.velocity'];% Measured signal
+z = [pedal.position_unfiltered'; pedal.velocity'];% Measured signals
 
 x_hat=zeros(3,N); % Final state Estimates
 
@@ -45,12 +45,18 @@ H1 = [1 0 0;
 % Gyro only
 H2 = [0 1 0];
 
-%Covariance Matrices
-Q = [1e3    1e3       0;
-     1e3      1e3       0;
-     0      0       1e8];
+qModel =  1.62414e+07;%[128114800600.2994234];
+% q3_3   = 7.65096e+06;%[12808463000.5081312];
+rGyro  = 100000;%0.0027*10;%[0.078522264652233];
 
-R = diag([0.0027; 0.0025]);
+Q1 = [Ts^4/4 Ts^3/2; Ts^3/2 Ts^2] * qModel;
+
+%Covariance Matrices
+Q = [Q1(1,1)    Q1(1,2)       0;
+     Q1(2,1)    Q1(2,2)       0;
+     0          0           Q1(2,2)];
+
+R = diag([0.0027; rGyro]);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Kalman
@@ -61,8 +67,6 @@ x_hat_plus = x_hat(:,1); %Take first measurement as initial state
 P_plus = diag([1, 1, 0]); % Starting covarience
 
 for k=2:N
-    if(k==211)
-    end
     %% Prediction
     x_hat_minus = A*x_hat_plus; % Model Output
     P_minus = A*P_plus*A' + Q; % Covarience Estimation
@@ -75,7 +79,7 @@ for k=2:N
         
         y_err = z_now - y; % error
         
-        K = (P_minus(2,2)*H2')*pinv(H2*P_minus(2,2)*H2'+R(2,2));
+        K = (P_minus*H2')*pinv(H2*P_minus*H2'+R(2,2));
         x_hat_plus = x_hat_minus + K * y_err;
         P_plus = (eye(3)-K*H2)*P_minus;
         
@@ -89,9 +93,7 @@ for k=2:N
         x_hat_plus = x_hat_minus + K * y_err;
         P_plus = (eye(3)-K*H1)*P_minus;
     end
-    if(k==211)
-        disp(x_hat_plus);
-    end
+   
     x_hat(1,k) = x_hat_plus(1);
     x_hat(2,k) = x_hat_plus(2);
     x_hat(3,k) = x_hat_plus(3);
