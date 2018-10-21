@@ -21,6 +21,8 @@ const float encoderResolution 	= 0.18f;
 uint8_t beginDelimiter[] = {'$','$'};
 uint8_t endDelimiter[]   = {'*','*'};
 
+#define ITM_Port32(n) (*((volatile unsigned long *)(0xE0000000+4*n)))
+
 uint32_t loopCount;
 uint8_t initMPU6050()
 {
@@ -121,6 +123,7 @@ void hapticLoop(void)
 			}
 			break;
 		case RUNNING:
+			ITM_Port32(31) = 1;
 			loopCount++;
 			if(loopCount%100 == 0)
 				HAL_GPIO_TogglePin(LD2_GPIO_Port,LD2_Pin);
@@ -161,8 +164,9 @@ void hapticLoop(void)
 																	   + kalmanGain * error;
 				pedalVariables.estimatedVariables.P_Plus = (1.0f - kalmanGain) * pedalVariables.estimatedVariables.P_Minus;
 			}
-
+			ITM_Port32(31) = 1;
 			calculateMassStatesAndForces(loopCount);
+			ITM_Port32(31) = 2;
 			giveHapticFeedback(g_ssimulatedForces.totalForce);
 
 			HAL_UART_Transmit(&huart3, beginDelimiter, 2, 10);
@@ -186,11 +190,13 @@ void hapticLoop(void)
 			//HAL_UART_Transmit(&huart3, &(pedalVariables.estimatedVariables.positionFilterPlus), 4, 10);
 
 			HAL_UART_Transmit(&huart3, endDelimiter, 2, 10);
+
 			break;
 		case STOPPED:
 			break;
 		}
 		HAL_I2C_Mem_Read(&hi2c1, MPU6050_ADDRESS, MPU6050_O_INT_STATUS, I2C_MEMADD_SIZE_8BIT, outBuffer, 1, 10);
+
 	}
 }
 

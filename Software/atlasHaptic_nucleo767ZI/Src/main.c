@@ -74,8 +74,8 @@ void SystemClock_Config(void);
 
 /* USER CODE BEGIN 0 */
 hapticFlagSet_t hapticFlagSet;
-float targetPositions[60000];
-float targetVelocities[60000];
+
+
 char asd[] = {'H','E','L','L','O','\r','\n'};
 /* USER CODE END 0 */
 
