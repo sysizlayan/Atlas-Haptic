@@ -13,9 +13,13 @@ volatile massStates_typedef g_ssimulatedMassStates_prev;
 
 volatile forces_typedef g_ssimulatedForces;
 
-const float k_spring = 1000.0f; // N/cm
-const float M_mass = 0.1f; // kg
-const float b_damper = 20.0f; // N*s/m
+float forceGain = -0.018;
+float forceBias = 1900;
+
+float k_spring = 1000.0f; // N/cm
+float M_mass = 0.1f; // kg
+float b_damper = 20.0f; // N*s/m
+
 // Discrete model from matlab with Ts = 0.001s
 const float A_0_0 = 0.999737744415373f;
 const float A_0_1 = 0.000720691344621f;

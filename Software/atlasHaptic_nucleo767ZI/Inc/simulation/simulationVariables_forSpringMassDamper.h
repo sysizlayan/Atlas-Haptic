@@ -8,9 +8,6 @@
 #ifndef SIMULATIONVARIABLES_H_
 #define SIMULATIONVARIABLES_H_
 
-#define FORCE_GAIN -0.018
-#define FORCE_BIAS 1900
-
 //Simulated Variables
 typedef struct _massStates
 {
@@ -28,9 +25,12 @@ extern volatile massStates_typedef g_ssimulatedMassStates_prev;
 
 extern volatile forces_typedef g_ssimulatedForces;
 
-extern const float k_spring; // N/cm
-extern const float M_mass; // kg
-extern const float b_damper; // N*s/m
+extern float forceGain;
+extern float forceBias;
+
+extern float k_spring; // N/cm
+extern float M_mass; // kg
+extern float b_damper; // N*s/m
 // Discrete model from matlab with Ts = 0.001s
 extern const float A_0_0;
 extern const float A_0_1;

@@ -54,6 +54,7 @@
 #include <stdbool.h>
 #include "flagSet.h"
 #include "hw_MPU6050.h"
+#include "cJSON/cJSON.h"
 
 /* USER CODE END Includes */
 
@@ -61,7 +62,7 @@
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
-uint8_t hapticDeviceState;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/

@@ -10,6 +10,7 @@
 #include "tim.h"
 #include "simulation/pedalVariables.h"
 #include "simulation/massStatesCalculation.h"
+#include "experimentConfig.h"
 
 #define NUMBER_OF_BIAS_SAMPLES 	3000
 #define MCP4725_ADDR 			0x62 << 1
@@ -85,8 +86,9 @@ uint8_t initMPU6050()
 
 void hapticLoop(void)
 {
-	static float 	gyroBias 		= 0;
-	static uint32_t gyroBiasSamples = 0;
+	static uint32_t waitPeriodCounter 	= 0;
+	static float 	gyroBias 			= 0;
+	static uint32_t gyroBiasSamples 	= 0;
 
 
 	float error, kalmanGain;
@@ -104,10 +106,10 @@ void hapticLoop(void)
 		// Float conversion
 		gyroReading = (float)gyroReadingRaw / gyroResolution;
 
-		switch(hapticDeviceState)
+		switch(experimentConfig.hapticDeviceState)
 		{
 		case BEGIN:
-			hapticDeviceState = CALIBRATION;
+			experimentConfig.hapticDeviceState = CALIBRATION;
 			break;
 		case CALIBRATION:
 			if(gyroBiasSamples < NUMBER_OF_BIAS_SAMPLES)
@@ -119,11 +121,21 @@ void hapticLoop(void)
 			{
 				gyroBias /= NUMBER_OF_BIAS_SAMPLES;
 				HAL_GPIO_WritePin(LD2_GPIO_Port,LD2_Pin,GPIO_PIN_SET);
-				hapticDeviceState = RUNNING;
+				experimentConfig.hapticDeviceState = WAITING_JSON;
 			}
 			break;
+		case WAITING_JSON:
+			if(experimentConfig.hasJSONCome)
+			{
+				waitPeriodCounter = experimentConfig.waitingPeriod;
+				experimentConfig.hapticDeviceState = WAIT_FOR_SPECIFIC_TIME;
+			}
+			break;
+		case WAIT_FOR_SPECIFIC_TIME:
+			if(--waitPeriodCounter == 0)
+				experimentConfig.hapticDeviceState = RUNNING;
+			break;
 		case RUNNING:
-			ITM_Port32(31) = 1;
 			loopCount++;
 			if(loopCount%100 == 0)
 				HAL_GPIO_TogglePin(LD2_GPIO_Port,LD2_Pin);
@@ -164,37 +176,52 @@ void hapticLoop(void)
 																	   + kalmanGain * error;
 				pedalVariables.estimatedVariables.P_Plus = (1.0f - kalmanGain) * pedalVariables.estimatedVariables.P_Minus;
 			}
-			ITM_Port32(31) = 1;
+
 			calculateMassStatesAndForces(loopCount);
-			ITM_Port32(31) = 2;
+
 			giveHapticFeedback(g_ssimulatedForces.totalForce);
 
-			HAL_UART_Transmit(&huart3, beginDelimiter, 2, 10);
-			HAL_UART_Transmit(&huart3, (uint8_t*)&loopCount, 4, 10);
-			HAL_UART_Transmit(&huart3, (uint8_t*)&(pedalVariables.measuredVariables.position), 4, 10);
-			HAL_UART_Transmit(&huart3, (uint8_t*)&(pedalVariables.estimatedVariables.positionFilterPlus), 4, 10);
-			HAL_UART_Transmit(&huart3, (uint8_t*)&(pedalVariables.measuredVariables.gyroVelocity), 4, 10);
-			HAL_UART_Transmit(&huart3, (uint8_t*)&(g_ssimulatedMassStates.massPosition), 4, 10);
-			HAL_UART_Transmit(&huart3, (uint8_t*)&(g_ssimulatedMassStates.massVelocity), 4, 10);
-
-			/*HAL_UART_Transmit(&huart3, &(pedalVariables.estimatedVariables.positionFilterPlus), 4, 10);
-
-			HAL_UART_Transmit(&huart3, &(pedalVariables.estimatedVariables.positionFilterPlus), 4, 10);
-
-			HAL_UART_Transmit(&huart3, &(pedalVariables.estimatedVariables.positionFilterPlus), 4, 10);
-
-			HAL_UART_Transmit(&huart3, &(pedalVariables.estimatedVariables.positionFilterPlus), 4, 10);*/
-
-			//HAL_UART_Transmit(&huart3, &(pedalVariables.estimatedVariables.positionFilterPlus), 4, 10);
-
-			//HAL_UART_Transmit(&huart3, &(pedalVariables.estimatedVariables.positionFilterPlus), 4, 10);
-
-			HAL_UART_Transmit(&huart3, endDelimiter, 2, 10);
-
+			if(loopCount == experimentConfig.period-1)
+			{
+				experimentConfig.hapticDeviceState = STOPPED;
+			}
 			break;
 		case STOPPED:
+			giveHapticFeedback(0);
+			g_ssimulatedForces.totalForce = 0;
+			g_ssimulatedMassStates.massPosition = 0;
+			g_ssimulatedMassStates.massVelocity = 0;
+			g_ssimulatedMassStates_prev.massPosition = 0;
+			g_ssimulatedMassStates_prev.massVelocity = 0;
+			loopCount = 0;
+			experimentConfig.hapticDeviceState = WAITING_JSON;
 			break;
 		}
+
+
+		HAL_UART_Transmit(&huart3, beginDelimiter, 2, 10);
+		HAL_UART_Transmit(&huart3, (uint8_t*)&loopCount, 4, 10);
+		HAL_UART_Transmit(&huart3, (uint8_t*)&(pedalVariables.measuredVariables.position), 4, 10);
+		HAL_UART_Transmit(&huart3, (uint8_t*)&(pedalVariables.estimatedVariables.positionFilterPlus), 4, 10);
+		HAL_UART_Transmit(&huart3, (uint8_t*)&(pedalVariables.measuredVariables.gyroVelocity), 4, 10);
+		HAL_UART_Transmit(&huart3, (uint8_t*)&(g_ssimulatedMassStates.massPosition), 4, 10);
+		HAL_UART_Transmit(&huart3, (uint8_t*)&(g_ssimulatedMassStates.massVelocity), 4, 10);
+
+		/*HAL_UART_Transmit(&huart3, &(pedalVariables.estimatedVariables.positionFilterPlus), 4, 10);
+
+		HAL_UART_Transmit(&huart3, &(pedalVariables.estimatedVariables.positionFilterPlus), 4, 10);
+
+		HAL_UART_Transmit(&huart3, &(pedalVariables.estimatedVariables.positionFilterPlus), 4, 10);
+
+		HAL_UART_Transmit(&huart3, &(pedalVariables.estimatedVariables.positionFilterPlus), 4, 10);*/
+
+		//HAL_UART_Transmit(&huart3, &(pedalVariables.estimatedVariables.positionFilterPlus), 4, 10);
+
+		//HAL_UART_Transmit(&huart3, &(pedalVariables.estimatedVariables.positionFilterPlus), 4, 10);
+
+		HAL_UART_Transmit(&huart3, endDelimiter, 2, 10);
+
+
 		HAL_I2C_Mem_Read(&hi2c1, MPU6050_ADDRESS, MPU6050_O_INT_STATUS, I2C_MEMADD_SIZE_8BIT, outBuffer, 1, 10);
 
 	}

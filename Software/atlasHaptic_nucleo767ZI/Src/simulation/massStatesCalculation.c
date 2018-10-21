@@ -8,30 +8,16 @@
 #include <simulation/massStatesCalculation.h>
 #include <arm_math.h>
 #include "simulation/pedalVariables.h"
+#include "experimentConfig.h"
 
-#define TWO_PI M_TWOPI
-//#define MOVEMENT_FREQ 0.55f
 #define DEGREE_TO_RADIAN 0.0174532925f
-
-float testFreqs[] = {0.3f, 0.5f, 0.8f, 1.0f, 1.1f};
-/*float testFreqs[] = {1.884955592154f,
-                     3.141592653590f,
-                     5.026548245744f,
-                     6.283185307180f,
-                     6.911503837898f};*/
-
-float testMags[] = {0.0f,
-                     0.0f,
-                     0.0f,
-                     45.0f,
-                     0.0f};
 
 void calculateMassStatesAndForces(uint32_t measurementTime)
 {
-
     //float timeVar, omega;
     float timeSecs;
-
+    float timeIns = 0.0F;
+    float sineValue, cosValue;
     timeSecs = (float)measurementTime / 1000.0f;
     //timeVar = TWO_PI * MOVEMENT_FREQ;
     //omega = timeVar * g_ui32measurementTime / 1000; //millis() / 1000;
@@ -49,21 +35,16 @@ void calculateMassStatesAndForces(uint32_t measurementTime)
                                             + testMags[2] * testFreqs[2] * cosf(testFreqs[2]*timeSecs)
                                             + testMags[3] * testFreqs[3] * cosf(testFreqs[3]*timeSecs)
                                             + testMags[4] * testFreqs[4] * cosf(testFreqs[4]*timeSecs);*/
-    int N_testFreqs = 5;
+
     g_ssimulatedMassStates.massPosition = 0;
     g_ssimulatedMassStates.massVelocity = 0;
-
-    float timeIns = 0.0F;
-    float sineValue, cosValue;
-
-    for(int i=0;i<N_testFreqs;i++)
+    for(int i=0;i<experimentSineParams.numberOfFrequencies;i++)
     {
-    	timeIns = 57.2957795 * (TWO_PI * testFreqs[i] * timeSecs); // 2pi*f*t
-    	arm_sin_cos_f32(timeIns, &sineValue, &cosValue);
+    	timeIns = 360 * experimentSineParams.frequencies[i] * timeSecs + experimentSineParams.phases[i]; // 2pi*f*t
     	arm_sin_cos_f32(timeIns, &sineValue, &cosValue);
 
-		g_ssimulatedMassStates.massPosition = testMags[i] * sineValue;
-		g_ssimulatedMassStates.massVelocity = testMags[i] * testFreqs[i] * cosValue;
+		g_ssimulatedMassStates.massPosition += experimentSineParams.magnitudes[i] * sineValue;
+		g_ssimulatedMassStates.massVelocity += experimentSineParams.magnitudes[i] * experimentSineParams.frequencies[i] * M_TWOPI * cosValue;
     }
 
     g_ssimulatedForces.springForce = (pedalVariables.estimatedVariables.positionFilterPlus
@@ -72,7 +53,7 @@ void calculateMassStatesAndForces(uint32_t measurementTime)
             - g_ssimulatedMassStates.massVelocity) * b_damper;
 
     g_ssimulatedForces.totalForce = (g_ssimulatedForces.springForce
-            + g_ssimulatedForces.damperForce) * FORCE_GAIN + FORCE_BIAS;
+            + g_ssimulatedForces.damperForce) * forceGain + forceBias;
 
     g_ssimulatedMassStates_prev.massPosition =
                g_ssimulatedMassStates.massPosition;
