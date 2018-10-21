@@ -10,3 +10,8 @@ Software/.metadata/
 .index
 .tree
 .xml
+*.xml
+*.snap
+*.index
+*.log
+*.xml
