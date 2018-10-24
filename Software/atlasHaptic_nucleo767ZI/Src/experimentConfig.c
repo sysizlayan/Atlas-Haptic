@@ -9,13 +9,14 @@
 
 experimentSineParams_t experimentSineParams;
 experimentConfig_t experimentConfig;
+char configJSONBuffer[1024];
 
 void initExperimentConfig()
 {
-	experimentConfig.hapticDeviceState = BEGIN;
-	experimentConfig.hasJSONCome = false;
-	experimentConfig.period = 150000; // 2.5 mins
-	experimentConfig.waitingPeriod = 10000; // 10 secs
+	experimentConfig.hapticDeviceState 		= BEGIN;
+	experimentConfig.hasJSONCome 			= false;
+	experimentConfig.period 				= 150000; // 2.5 mins
+	experimentConfig.waitingPeriod 			= 10000; // 10 secs
 
 	experimentSineParams.frequencies 	= (void *)0;
 	experimentSineParams.magnitudes 	= (void *)0;

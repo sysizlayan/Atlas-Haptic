@@ -39,5 +39,8 @@ typedef struct _experimentConfig
 
 extern experimentConfig_t experimentConfig;
 extern experimentSineParams_t experimentSineParams;
+extern char configJSONBuffer[];
 
+void initExperimentConfig();
+void readExperimentConfiguration(char* configurationString);
 #endif /* EXPERIMENTCONFIG_H_ */

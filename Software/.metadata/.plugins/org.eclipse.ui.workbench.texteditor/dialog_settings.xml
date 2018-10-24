@@ -2,20 +2,20 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="sinTable_f32" key="selection"/>
+		<item value="Idle" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="idle"/>
+			<item value="__weak"/>
+			<item value="PI"/>
+			<item value="TWO"/>
 			<item value="sinTable_f32"/>
 			<item value="sine"/>
 			<item value="sin"/>
 			<item value="fmod"/>
-			<item value="2000000"/>
-			<item value="0x3A"/>
-			<item value="extern UART_HandleTypeDef huart3"/>
-			<item value="MPU6050_DEFAULT_ADDRESS"/>
 		</list>
 		<list key="replacehistory">
 		</list>

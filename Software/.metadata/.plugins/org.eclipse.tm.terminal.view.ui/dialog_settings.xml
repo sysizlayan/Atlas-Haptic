@@ -8,7 +8,7 @@
 			<section name="Serial Terminal">
 				<item value="COM4" key="SerialLinePanel.selectedTTYDevice.Windows 10"/>
 				<item value="5" key="SerialLinePanel.selectedTTYTimeout.Windows 10"/>
-				<item value="1000000" key="SerialLinePanel.selectedTTYSpeedRate.Windows 10"/>
+				<item value="2000000" key="SerialLinePanel.selectedTTYSpeedRate.Windows 10"/>
 				<item value="115200" key="SerialLinePanel.selectedTTYSpeedRate.Linux"/>
 				<item value="1" key="SerialLinePanel.selectedTTYStopbits.Linux"/>
 				<item value="8" key="SerialLinePanel.selectedTTYDatabits.Linux"/>

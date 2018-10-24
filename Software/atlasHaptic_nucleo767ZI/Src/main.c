@@ -54,7 +54,9 @@
 #include <stdbool.h>
 #include "flagSet.h"
 #include "hw_MPU6050.h"
+#include "experimentConfig.h"
 #include "cJSON/cJSON.h"
+#include "mjson/mjson.h"
 
 /* USER CODE END Includes */
 
@@ -62,7 +64,9 @@
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
-
+#define UART_BUFFER_SIZE            512
+uint8_t uartBuff[UART_BUFFER_SIZE];
+char* jsonBuffer;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -117,6 +121,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   //i2c_discover(&hi2c2, 0, 255, 0, 255);
   HAL_NVIC_DisableIRQ(EXTI15_10_IRQn);
+  initExperimentConfig();
 
   initEstimator();
   initMPU6050();
@@ -124,14 +129,140 @@ int main(void)
   memset(&hapticFlagSet, 0, sizeof(hapticFlagSet));
 
   HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
-
+  HAL_UART_Receive_DMA(&huart3, uartBuff, UART_BUFFER_SIZE);
+  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_RESET);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  if(experimentConfig.hapticDeviceState == WAITING_JSON && uartBuff[0] == '{')
+	  {
+		  for(int i=0;i<UART_BUFFER_SIZE;i++)
+		  {
+			  if(uartBuff[i] == '}')
+			  {
+				  HAL_UART_DMAStop(&huart3);
+				  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_SET);
+				  if(jsonBuffer!=NULL)
+					  free(jsonBuffer);
 
+				  jsonBuffer = (char*)malloc(i*sizeof(char));
+				  memcpy(jsonBuffer, uartBuff, i+1);
+				  memset(uartBuff, 0, i+1);
+				  HAL_Delay(500);
+				  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_RESET);
+				  HAL_UART_Receive_DMA(&huart3, uartBuff, UART_BUFFER_SIZE);
+
+				  /*char *p;
+				  int n;
+				  if(mjson_find(jsonBuffer, strlen(jsonBuffer), "$.nFreqs", &p, &n) == MJSON_TOK_NUMBER)
+				  {
+					  experimentSineParams.numberOfFrequencies = (uint32_t)mjson_find_number(p, n, "$.nFreqs", -100);  // Assigns to 2
+					  printf("N freq: %lu\r\n", experimentSineParams.numberOfFrequencies);
+				  }*/
+
+				  /*cJSON *configJson = cJSON_Parse(jsonBuffer);
+				  if (configJson == NULL)
+				  {
+					  printf("Error parsing json!");
+				  }
+
+				  cJSON *kSpringJ = cJSON_GetObjectItemCaseSensitive(configJson, "kSpring");
+				  if (cJSON_IsNumber(kSpringJ))
+					  k_spring = (float)kSpringJ->valuedouble;
+				  free(kSpringJ);
+
+				  cJSON *bDamperJ = cJSON_GetObjectItemCaseSensitive(configJson, "bDamper");
+				  if (cJSON_IsNumber(bDamperJ))
+					  b_damper = (float)bDamperJ->valuedouble;
+				  free(bDamperJ);
+
+				  cJSON *value1 = cJSON_GetObjectItemCaseSensitive(configJson, "forceGain");
+				  if (cJSON_IsNumber(value1))
+					  forceGain = (float)value1->valuedouble;
+				  free(value1);
+
+				  cJSON *value2 = cJSON_GetObjectItemCaseSensitive(configJson, "forceBias");
+				  if (cJSON_IsNumber(value2))
+				  {
+					  forceBias = (float)value2->valuedouble;
+					  printf("Force Bias: %.2f\n", forceBias);
+				  }
+				  free(value2);
+
+				  cJSON *value3 = cJSON_GetObjectItemCaseSensitive(configJson, "numberFreq");
+				  if (cJSON_IsNumber(value3))
+				  {
+					  experimentSineParams.numberOfFrequencies = (uint32_t)value3->valueint;
+					  printf("Number of freqs: %lu\n", experimentSineParams.numberOfFrequencies);
+				  }
+				  free(value3);
+				  if(experimentSineParams.numberOfFrequencies < 0 || experimentSineParams.numberOfFrequencies > 10)
+					  printf("ERROR Number of frequencies is errorous!");
+				  else
+				  {
+					  experimentSineParams.frequencies 	= (float*)malloc(sizeof(float)*experimentSineParams.numberOfFrequencies);
+					  experimentSineParams.magnitudes 	= (float*)malloc(sizeof(float)*experimentSineParams.numberOfFrequencies);
+					  experimentSineParams.phases 		= (float*)malloc(sizeof(float)*experimentSineParams.numberOfFrequencies);
+
+					  cJSON *value4 = cJSON_GetObjectItemCaseSensitive(configJson, "freqs");
+					  if (cJSON_IsArray(value4) && cJSON_GetArraySize(value4) == experimentSineParams.numberOfFrequencies)
+					  {
+						  for(int i = 0;i<experimentSineParams.numberOfFrequencies;i++)
+						  {
+							  cJSON *item = cJSON_GetArrayItem(value4, i);
+							  if(cJSON_IsNumber(item))
+							  {
+								  experimentSineParams.frequencies[i] = (float)item->valuedouble;
+							  }
+							  free(item);
+						  }
+					  }
+					  free(value4);
+
+					  cJSON *value5 = cJSON_GetObjectItemCaseSensitive(configJson, "phases");
+					  if (cJSON_IsArray(value5) && cJSON_GetArraySize(value5) == experimentSineParams.numberOfFrequencies)
+					  {
+						  for(int i = 0;i<experimentSineParams.numberOfFrequencies;i++)
+						  {
+							  cJSON *item = cJSON_GetArrayItem(value5, i);
+							  if(cJSON_IsNumber(item))
+							  {
+								  experimentSineParams.phases[i] = (float)item->valuedouble;
+							  }
+							  free(item);
+						  }
+					  }
+					  free(value5);
+
+					  cJSON *value6 = cJSON_GetObjectItemCaseSensitive(configJson, "magnitudes");
+					  if (cJSON_IsArray(value6) && cJSON_GetArraySize(value6) == experimentSineParams.numberOfFrequencies)
+					  {
+						  for(int i = 0;i<experimentSineParams.numberOfFrequencies;i++)
+						  {
+							  cJSON *item = cJSON_GetArrayItem(value6, i);
+							  if(cJSON_IsNumber(item))
+							  {
+								  experimentSineParams.magnitudes[i] = (float)item->valuedouble;
+							  }
+							  free(item);
+						  }
+					  }
+					  free(value6);
+				  }*/
+
+				  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
+				  break;
+			  }
+		  }
+
+	  }
+	  else
+	  {
+		  __NOP();
+	  }
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
@@ -232,15 +363,11 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 		__NOP();
 	}
 }
-void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
-{
-
-}
 int __io_putchar(int ch)
 {
  uint8_t c;
  c = ch & 0x00FF;
- HAL_UART_Transmit_DMA(&huart3, &c, 1);
+ HAL_UART_Transmit(&huart3, &c, 1,10);
  return ch;
 }
 
@@ -253,7 +380,6 @@ int _write(int file,char *ptr, int len)
  }
 return len;
 }
-
 /* USER CODE END 4 */
 
 /**
