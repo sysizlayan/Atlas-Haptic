@@ -6042,3 +6042,6 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 
 !ENTRY org.eclipse.cdt.dsf.gdb 4 0 2018-10-24 02:12:29.411
 !MESSAGE Endianness was never initialized!
+
+!ENTRY com.atollic.truestudio.productmanager 1 0 2018-10-25 23:27:15.773
+!MESSAGE Unloading product manager
