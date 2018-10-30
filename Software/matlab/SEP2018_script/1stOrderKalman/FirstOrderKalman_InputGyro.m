@@ -22,10 +22,10 @@ theta_measurements = pedal.position_unfiltered;
 thetaDot_measurements = pedal.velocity;
 
 % Noise models
-q_model = 100;%0.000658536602603968;%0.000557541965438186;
-r_enc = 100; %0.0027; % Output model noise
+q_model = 0.000658536602603968;%0.000557541965438186;
+r_enc = 0.0027; % Output model noise
 
-for emIterations = 1:100
+for emIterations = 1:1
     filteredTheta_values=zeros(1,N);
     predictedTheta_values=zeros(1,N);
 
@@ -57,7 +57,7 @@ for emIterations = 1:100
             filteredCoverience = predictedCovarience;
         else
             kalmanGain = predictedCovarience * C1' * pinv(C1 * predictedCovarience * C1' + r_enc);  % Kalman gain
-            err = theta_measurements(k) - C1 * predictedTheta + d;
+            err = theta_measurements(k) - C1 * predictedTheta - d;
 
             filteredTheta = predictedTheta + kalmanGain * err;
             filteredCoverience = (eye(1)-kalmanGain*C1)*predictedCovarience;
