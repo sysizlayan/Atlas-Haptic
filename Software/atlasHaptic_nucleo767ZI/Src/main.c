@@ -136,6 +136,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  static int waitCount = 0;
 	  if(experimentConfig.hapticDeviceState == WAITING_JSON && uartBuff[0] == '{')
 	  {
 		  for(int i=0;i<UART_BUFFER_SIZE;i++)
@@ -156,16 +157,22 @@ int main(void)
 				  HAL_UART_Receive_DMA(&huart3, uartBuff, UART_BUFFER_SIZE);
 
 				  if(parseConfigurationJSON(jsonBuffer))
+				  {
+					  waitCount = 0;
 					  experimentConfig.hapticDeviceState = WAIT_FOR_SPECIFIC_TIME;
+				  }
 				  break;
 			  }
 		  }
 	  }
 	  else if(experimentConfig.hapticDeviceState == WAIT_FOR_SPECIFIC_TIME)
 	  {
-		  HAL_Delay(10000);
-		  experimentConfig.hapticDeviceState = RUNNING;
-		  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
+		  HAL_Delay(1000);
+		  waitCount++;
+		  HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+		  if(waitCount == 10)
+			  experimentConfig.hapticDeviceState = RUNNING;
+		  //HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 	  }
 	  else
 	  {
@@ -260,7 +267,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 	if(GPIO_Pin == USER_Btn_Pin)
 	{
-		HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+		//HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+		experimentConfig.hapticDeviceState = STOPPED;
 	}
 	else if(GPIO_Pin == MPU6050_INT_Pin)
 	{

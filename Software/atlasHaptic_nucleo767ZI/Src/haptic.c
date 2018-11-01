@@ -180,7 +180,7 @@ void hapticLoop(void)
 			}
 			break;
 		case STOPPED:
-			giveHapticFeedback(0);
+			giveHapticFeedback(forceBias);
 			g_ssimulatedForces.totalForce = 0;
 			g_ssimulatedMassStates.massPosition = 0;
 			g_ssimulatedMassStates.massVelocity = 0;
@@ -191,6 +191,7 @@ void hapticLoop(void)
 			HAL_UART_Transmit(&huart3, (uint8_t*)&loopCount, 4, 10);
 			HAL_UART_Transmit(&huart3, (uint8_t*)dummyLoad, DUMMY_LOAD_SIZE, 10);
 			HAL_UART_Transmit(&huart3, endDelimiter, 2, 10);
+			HAL_GPIO_WritePin(LD2_GPIO_Port,LD2_Pin, GPIO_PIN_SET);
 			experimentConfig.hapticDeviceState = WAITING_JSON;
 			break;
 		default:
