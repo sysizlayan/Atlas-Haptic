@@ -25,7 +25,7 @@ thetaDot_measurements = pedal.velocity;
 q_model = 0.000658536602603968;%0.000557541965438186;
 r_enc = 0.0027; % Output model noise
 
-for emIterations = 1:1
+for emIterations = 1:100
     filteredTheta_values=zeros(1,N);
     predictedTheta_values=zeros(1,N);
 
@@ -112,7 +112,7 @@ for emIterations = 1:1
                   - minusTerm';
     end
     q_new = 1/N * sum;
-    disp(q_new);
+%     disp(q_new);
 
     sum = 0;
     numberOfNewMeasurements = 0;
@@ -129,10 +129,22 @@ for emIterations = 1:1
         end
     end
     r_new = 1/(numberOfNewMeasurements) * sum;
-    disp(r_new);
+%     disp(r_new);
     
+    clear sum
+    normalized_diff = sum(smoothedTheta_values - filteredTheta_values) / length(filteredTheta_values);
+    
+    q_diff = q_new-q_model;
+    r_diff = r_enc-r_new;
+%     display(q_diff);
+%     display(r_diff);
+    disp(normalized_diff)
+    if(abs(q_diff) < 1e-7 && abs(r_diff) < 1e-7)
+        break;
+    end
     q_model = q_new;
     r_enc = r_new;
+   
 end
 
 figure

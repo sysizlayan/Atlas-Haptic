@@ -9,7 +9,7 @@
 volatile pedalVariables_t pedalVariables;
 void initEstimator(void)
 {
-	pedalVariables.kalmanConstants.Q_model 					= 0.000557542f;
+	pedalVariables.kalmanConstants.Q_model 					= 0.000658536602603968f;
 	pedalVariables.kalmanConstants.R_encoder 				= 0.0027f;
 	pedalVariables.kalmanConstants.delta_t 					= 0.001f;
 
