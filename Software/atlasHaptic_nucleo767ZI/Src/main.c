@@ -56,7 +56,6 @@
 #include "hw_MPU6050.h"
 #include "experimentConfig.h"
 #include "cJSON/cJSON.h"
-#include "mjson/mjson.h"
 
 /* USER CODE END Includes */
 
@@ -147,58 +146,48 @@ int main(void)
 				  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_SET);
 				  if(jsonBuffer!=NULL)
 					  free(jsonBuffer);
+				  size_t sizeOfJson = (strlen((const char*)uartBuff)+1);
+				  jsonBuffer = (char*)malloc(sizeOfJson*sizeof(char));
+				  strcpy(jsonBuffer, (const char*)uartBuff);
 
-				  jsonBuffer = (char*)malloc(i*sizeof(char));
-				  memcpy(jsonBuffer, uartBuff, i+1);
-				  memset(uartBuff, 0, i+1);
+				  memset(uartBuff, 0, UART_BUFFER_SIZE);
 				  HAL_Delay(500);
 				  HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, GPIO_PIN_RESET);
 				  HAL_UART_Receive_DMA(&huart3, uartBuff, UART_BUFFER_SIZE);
 
-				  /*char *p;
-				  int n;
-				  if(mjson_find(jsonBuffer, strlen(jsonBuffer), "$.nFreqs", &p, &n) == MJSON_TOK_NUMBER)
-				  {
-					  experimentSineParams.numberOfFrequencies = (uint32_t)mjson_find_number(p, n, "$.nFreqs", -100);  // Assigns to 2
-					  printf("N freq: %lu\r\n", experimentSineParams.numberOfFrequencies);
-				  }*/
-
-				  /*cJSON *configJson = cJSON_Parse(jsonBuffer);
+				  cJSON *configJson = cJSON_Parse(jsonBuffer);
 				  if (configJson == NULL)
 				  {
 					  printf("Error parsing json!");
 				  }
 
+				  cJSON *experimentPeriod = cJSON_GetObjectItemCaseSensitive(configJson, "experimentPeriod");
+				  if (cJSON_IsNumber(experimentPeriod))
+					  experimentConfig.period = (uint32_t)experimentPeriod->valueint;
+
 				  cJSON *kSpringJ = cJSON_GetObjectItemCaseSensitive(configJson, "kSpring");
 				  if (cJSON_IsNumber(kSpringJ))
 					  k_spring = (float)kSpringJ->valuedouble;
-				  free(kSpringJ);
 
 				  cJSON *bDamperJ = cJSON_GetObjectItemCaseSensitive(configJson, "bDamper");
 				  if (cJSON_IsNumber(bDamperJ))
 					  b_damper = (float)bDamperJ->valuedouble;
-				  free(bDamperJ);
 
 				  cJSON *value1 = cJSON_GetObjectItemCaseSensitive(configJson, "forceGain");
 				  if (cJSON_IsNumber(value1))
 					  forceGain = (float)value1->valuedouble;
-				  free(value1);
 
 				  cJSON *value2 = cJSON_GetObjectItemCaseSensitive(configJson, "forceBias");
 				  if (cJSON_IsNumber(value2))
 				  {
 					  forceBias = (float)value2->valuedouble;
-					  printf("Force Bias: %.2f\n", forceBias);
 				  }
-				  free(value2);
 
 				  cJSON *value3 = cJSON_GetObjectItemCaseSensitive(configJson, "numberFreq");
 				  if (cJSON_IsNumber(value3))
 				  {
 					  experimentSineParams.numberOfFrequencies = (uint32_t)value3->valueint;
-					  printf("Number of freqs: %lu\n", experimentSineParams.numberOfFrequencies);
 				  }
-				  free(value3);
 				  if(experimentSineParams.numberOfFrequencies < 0 || experimentSineParams.numberOfFrequencies > 10)
 					  printf("ERROR Number of frequencies is errorous!");
 				  else
@@ -217,10 +206,8 @@ int main(void)
 							  {
 								  experimentSineParams.frequencies[i] = (float)item->valuedouble;
 							  }
-							  free(item);
 						  }
 					  }
-					  free(value4);
 
 					  cJSON *value5 = cJSON_GetObjectItemCaseSensitive(configJson, "phases");
 					  if (cJSON_IsArray(value5) && cJSON_GetArraySize(value5) == experimentSineParams.numberOfFrequencies)
@@ -232,10 +219,8 @@ int main(void)
 							  {
 								  experimentSineParams.phases[i] = (float)item->valuedouble;
 							  }
-							  free(item);
 						  }
 					  }
-					  free(value5);
 
 					  cJSON *value6 = cJSON_GetObjectItemCaseSensitive(configJson, "magnitudes");
 					  if (cJSON_IsArray(value6) && cJSON_GetArraySize(value6) == experimentSineParams.numberOfFrequencies)
@@ -247,17 +232,21 @@ int main(void)
 							  {
 								  experimentSineParams.magnitudes[i] = (float)item->valuedouble;
 							  }
-							  free(item);
 						  }
 					  }
-					  free(value6);
-				  }*/
+				  }
+				  cJSON_Delete(configJson);
+				  experimentConfig.hapticDeviceState = WAIT_FOR_SPECIFIC_TIME;
 
-				  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 				  break;
 			  }
 		  }
-
+	  }
+	  else if(experimentConfig.hapticDeviceState == WAIT_FOR_SPECIFIC_TIME)
+	  {
+		  HAL_Delay(10000);
+		  experimentConfig.hapticDeviceState = RUNNING;
+		  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 	  }
 	  else
 	  {

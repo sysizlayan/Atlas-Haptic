@@ -21,6 +21,8 @@ const float encoderResolution 	= 0.18f;
 
 uint8_t beginDelimiter[] = {'$','$'};
 uint8_t endDelimiter[]   = {'*','*'};
+#define DUMMY_LOAD_SIZE 20
+float dummyLoad[DUMMY_LOAD_SIZE];
 
 #define ITM_Port32(n) (*((volatile unsigned long *)(0xE0000000+4*n)))
 
@@ -86,7 +88,6 @@ uint8_t initMPU6050()
 
 void hapticLoop(void)
 {
-	static uint32_t waitPeriodCounter 	= 0;
 	static float 	gyroBias 			= 0;
 	static uint32_t gyroBiasSamples 	= 0;
 
@@ -110,6 +111,8 @@ void hapticLoop(void)
 		{
 		case BEGIN:
 			experimentConfig.hapticDeviceState = CALIBRATION;
+			for(int i = 0; i< DUMMY_LOAD_SIZE; i++)
+				dummyLoad[i] = -1000000.0f;
 			break;
 		case CALIBRATION:
 			if(gyroBiasSamples < NUMBER_OF_BIAS_SAMPLES)
@@ -124,18 +127,6 @@ void hapticLoop(void)
 				experimentConfig.hapticDeviceState = WAITING_JSON;
 				//HAL_NVIC_DisableIRQ(EXTI15_10_IRQn);
 			}
-			break;
-		case WAITING_JSON:
-			if(experimentConfig.hasJSONCome)
-			{
-				waitPeriodCounter = experimentConfig.waitingPeriod;
-				experimentConfig.hapticDeviceState = WAIT_FOR_SPECIFIC_TIME;
-
-			}
-			break;
-		case WAIT_FOR_SPECIFIC_TIME:
-			if(--waitPeriodCounter == 0)
-				experimentConfig.hapticDeviceState = RUNNING;
 			break;
 		case RUNNING:
 			loopCount++;
@@ -196,10 +187,17 @@ void hapticLoop(void)
 			g_ssimulatedMassStates_prev.massPosition = 0;
 			g_ssimulatedMassStates_prev.massVelocity = 0;
 			loopCount = 0;
+			HAL_UART_Transmit(&huart3, beginDelimiter, 2, 10);
+			HAL_UART_Transmit(&huart3, (uint8_t*)&loopCount, 4, 10);
+			HAL_UART_Transmit(&huart3, (uint8_t*)dummyLoad, DUMMY_LOAD_SIZE, 10);
+			HAL_UART_Transmit(&huart3, endDelimiter, 2, 10);
 			experimentConfig.hapticDeviceState = WAITING_JSON;
 			break;
+		default:
+			__NOP();
 		}
 
+		// Send the variables if the state is running
 		if(experimentConfig.hapticDeviceState == RUNNING)
 		{
 			HAL_UART_Transmit(&huart3, beginDelimiter, 2, 10);
@@ -225,6 +223,7 @@ void hapticLoop(void)
 			HAL_UART_Transmit(&huart3, endDelimiter, 2, 10);
 
 		}
+
 		HAL_I2C_Mem_Read(&hi2c1, MPU6050_ADDRESS, MPU6050_O_INT_STATUS, I2C_MEMADD_SIZE_8BIT, outBuffer, 1, 10);
 
 	}
