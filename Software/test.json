@@ -1,1 +1,1 @@
-{"experimentPeriod":150000,"kSpring":1000,"bDamper":20,"forceGain":-0.018,"forceBias":1900,"numberFreq":5,"freqs":[0.3,0.5,0.8,1,1.1],"phases":[0,0,0,0,0],"magnitudes":[9,9,9,9,9]}
+{"experimentPeriod":150000,"kSpring":1000,"bDamper":20,"forceGain":-0.018,"forceBias":1900,"numberFreq":5,"freqs":[0.3,0.5,0.8,1,1.1],"phases":[0,0,0,0,0],"magnitudes":[0,0,0,45,0]}

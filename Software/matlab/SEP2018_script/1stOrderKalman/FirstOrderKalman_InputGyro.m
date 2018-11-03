@@ -22,10 +22,10 @@ theta_measurements = pedal.position_unfiltered;
 thetaDot_measurements = pedal.velocity;
 
 % Noise models
-q_model = 1000;%0.000658536602603968;%0.000557541965438186;
-r_enc = 1000; %0.0027; % Output model noise
+q_model = 0.000658536602603968;%0.000557541965438186;
+r_enc = 0.0027; % Output model noise
 
-for emIterations = 1:100
+for emIterations = 1:1
     filteredTheta_values=zeros(1,N);
     predictedTheta_values=zeros(1,N);
 

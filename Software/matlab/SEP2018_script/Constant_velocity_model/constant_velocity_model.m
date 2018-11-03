@@ -24,11 +24,11 @@ thetaDot_measurements = pedal.velocity;
 measurements = [theta_measurements';thetaDot_measurements']; % 2xN
 
 % Noise models
-q_model = 1e12;
+q_model = 10e12;
 r_enc = 0.0027;
 r_gyro = 0.0025;
 
-Q = 100*eye(modelOrder);%B * B' * q_model; % 2x2
+Q = B * B' * q_model; % 2x2
 R = [r_enc 0; 0 r_gyro]; % 2x2
 
 for emIterations = 1:10
