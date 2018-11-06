@@ -69,7 +69,7 @@ class myThread(threading.Thread):
                 # print(len(line))
                 if len(line) == 24:
                     # Acquire mutex
-                    # threadLock.acquire()
+                    threadLock.acquire()
                     # little endian unsigned integer
                     (time, unfiltered_position_pedal, position_pedal, velocity_pedal, position_target, velocity_target) = unpack('<Ifffff',line)
 
@@ -88,7 +88,7 @@ class myThread(threading.Thread):
                                                                                round(position_target, 4),
                                                                                round(velocity_target, 4)))
                     #Release mutex
-                    # threadLock.release()
+                    threadLock.release()
                 else:
                     print("Delimiter Error:")
                     print(line)
@@ -148,14 +148,14 @@ while not isWindowClosed:
     pygame.draw.line(GUIDisplay, blackColor, (middleOfTheScreen[0], 0), (middleOfTheScreen[0], GUISize[1] - 1), 1)
     pygame.draw.line(GUIDisplay, blackColor, (0, middleOfTheScreen[1]), (GUISize[0] - 1, middleOfTheScreen[1]), 1)
     # Acquire thread lock
-    # threadLock.acquire()
+    threadLock.acquire()
     # Take local copies of the positions
     # Only positions will be used for GUI
     _pT = -1 * position_target + 90
     _pP = -1 * position_pedal + 90
 
     # Release the mutex after taking copies
-    # threadLock.release()
+    threadLock.release()
     # test1 = test1 + 1
     # if test1 is 2:
     #     if direction is 0:
@@ -205,7 +205,7 @@ while not isWindowClosed:
 
     pygame.display.update()
     # 240Hz FPS
-    clock.tick(30)
+    clock.tick(240)
 # readerThread.join()a
 pygame.quit()
 quit()

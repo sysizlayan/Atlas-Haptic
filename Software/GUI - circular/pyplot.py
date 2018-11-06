@@ -16,7 +16,7 @@ unfiltered_position = 0
 
 crashed = False
 threadLock = threading.Lock()
-# fileStreamer = open('lastReadData.csv','w')
+fileStreamer = open('lastReadData.csv','w')
 ser = serial.Serial()
 try:
     ser.port = portName
@@ -52,6 +52,7 @@ class myThread(threading.Thread):
                 # print(len(line))
                 if len(line) == 24:
                     # little endian unsigned integer
+                    threadLock.acquire()
                     (time, unfiltered_position, position_pedal, velocity_pedal, position_target, velocity_target) = unpack('<Ifffff',line)
 
                     print("Time:{0} Pedal_Pos:{1:.2}, Target_Pos:{2:.2} Pedal_Vel:{3:.2}, Target_Vel:{4:.2}\n"
@@ -61,9 +62,16 @@ class myThread(threading.Thread):
                                 round(velocity_pedal, 2),
                                 round(velocity_target, 2)))
                     # fileStreamer.write(time,position_pedal,position_target,velocity_pedal,velocity_target)
-                    # threadLock.acquire()
+                    #
 
-                    # threadLock.release()
+                    threadLock.release()
+                    fileStreamer.write(
+                        "{0},{1:.2f},{2:.4f},{3:.4f},{4:.4f},{5:.4f}\n".format(time, round(unfiltered_position, 2),
+                                                                               round(position_pedal, 4),
+                                                                               round(velocity_pedal, 4),
+                                                                               round(position_target, 4),
+                                                                               round(velocity_target, 4)))
+
                 else:
                     print(line)
                     # print("Delimiter Error!")
