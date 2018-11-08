@@ -2,10 +2,10 @@ import pygame
 import serial
 import threading
 import numpy as np
-from datetime import datetime
-import math
 from pygame import gfxdraw
 from struct import *
+import os
+import time
 
 # ///// Experiment Variables //////
 position_pedal = 0
@@ -13,6 +13,9 @@ position_target = 0
 velocity_pedal = 0
 velocity_target = 0
 unfiltered_position_pedal = 0
+
+sendJson = False
+experimentState = 0
 isWindowClosed = False
 
 def calculateRectangleCorners(angle=0, length=200, thickness=5):
@@ -40,7 +43,7 @@ try:
     ser.baudrate = baudRate
     ser.timeout = 10
     ser.open()
-    fileStreamer = open('lastReadData.csv','w')
+    fileStreamer = open('lastReadData.csv', 'w')
 except:
     print('The port cannot be opened!')
     # Do not start the pyGame screen
@@ -59,7 +62,7 @@ class myThread(threading.Thread):
         global velocity_pedal
         global velocity_target
         global unfiltered_position_pedal
-
+        global experimentState
         while not isWindowClosed:
             try:
                 temp = ser.read_until(b'$$')
@@ -73,25 +76,33 @@ class myThread(threading.Thread):
                     # little endian unsigned integer
                     (time, unfiltered_position_pedal, position_pedal, velocity_pedal, position_target, velocity_target) = unpack('<Ifffff',line)
 
-                    print("Time:{0} Pedal_Pos:{1:.2}, Target_Pos:{2:.2} Pedal_Vel:{3:.2}, Target_Vel:{4:.2}\n"
-                        .format(time,
-                                round(unfiltered_position_pedal, 2),
-                                round(position_pedal, 2),
-                                round(position_target, 2),
-                                round(velocity_pedal, 2),
-                                round(velocity_target, 2)))
-
-                    fileStreamer.write(
-                        "{0},{1:.2f},{2:.4f},{3:.4f},{4:.4f},{5:.4f}\n".format(time, round(unfiltered_position_pedal, 2),
-                                                                               round(position_pedal, 4),
-                                                                               round(velocity_pedal, 4),
-                                                                               round(position_target, 4),
-                                                                               round(velocity_target, 4)))
                     #Release mutex
                     threadLock.release()
+                    if experimentState == 1:
+                        print("Time:{0} Pedal_Pos:{1:.2}, Target_Pos:{2:.2} Pedal_Vel:{3:.2}, Target_Vel:{4:.2}\n"
+                              .format(time,
+                                      round(unfiltered_position_pedal, 2),
+                                      round(position_pedal, 2),
+                                      round(position_target, 2),
+                                      round(velocity_pedal, 2),
+                                      round(velocity_target, 2)))
+                        fileStreamer.write(
+                            "{0},{1:.2f},{2:.4f},{3:.4f},{4:.4f},{5:.4f}\n".format(time, round(unfiltered_position_pedal, 2),
+                                                                                   round(position_pedal, 4),
+                                                                                   round(velocity_pedal, 4),
+                                                                                   round(position_target, 4),
+                                                                                   round(velocity_target, 4)))
+                    if position_target == -1000000 and velocity_target == -1000000:
+                        experimentState = 0
+                        position_pedal = 0
+                        position_target = 0
+                        velocity_pedal = 0
+                        velocity_target = 0
+                        unfiltered_position_pedal = 0
+                        fileStreamer.close()
                 else:
                     print("Delimiter Error:")
-                    print(line)
+                    print(len(line))
                     continue
 
             except KeyboardInterrupt:
@@ -127,7 +138,6 @@ targetRadius = 20
 pedalRadius = 30
 rectangleSize = (10, 200)
 
-
 test1 = 0
 direction = 0
 # // GUI LOOP //
@@ -136,76 +146,95 @@ while not isWindowClosed:
         if event.type == pygame.QUIT:
             isWindowClosed = True
 
+    if experimentState == 1:
+        # Fill the GUI with white
+        GUIDisplay.fill((205, 205, 205))
+        pygame.draw.line(GUIDisplay, blackColor, upLeftCorner, upRightCorner, 1)
+        pygame.draw.line(GUIDisplay, blackColor, upLeftCorner, downLeftCorner, 1)
+        pygame.draw.line(GUIDisplay, blackColor, downLeftCorner, downRightCorner, 1)
+        pygame.draw.line(GUIDisplay, blackColor, upRightCorner, downRightCorner, 1)
+
+        pygame.draw.line(GUIDisplay, blackColor, (middleOfTheScreen[0], 0), (middleOfTheScreen[0], GUISize[1] - 1), 1)
+        pygame.draw.line(GUIDisplay, blackColor, (0, middleOfTheScreen[1]), (GUISize[0] - 1, middleOfTheScreen[1]), 1)
+        # Acquire thread lock
+        threadLock.acquire()
+        # Take local copies of the positions
+        # Only positions will be used for GUI
+        _pT = -1 * position_target + 90
+        _pP = -1 * position_pedal + 90
+
+        # Release the mutex after taking copies
+        threadLock.release()
+        # test1 = test1 + 1
+        # if test1 is 2:
+        #     if direction is 0:
+        #         position_pedal = position_pedal + 1
+        #         position_target = position_target - 1
+        #         if position_pedal == 90:
+        #             direction = 1
+        #     else:
+        #         position_pedal = position_pedal - 1
+        #         position_target = position_target + 1
+        #         if position_pedal == -90:
+        #             direction = 0
+        #     test1 = 0
+
+        targetRectangle = calculateRectangleCorners(_pT, handleLength, handleThickness)
+        pedalRectangle  = calculateRectangleCorners(_pP, handleLength, handleThickness)
 
 
-    # Fill the GUI with white
-    GUIDisplay.fill((255, 255, 255))
-    pygame.draw.line(GUIDisplay, blackColor, upLeftCorner, upRightCorner, 1)
-    pygame.draw.line(GUIDisplay, blackColor, upLeftCorner, downLeftCorner, 1)
-    pygame.draw.line(GUIDisplay, blackColor, downLeftCorner, downRightCorner, 1)
-    pygame.draw.line(GUIDisplay, blackColor, upRightCorner, downRightCorner, 1)
 
-    pygame.draw.line(GUIDisplay, blackColor, (middleOfTheScreen[0], 0), (middleOfTheScreen[0], GUISize[1] - 1), 1)
-    pygame.draw.line(GUIDisplay, blackColor, (0, middleOfTheScreen[1]), (GUISize[0] - 1, middleOfTheScreen[1]), 1)
-    # Acquire thread lock
-    threadLock.acquire()
-    # Take local copies of the positions
-    # Only positions will be used for GUI
-    _pT = -1 * position_target + 90
-    _pP = -1 * position_pedal + 90
+        pygame.gfxdraw.filled_polygon(GUIDisplay,
+                                      pedalRectangle[0:4],
+                                      blackColor)
+        pygame.gfxdraw.filled_circle(GUIDisplay,
+                                     int(pedalRectangle[4]),
+                                     int(pedalRectangle[5]),
+                                     pedalRadius,
+                                     blackColor)
+        pygame.gfxdraw.filled_circle(GUIDisplay,
+                                     int(middleOfTheScreen[0]),
+                                     int(middleOfTheScreen[1]),
+                                     handleThickness,
+                                     blackColor)
 
-    # Release the mutex after taking copies
-    threadLock.release()
-    # test1 = test1 + 1
-    # if test1 is 2:
-    #     if direction is 0:
-    #         position_pedal = position_pedal + 1
-    #         position_target = position_target - 1
-    #         if position_pedal == 90:
-    #             direction = 1
-    #     else:
-    #         position_pedal = position_pedal - 1
-    #         position_target = position_target + 1
-    #         if position_pedal == -90:
-    #             direction = 0
-    #     test1 = 0
+        pygame.gfxdraw.filled_polygon(GUIDisplay,
+                                      targetRectangle[0:4],
+                                      redColor)
+        pygame.gfxdraw.filled_circle(GUIDisplay,
+                                     int(targetRectangle[4]),
+                                     int(targetRectangle[5]),
+                                     targetRadius,
+                                     redColor)
+        pygame.gfxdraw.filled_circle(GUIDisplay,
+                                     int(middleOfTheScreen[0]),
+                                     int(middleOfTheScreen[1]),
+                                     handleThickness,
+                                     redColor)
 
-    targetRectangle = calculateRectangleCorners(_pT, handleLength, handleThickness)
-    pedalRectangle  = calculateRectangleCorners(_pP, handleLength, handleThickness)
+        pygame.display.update()
+        # 240Hz FPS
+        clock.tick(240)
+    elif experimentState == 0:
+        # time.sleep(3)
+        isNewExperimentConfigRequired = input("Do you want to change the experiment config?(y/n)")
+        if isNewExperimentConfigRequired == 'y':
+            print("Config editor is starting")
+            os.system("python configJSON_editor.py")
+            sendJson = True
+        elif isNewExperimentConfigRequired == 'n':
+            sendJson = True
+        else:
+            continue
 
+        if sendJson == True:
+            with open('haptic.json') as json_data:
+                jsonConfig = json_data.read().encode(encoding='utf-8')
+                ser.write(jsonConfig)
+            sendJson = False
+            experimentState = 1
+            fileStreamer = open('lastReadData.csv', 'w')
 
-
-    pygame.gfxdraw.filled_polygon(GUIDisplay,
-                                  pedalRectangle[0:4],
-                                  blackColor)
-    pygame.gfxdraw.filled_circle(GUIDisplay,
-                                 int(pedalRectangle[4]),
-                                 int(pedalRectangle[5]),
-                                 pedalRadius,
-                                 blackColor)
-    pygame.gfxdraw.filled_circle(GUIDisplay,
-                                 int(middleOfTheScreen[0]),
-                                 int(middleOfTheScreen[1]),
-                                 handleThickness,
-                                 blackColor)
-
-    pygame.gfxdraw.filled_polygon(GUIDisplay,
-                                  targetRectangle[0:4],
-                                  redColor)
-    pygame.gfxdraw.filled_circle(GUIDisplay,
-                                 int(targetRectangle[4]),
-                                 int(targetRectangle[5]),
-                                 targetRadius,
-                                 redColor)
-    pygame.gfxdraw.filled_circle(GUIDisplay,
-                                 int(middleOfTheScreen[0]),
-                                 int(middleOfTheScreen[1]),
-                                 handleThickness,
-                                 redColor)
-
-    pygame.display.update()
-    # 240Hz FPS
-    clock.tick(240)
 # readerThread.join()a
 pygame.quit()
 quit()

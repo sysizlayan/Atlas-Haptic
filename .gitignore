@@ -16,3 +16,8 @@ Software/.metadata/
 *.log
 *.xml
 *.asv
+*.ini
+*.xml
+*.xmi
+*.prefs
+*.resources
