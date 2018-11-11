@@ -127,6 +127,26 @@ downRightCorner = (GUISize[0]-1, GUISize[1]-1)
 middleOfTheScreen = (GUISize[0]/2, GUISize[1]/2)
 os.environ['SDL_VIDEO_WINDOW_POS'] = 'center'
 
+isNewExperimentConfigRequired = input("Do you want to change the experiment config?(y/n)")
+while not sendJson:
+    if isNewExperimentConfigRequired == 'y':
+        print("Config editor is starting")
+        os.system("python configJSON_editor.py")
+        sendJson = True
+    elif isNewExperimentConfigRequired == 'n':
+        sendJson = True
+    else:
+        continue
+
+if sendJson == True:
+    with open('haptic.json') as json_data:
+        jsonConfig = json_data.read().encode(encoding='utf-8')
+        ser.write(jsonConfig)
+    sendJson = False
+    experimentState = 1
+    fileStreamer = open('lastReadData.csv', 'w')
+
+
 pygame.init()
 clock = pygame.time.Clock()
 # GUIDisplay = pygame.display.set_mode(GUISize)
