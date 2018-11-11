@@ -6,6 +6,7 @@ from pygame import gfxdraw
 from struct import *
 import os
 import time
+from pygl2d import display, draw
 
 # ///// Experiment Variables //////
 position_pedal = 0
@@ -118,16 +119,19 @@ readerThread = myThread(1)
 readerThread.start()
 
 # ///////////// GUI SCREEN INIT ////////////////
-GUISize = [800, 600]
+GUISize = (800, 600)
 upLeftCorner = (0, 0)
 downLeftCorner = (0, GUISize[1] - 1)
 upRightCorner = (GUISize[0]-1, 0)
 downRightCorner = (GUISize[0]-1, GUISize[1]-1)
 middleOfTheScreen = (GUISize[0]/2, GUISize[1]/2)
+os.environ['SDL_VIDEO_WINDOW_POS'] = 'center'
 
 pygame.init()
 clock = pygame.time.Clock()
-GUIDisplay = pygame.display.set_mode(GUISize)
+# GUIDisplay = pygame.display.set_mode(GUISize)
+GUIDisplay = pygame.display.set_mode(GUISize, pygame.DOUBLEBUF | pygame.OPENGL)
+display.init_gl()
 pygame.display.set_caption('Target Tracking')
 
 redColor   = (255, 0, 0)
@@ -142,29 +146,16 @@ test1 = 0
 direction = 0
 # // GUI LOOP //
 while not isWindowClosed:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
+    clock.tick(240)
+    for e in pygame.event.get():
+        if e.type == pygame.QUIT:
             isWindowClosed = True
+        if e.type == pygame.KEYDOWN:
+            if e.key == pygame.K_ESCAPE:
+                isWindowClosed = True
 
     if experimentState == 1:
-        # Fill the GUI with white
-        GUIDisplay.fill((205, 205, 205))
-        pygame.draw.line(GUIDisplay, blackColor, upLeftCorner, upRightCorner, 1)
-        pygame.draw.line(GUIDisplay, blackColor, upLeftCorner, downLeftCorner, 1)
-        pygame.draw.line(GUIDisplay, blackColor, downLeftCorner, downRightCorner, 1)
-        pygame.draw.line(GUIDisplay, blackColor, upRightCorner, downRightCorner, 1)
 
-        pygame.draw.line(GUIDisplay, blackColor, (middleOfTheScreen[0], 0), (middleOfTheScreen[0], GUISize[1] - 1), 1)
-        pygame.draw.line(GUIDisplay, blackColor, (0, middleOfTheScreen[1]), (GUISize[0] - 1, middleOfTheScreen[1]), 1)
-        # Acquire thread lock
-        threadLock.acquire()
-        # Take local copies of the positions
-        # Only positions will be used for GUI
-        _pT = -1 * position_target + 90
-        _pP = -1 * position_pedal + 90
-
-        # Release the mutex after taking copies
-        threadLock.release()
         # test1 = test1 + 1
         # if test1 is 2:
         #     if direction is 0:
@@ -179,42 +170,26 @@ while not isWindowClosed:
         #             direction = 0
         #     test1 = 0
 
+        # Acquire thread lock
+        threadLock.acquire()
+        # Take local copies of the positions
+        # Only positions will be used for GUI
+        _pT = -1 * position_target + 90
+        _pP = -1 * position_pedal + 90
+
+        # Release the mutex after taking copies
+        threadLock.release()
         targetRectangle = calculateRectangleCorners(_pT, handleLength, handleThickness)
         pedalRectangle  = calculateRectangleCorners(_pP, handleLength, handleThickness)
 
+        display.begin_draw(GUISize)
+        draw.polygon(pedalRectangle[0:4], blackColor, aa=True, alpha=255.0)
+        draw.circle((int(pedalRectangle[4]),int(pedalRectangle[5])), pedalRadius, blackColor)
+        draw.polygon(targetRectangle[0:4], redColor, aa=True, alpha=255.0)
+        draw.circle((int(targetRectangle[4]), int(targetRectangle[5])), targetRadius, redColor)
+        draw.circle((int(middleOfTheScreen[0]), int(middleOfTheScreen[1])), handleThickness, redColor)
+        display.end_draw()
 
-
-        pygame.gfxdraw.filled_polygon(GUIDisplay,
-                                      pedalRectangle[0:4],
-                                      blackColor)
-        pygame.gfxdraw.filled_circle(GUIDisplay,
-                                     int(pedalRectangle[4]),
-                                     int(pedalRectangle[5]),
-                                     pedalRadius,
-                                     blackColor)
-        pygame.gfxdraw.filled_circle(GUIDisplay,
-                                     int(middleOfTheScreen[0]),
-                                     int(middleOfTheScreen[1]),
-                                     handleThickness,
-                                     blackColor)
-
-        pygame.gfxdraw.filled_polygon(GUIDisplay,
-                                      targetRectangle[0:4],
-                                      redColor)
-        pygame.gfxdraw.filled_circle(GUIDisplay,
-                                     int(targetRectangle[4]),
-                                     int(targetRectangle[5]),
-                                     targetRadius,
-                                     redColor)
-        pygame.gfxdraw.filled_circle(GUIDisplay,
-                                     int(middleOfTheScreen[0]),
-                                     int(middleOfTheScreen[1]),
-                                     handleThickness,
-                                     redColor)
-
-        pygame.display.update()
-        # 240Hz FPS
-        clock.tick(240)
     elif experimentState == 0:
         # time.sleep(3)
         isNewExperimentConfigRequired = input("Do you want to change the experiment config?(y/n)")
@@ -235,6 +210,6 @@ while not isWindowClosed:
             experimentState = 1
             fileStreamer = open('lastReadData.csv', 'w')
 
-# readerThread.join()a
+readerThread.join()
 pygame.quit()
 quit()

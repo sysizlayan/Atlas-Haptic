@@ -2,12 +2,13 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="mjson_find" key="selection"/>
+		<item value="dummyLoad" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="dummyLoad"/>
 			<item value="mjson_find"/>
 			<item value="UART_B"/>
 			<item value="idle"/>
@@ -15,7 +16,6 @@
 			<item value="PI"/>
 			<item value="TWO"/>
 			<item value="sinTable_f32"/>
-			<item value="sine"/>
 		</list>
 		<list key="replacehistory">
 		</list>
