@@ -36,7 +36,7 @@ def init_gl():
     glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE)
     glEnable(GL_TEXTURE_2D)
     glShadeModel(GL_SMOOTH)
-    glClearColor(0.3, 0.3, 0.3, 0.3)
+    glClearColor(0.7, 0.7, 0.7, 0.7)
     glClearDepth(1.0)
     glEnable(GL_DEPTH_TEST)
     glEnable(GL_ALPHA_TEST)

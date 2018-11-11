@@ -130,7 +130,7 @@ os.environ['SDL_VIDEO_WINDOW_POS'] = 'center'
 pygame.init()
 clock = pygame.time.Clock()
 # GUIDisplay = pygame.display.set_mode(GUISize)
-GUIDisplay = pygame.display.set_mode(GUISize, pygame.DOUBLEBUF | pygame.OPENGL)
+GUIDisplay = pygame.display.set_mode(GUISize, pygame.DOUBLEBUF | pygame.OPENGL | pygame.HWSURFACE)
 display.init_gl()
 pygame.display.set_caption('Target Tracking')
 
@@ -146,7 +146,7 @@ test1 = 0
 direction = 0
 # // GUI LOOP //
 while not isWindowClosed:
-    clock.tick(240)
+    clock.tick(300)
     for e in pygame.event.get():
         if e.type == pygame.QUIT:
             isWindowClosed = True
