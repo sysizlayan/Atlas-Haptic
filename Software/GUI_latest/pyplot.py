@@ -80,13 +80,13 @@ class myThread(threading.Thread):
                     #Release mutex
                     threadLock.release()
                     if experimentState == 1:
-                        print("Time:{0} Pedal_Pos:{1:.2}, Target_Pos:{2:.2} Pedal_Vel:{3:.2}, Target_Vel:{4:.2}\n"
-                              .format(time,
-                                      round(unfiltered_position_pedal, 2),
-                                      round(position_pedal, 2),
-                                      round(position_target, 2),
-                                      round(velocity_pedal, 2),
-                                      round(velocity_target, 2)))
+                        # print("Time:{0} Pedal_Pos:{1:.2}, Target_Pos:{2:.2} Pedal_Vel:{3:.2}, Target_Vel:{4:.2}\n"
+                        #       .format(time,
+                        #               round(unfiltered_position_pedal, 2),
+                        #               round(position_pedal, 2),
+                        #               round(position_target, 2),
+                        #               round(velocity_pedal, 2),
+                        #               round(velocity_target, 2)))
                         fileStreamer.write(
                             "{0},{1:.2f},{2:.4f},{3:.4f},{4:.4f},{5:.4f}\n".format(time, round(unfiltered_position_pedal, 2),
                                                                                    round(position_pedal, 4),
@@ -166,7 +166,7 @@ test1 = 0
 direction = 0
 # // GUI LOOP //
 while not isWindowClosed:
-    clock.tick(300)
+    clock.tick(260)
     for e in pygame.event.get():
         if e.type == pygame.QUIT:
             isWindowClosed = True
