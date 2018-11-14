@@ -37,7 +37,7 @@ def calculateRectangleCorners(angle=0, length=200, thickness=5):
 threadLock = threading.Lock()
 
 ser = serial.Serial()
-portName = 'COM4'  # Look for port name every time!
+portName = 'COM18'  # Look for port name every time!
 baudRate = 2000000  # 2 MHz
 try:
     ser.port = portName
