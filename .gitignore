@@ -22,3 +22,5 @@ Software/.metadata/
 *.prefs
 *.resources
 *.xmi
+Software/GUI_latest/lastReadData.csv
+*.pyc

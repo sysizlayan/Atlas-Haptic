@@ -37,8 +37,9 @@ def calculateRectangleCorners(angle=0, length=200, thickness=5):
 threadLock = threading.Lock()
 
 ser = serial.Serial()
-portName = 'COM18'  # Look for port name every time!
+portName = 'COM4'  # Look for port name every time!
 baudRate = 2000000  # 2 MHz
+fileStreamer = 0
 try:
     ser.port = portName
     ser.baudrate = baudRate
@@ -64,18 +65,19 @@ class myThread(threading.Thread):
         global velocity_target
         global unfiltered_position_pedal
         global experimentState
+        global fileStreamer
         while not isWindowClosed:
             try:
                 temp = ser.read_until(b'$$')
 
-                line = ser.read_until(b'**')
-                line = line[0: len(line) - 2]
+                line1 = ser.read_until(b'**')
+                line = line1[0: len(line1) - 2]
                 # print(len(line))
                 if len(line) == 24:
                     # Acquire mutex
                     threadLock.acquire()
                     # little endian unsigned integer
-                    (time, unfiltered_position_pedal, position_pedal, velocity_pedal, position_target, velocity_target) = unpack('<Ifffff',line)
+                    (time, unfiltered_position_pedal, position_pedal, velocity_pedal, position_target, velocity_target) = unpack('<Ifffff', line)
 
                     #Release mutex
                     threadLock.release()
@@ -94,16 +96,17 @@ class myThread(threading.Thread):
                                                                                    round(position_target, 4),
                                                                                    round(velocity_target, 4)))
                     if position_target == -1000000 and velocity_target == -1000000:
-                        experimentState = 0
                         position_pedal = 0
                         position_target = 0
                         velocity_pedal = 0
                         velocity_target = 0
                         unfiltered_position_pedal = 0
                         fileStreamer.close()
+                        experimentState = 0
+
                 else:
                     print("Delimiter Error:")
-                    print(len(line))
+                    print(line1)
                     continue
 
             except KeyboardInterrupt:
@@ -118,13 +121,6 @@ class myThread(threading.Thread):
 readerThread = myThread(1)
 readerThread.start()
 
-# ///////////// GUI SCREEN INIT ////////////////
-GUISize = (800, 600)
-upLeftCorner = (0, 0)
-downLeftCorner = (0, GUISize[1] - 1)
-upRightCorner = (GUISize[0]-1, 0)
-downRightCorner = (GUISize[0]-1, GUISize[1]-1)
-middleOfTheScreen = (GUISize[0]/2, GUISize[1]/2)
 os.environ['SDL_VIDEO_WINDOW_POS'] = 'center'
 
 isNewExperimentConfigRequired = input("Do you want to change the experiment config?(y/n)")
@@ -138,97 +134,132 @@ while not sendJson:
     else:
         continue
 
-if sendJson == True:
-    with open('haptic.json') as json_data:
-        jsonConfig = json_data.read().encode(encoding='utf-8')
-        ser.write(jsonConfig)
-    sendJson = False
-    experimentState = 1
-    fileStreamer = open('lastReadData.csv', 'w')
+with open('haptic.json') as json_data:
+    jsonConfig = json_data.read().encode(encoding='utf-8')
+    ser.write(jsonConfig)
+sendJson = False
+experimentState = 1
+fileStreamer = open('lastReadData.csv', 'w')
 
-
+# ///////// GUI INIT ////////////////
 pygame.init()
+print(pygame.display.Info())
+screenInfo = pygame.display.Info()
+GUISize = (screenInfo.current_w, screenInfo.current_h)
+upLeftCorner = (0, 0)
+downLeftCorner = (0, GUISize[1] - 1)
+upRightCorner = (GUISize[0]-1, 0)
+downRightCorner = (GUISize[0]-1, GUISize[1]-1)
+middleOfTheScreen = (GUISize[0]/2, GUISize[1]/2)
+
+
 clock = pygame.time.Clock()
 # GUIDisplay = pygame.display.set_mode(GUISize)
-GUIDisplay = pygame.display.set_mode(GUISize, pygame.DOUBLEBUF | pygame.OPENGL | pygame.HWSURFACE)
+pygame.display.set_mode(GUISize, pygame.DOUBLEBUF | pygame.OPENGL | pygame.HWSURFACE | pygame.FULLSCREEN)
 display.init_gl()
+
 pygame.display.set_caption('Target Tracking')
 
 redColor   = (255, 0, 0)
 blackColor = (0, 0, 0)
-handleLength = 200  # Line size
+handleLength = 400  # Line size
 handleThickness = 5
-targetRadius = 20
-pedalRadius = 30
+targetRadius = 25
+pedalRadius = 35
 rectangleSize = (10, 200)
 
 test1 = 0
 direction = 0
-# // GUI LOOP //
-while not isWindowClosed:
-    clock.tick(260)
-    for e in pygame.event.get():
-        if e.type == pygame.QUIT:
-            isWindowClosed = True
-        if e.type == pygame.KEYDOWN:
-            if e.key == pygame.K_ESCAPE:
-                isWindowClosed = True
 
-    if experimentState == 1:
+isWindowReady = True
+isQuitNecessary = False
 
-        # test1 = test1 + 1
-        # if test1 is 2:
-        #     if direction is 0:
-        #         position_pedal = position_pedal + 1
-        #         position_target = position_target - 1
-        #         if position_pedal == 90:
-        #             direction = 1
-        #     else:
-        #         position_pedal = position_pedal - 1
-        #         position_target = position_target + 1
-        #         if position_pedal == -90:
-        #             direction = 0
-        #     test1 = 0
-
-        # Acquire thread lock
-        threadLock.acquire()
-        # Take local copies of the positions
-        # Only positions will be used for GUI
-        _pT = -1 * position_target + 90
-        _pP = -1 * position_pedal + 90
-
-        # Release the mutex after taking copies
-        threadLock.release()
-        targetRectangle = calculateRectangleCorners(_pT, handleLength, handleThickness)
-        pedalRectangle  = calculateRectangleCorners(_pP, handleLength, handleThickness)
-
-        display.begin_draw(GUISize)
-        draw.polygon(pedalRectangle[0:4], blackColor, aa=True, alpha=255.0)
-        draw.circle((int(pedalRectangle[4]),int(pedalRectangle[5])), pedalRadius, blackColor)
-        draw.polygon(targetRectangle[0:4], redColor, aa=True, alpha=255.0)
-        draw.circle((int(targetRectangle[4]), int(targetRectangle[5])), targetRadius, redColor)
-        draw.circle((int(middleOfTheScreen[0]), int(middleOfTheScreen[1])), handleThickness, redColor)
-        display.end_draw()
-
-    elif experimentState == 0:
+while True:
+    if experimentState == 0:
+        if isWindowReady:
+            pygame.display.quit()
+            pygame.quit()
+            isWindowReady = False
         # time.sleep(3)
         isNewExperimentConfigRequired = input("Do you want to change the experiment config?(y/n)")
-        if isNewExperimentConfigRequired == 'y':
-            print("Config editor is starting")
-            os.system("python configJSON_editor.py")
-            sendJson = True
-        elif isNewExperimentConfigRequired == 'n':
-            sendJson = True
-        else:
-            continue
+        while not sendJson:
+            if isNewExperimentConfigRequired == 'y':
+                print("Config editor is starting")
+                os.system("python configJSON_editor.py")
+                sendJson = True
+            elif isNewExperimentConfigRequired == 'n':
+                sendJson = True
+            else:
+                continue
 
-        if sendJson == True:
-            with open('haptic.json') as json_data:
-                jsonConfig = json_data.read().encode(encoding='utf-8')
-                ser.write(jsonConfig)
-            sendJson = False
-            experimentState = 1
-            fileStreamer = open('lastReadData.csv', 'w')
+        with open('haptic.json') as json_data:
+            jsonConfig = json_data.read().encode(encoding='utf-8')
+            ser.write(jsonConfig)
+        sendJson = False
+
+        fileStreamer = open('lastReadData.csv', 'w')
+
+        pygame.init()
+        clock = pygame.time.Clock()
+        # GUIDisplay = pygame.display.set_mode(GUISize)
+        pygame.display.set_mode(GUISize, pygame.DOUBLEBUF | pygame.OPENGL | pygame.HWSURFACE)
+        display.init_gl()
+        pygame.display.set_caption('Target Tracking')
+        experimentState = 1
+
+    # // GUI LOOP //
+    elif experimentState == 1:
+        if isWindowReady is not True:
+            pygame.init()
+            clock = pygame.time.Clock()
+            # GUIDisplay = pygame.display.set_mode(GUISize)
+            pygame.display.set_mode(GUISize, pygame.DOUBLEBUF | pygame.OPENGL | pygame.HWSURFACE | pygame.FULLSCREEN)
+            display.init_gl()
+            pygame.display.set_caption('Target Tracking')
+            isWindowReady = True
+        while not isWindowClosed and experimentState == 1:
+            clock.tick(260)
+            for e in pygame.event.get():
+                if e.type == pygame.QUIT:
+                    isWindowClosed = True
+                if e.type == pygame.KEYDOWN:
+                    if e.key == pygame.K_ESCAPE:
+                        isWindowClosed = True
+
+            # test1 = test1 + 1
+            # if test1 is 2:
+            #     if direction is 0:
+            #         position_pedal = position_pedal + 1
+            #         position_target = position_target - 1
+            #         if position_pedal == 90:
+            #             direction = 1
+            #     else:
+            #         position_pedal = position_pedal - 1
+            #         position_target = position_target + 1
+            #         if position_pedal == -90:
+            #             direction = 0
+            #     test1 = 0
+
+            # Acquire thread lock
+            threadLock.acquire()
+            # Take local copies of the positions
+            # Only positions will be used for GUI
+            _pT = -1 * position_target + 90
+            _pP = -1 * position_pedal + 90
+
+            # Release the mutex after taking copies
+            threadLock.release()
+            targetRectangle = calculateRectangleCorners(_pT, handleLength, handleThickness)
+            pedalRectangle  = calculateRectangleCorners(_pP, handleLength, handleThickness)
+
+            display.begin_draw(GUISize)
+            draw.polygon(pedalRectangle[0:4], blackColor, aa=True, alpha=255.0)
+            draw.circle((int(pedalRectangle[4]),int(pedalRectangle[5])), pedalRadius, blackColor)
+            draw.polygon(targetRectangle[0:4], redColor, aa=True, alpha=255.0)
+            draw.circle((int(targetRectangle[4]), int(targetRectangle[5])), targetRadius, redColor)
+            draw.circle((int(middleOfTheScreen[0]), int(middleOfTheScreen[1])), handleThickness, redColor)
+            display.end_draw()
+
 
 readerThread.join()
 pygame.quit()
