@@ -7,67 +7,61 @@ close all;
 %% Data Import
 global N
 global dt
-global angPos
-global gyro_angVel
+global pedal
 global t
 
-N = length(angPos); % Number of samples
-
-z = [angPos'; gyro_angVel'];% Measured signal
-x_hat=zeros(2,N); % State Estimates
-
-qPos_Pos    = 0.001;
-qPos_Vel    = 0.001;
-qVel_Vel    = 0.001;
- 
-rEncoder    = 0.0027;
-rGyro       = 0.0025;
-
-A = [1+dt -dt; 0 1]; % System Model
+A = [1 dt; 0 1]; % System Model
+B = 0;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % y[k] = z[k] - H * x_hat_minus
 
-C1 = [1 0; 1/dt -1/dt]; % Measurement Model when encoder has come
-C2 = [1/dt -1/dt];
+H1 = eye(2); % Measurement Model when encoder has come
 
 %% Error Covariences
-Q = [qPos_Pos, qPos_Vel; qPos_Vel, qVel_Vel];
-R = diag([rEncoder, rGyro]);
-
+Q = 1e6*eye(2);
+R = diag([0.0027, 0.0025]);
+for emIterations = 1:1
+    
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Kalman
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Initialisation
-x_hat(:,1) = z(:,1);
+% Take first theta value as initial point and assume it is in rest
+x_hat(:,1) = [z(1);1e-3]; 
 x_hat_plus = x_hat(:,1); %Take first measurement as initial state
 P_plus = R; % Starting covarience
 
+lastChangedMeasurement = z(1);
+lastChangedMeasurementInstance = 1;
+velocityMeasurementVector = zeros(N,1);
+velociyMeasurement = 0;
 for k=2:N
     %% Prediction
     x_hat_minus = A*x_hat_plus; % Model Output
     P_minus = A*P_plus*A' + Q; % Covarience Estimation
 
-    %% Measurement Update
-    if(angPos(k-1) == angPos(k))
-        y = C2 * x_hat_minus; % output model
-        gyro_current = z(2,k);
-        y_err = gyro_current - y; % error
-        K = (P_minus(2,2)*C2')*pinv(C2*P_minus(2,2)*C2'+R(2,2));
-        x_hat_plus = x_hat_minus + K * y_err;
-        P_plus = (eye(2)-K*C2)*P_minus;
+    %% Correction
+    if(z(k-1) ~= z(k))
+        velocityMeasurement = (z(k) - lastChangedMeasurement) / ...
+                              (dt*(k - lastChangedMeasurementInstance));
+        lastChangedMeasurement = z(k);
+        lastChangedMeasurementInstance = k;
+        
+        measurementVector = [z(k);velocityMeasurement];
+        errorVector = measurementVector - H1 * x_hat_minus;
+        
+        kalmanGain = P_minus * H1' \ (H1 * P_minus * H1' + R);
+        x_hat_plus = x_hat_minus + kalmanGain * errorVector;
+        P_plus = (eye(2) - kalmanGain*H1) * P_minus;
     else
-        y = C1*x_hat_minus;  % Output Model
-        y_err = z(:,k) - y; % error
-
-        K = (P_minus*C1')*pinv(C1*P_minus*C1'+R);
-
-        x_hat_plus = x_hat_minus + K * y_err;
-        P_plus = (eye(2)-K*C1)*P_minus;
+        x_hat_plus = x_hat_minus;
+        P_plus = P_minus;
     end
+    velocityMeasurementVector(k) = velocityMeasurement;
     x_hat(:,k)=x_hat_plus;
 end
-
+end
 filtered_angPos = x_hat(1,:);
 
 filtered_angVel = x_hat(2,:);
@@ -76,15 +70,15 @@ figure
 plot(t(2:N),filtered_angPos(2:N))
 title('Angular Position')
 hold on
-plot(t,angPos)
+plot(t,pedal.position_unfiltered)
 legend('Kalman Output','Measurement')
 
 figure
 plot(t(2:N),filtered_angVel(2:N))
 title('Angular Velocity')
-hold on
-plot(t,gyro_angVel) %, t, angVel_fromEncoder )
-legend('Kalman Output', 'Measurement Gyro', 'Measurement Encoder')
+% hold on
+% plot(t,pedal.velocity, t, velocityMeasurementVector )
+% legend('Kalman Output', 'Measurement Gyro', 'Measurement Encoder')
 
 % angPos = angPostmp;
 
