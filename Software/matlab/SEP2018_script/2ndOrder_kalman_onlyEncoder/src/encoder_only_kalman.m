@@ -20,8 +20,8 @@ theta_measurements = pedal.position_unfiltered;
 
 %% Error Covariences
 Q = 1e6*eye(2);%10^(10*(rand)) .* rand(2,2);
-R = diag([0.0027, 0.0025]);
-for emIterations = 1:5
+R = diag([0.0027 1e4]);
+for emIterations = 1:100
     %State vectors
     predictedState_vectors = zeros(2,N);
     filteredState_vectors = zeros(2,N);
@@ -50,8 +50,8 @@ for emIterations = 1:5
     lastChangedMeasurement = theta_measurements(1);
     lastChangedMeasurementInstance = 1;
     
-    
-    velociyMeasurement = 0;
+    kalmanGain = 0;
+    velocityMeasurement = 0;
     for k=2:N
         %% Prediction
         predictedState = A * filteredState;
@@ -67,7 +67,7 @@ for emIterations = 1:5
             measurementVector = [theta_measurements(k);velocityMeasurement];
             errorVector = measurementVector - H1 * predictedState;
 
-            kalmanGain = predictedCovariance_matrix * H1' \ (H1 * predictedCovariance_matrix* H1' + R);
+            kalmanGain = predictedCovariance_matrix * H1' \ (H1 * predictedCovariance_matrix * H1' + R);
 
             filteredState = predictedState + kalmanGain * errorVector;
             filteredCovariance_matrix = (eye(2) - kalmanGain*H1) * predictedCovariance_matrix;
@@ -132,8 +132,29 @@ for emIterations = 1:5
                         - minusTerm ...
                         - minusTerm';
     end
+    Q_prev = Q;
     Q = 1/N .* sumSum;
     display(Q)
+    
+    sumSum = zeros(2,2);
+    numberOfNewMeasurements = 0;
+    for k=1:N-1
+        if(theta_measurements(k)~=theta_measurements(k+1))
+            numberOfNewMeasurements = numberOfNewMeasurements + 1;
+            error = [theta_measurements(k); thetaDot_measurements(k)] - H1 * smoothedState_vectors(:,k);
+            plusTerm1 = H1 * smoothedCovariance_matrices(:,:,k) * H1';
+            sumSum = sumSum + ...
+                    + error * error' ...
+                    + plusTerm1;
+        end
+    end
+%     R_prev = R;
+%     R = 1/numberOfNewMeasurements .* sumSum;
+%     display(R);
+    
+    difference_vector = smoothedState_vectors - filteredState_vectors;
+    normalized_diff = (difference_vector * difference_vector') / N;
+    display(normalized_diff);
 end
 
 figure
@@ -150,7 +171,10 @@ plot(t(2:N), filteredState_vectors(2,2:N))
 title('Angular Velocity')
 hold on
 plot(t(2:N), smoothedState_vectors(2,2:N))
-legend('Filtered Velocity', 'Smoothed Velocity')
+hold on
+plot(t(2:N), thetaDot_measurements(2:N))
+legend('Filtered Velocity', 'Smoothed Velocity', 'Measurement')
+save('last_iteration_100.mat')
 % hold on
 % plot(t,pedal.velocity, t, velocityMeasurementVector )
 % legend('Kalman Output', 'Measurement Gyro', 'Measurement Encoder')
