@@ -21,12 +21,12 @@ theta_measurements = pedal.position_unfiltered;
 %% Error Covariences
 processVariance = 5.38e3;%(0.18/dt)^2/dt;
 % Q = B * B' * processVariance;
-% Q = [1/4 * dt^4, dt^3/2 ; dt^3/2 dt^2] * (processVariance / dt);
+% Q = [1/4 * dt^4, dt^3/2 ; dt^3/2, dt^2] * (processVariance / dt);
 
 % Q = 1e6*eye(2);%10^(10*(rand)) .* rand(2,2);
 % R = diag([0.18^2/12 (0.18/dt)^2/dt]);
-% % R = diag([0.18^2/12 5.38e3]);
-for emIterations = 1:1
+% R = diag([0.18^2/12 5.38e3]);
+for emIterations = 1:50
     display(emIterations);
     %State vectors
     predictedState_vectors = zeros(2,N);
@@ -148,7 +148,7 @@ for emIterations = 1:1
     for k=2:N
         if(theta_measurements(k-1) ~= theta_measurements(k))
             numberOfNewMeasurements = numberOfNewMeasurements + 1;
-            error = theta_measurements(k) * H1 * smoothedState_vectors(:,k);
+            error = theta_measurements(k) - H1 * smoothedState_vectors(:,k);
             
             sumR = sumR + error * error';
             
@@ -157,7 +157,7 @@ for emIterations = 1:1
     end
     Rnew = sumR ./ (numberOfNewMeasurements+1);
     display(Rnew);
-%     R=Rnew;
+    R=Rnew;
 %     covarianceBetweenStates_matrices = zeros(2,2,N);
 %     for k=2:N
 %         covarianceBetweenStates_matrices(:,:,k) = smoothedCovariance_matrices(:,:,k) * ...
