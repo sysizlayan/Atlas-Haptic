@@ -18,7 +18,7 @@ d = 0;
 
 
 % Measurements
-theta_measurements = pedal.position_unfiltered;
+theta_measurements = pedal.position_decreased;%pedal.position_unfiltered;
 thetaDot_measurements = pedal.velocity;
 
 % Noise models
@@ -150,16 +150,16 @@ end
 figure
 plot(t,filteredTheta_values);
 hold on
-plot(t,theta_measurements);
-hold on
 plot(t, smoothedTheta_values);
-legend('Filtered Output', 'Actual Measurement', 'Smoothed Output')
+hold on
+plot(t,theta_measurements);
+legend('Filtered Output', 'Smoothed Output', 'Actual Measurement')
 title('Angular Position')
 
-figure
-plot(t,predictionError_values);
-title('Prediction errors')
-
-figure
-plot(t,kalmanGain_values);
-title('Kalman Gains')
+% figure
+% plot(t,predictionError_values);
+% title('Prediction errors')
+% 
+% figure
+% plot(t,kalmanGain_values);
+% title('Kalman Gains')

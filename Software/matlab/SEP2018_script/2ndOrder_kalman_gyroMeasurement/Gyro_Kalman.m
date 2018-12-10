@@ -16,16 +16,16 @@ B = [dt^2/2; dt];
 H1 = eye(2); % Measurement Model when encoder has come
 H2 = [0 1]; % Gyro gives just angular velocity 
 % Measurements
-theta_measurements = pedal.position_unfiltered;
+theta_measurements = pedal.position_decreased;%pedal.position_unfiltered;
 thetaDot_measurements = pedal.velocity;
 
 %% Error Covariences
-processVariance = 0.0025;
+processVariance = 1e1;%0.0025;
 % Q = B * B' * processVariance;
-Q = [1/4 * dt^4, dt^3/2 ; dt^3/2, dt^2] * (processVariance / dt);
+% Q = [1/4 * dt^4, dt^3/2 ; dt^3/2, dt^2] * processVariance;%(processVariance / dt);
 
-R = diag([0.18^2/12 0.05^2]); % Gyro variance is taken from datasheet
-for emIterations = 1:10
+% R = diag([0.18^2/12 1e5]); % Gyro variance is taken from datasheet
+for emIterations = 1:1
     display(emIterations);
     %State vectors
     predictedState_vectors = zeros(2,N);
@@ -66,29 +66,18 @@ for emIterations = 1:10
             filteredState = predictedState + kalmanGain * errorVector;
             filteredCovariance_matrix = (eye(2) - kalmanGain*H1) * predictedCovariance_matrix;
         else
-%             filteredState = predictedState;
-%             filteredCovariance_matrix = predictedCovariance_matrix;
             measurementVector = thetaDot_measurements(k);
             errorVector = measurementVector - H2*predictedState;
             
-            kalmanGain = predictedCovariance_matrix * H2' * pinv(H2*predictedCovariance_matrix*H2' + R(2,2));
+            kalmanGain = predictedCovariance_matrix * H2' * pinv(H2*(predictedCovariance_matrix+R)*H2');
             
             filteredState = predictedState + kalmanGain * errorVector;
             filteredCovariance_matrix = (eye(2) - kalmanGain*H2) * predictedCovariance_matrix;
         end
-        thetaDot_measurements(k)    = velocityMeasurement;
         filteredState_vectors(:,k)  = filteredState;
         predictedState_vectors(:,k) = predictedState;
-%         kalmanGain_matrices(:,:,k)  = kalmanGain;
         filteredCovariance_matrices(:,:,k)  = filteredCovariance_matrix;
         predictedCovariance_matrices(:,:,k) = predictedCovariance_matrix;
-        
-%         if(predictedCovariance_matrix(1,1) < 0 || predictedCovariance_matrix(1,2) < 0 ||predictedCovariance_matrix(2,1) < 0 || predictedCovariance_matrix(2,2) < 0)
-%             display(predictedCovariance_matrix);
-%         end
-%         if(filteredCovariance_matrix(1,1) < 0 || filteredCovariance_matrix(1,2) < 0 ||filteredCovariance_matrix(2,1) < 0 || filteredCovariance_matrix(2,2) < 0)
-%             display(predictedCovariance_matrix);
-%         end
     end % End of forward kalman loop
     
     %Kalman Smoother
@@ -119,6 +108,7 @@ for emIterations = 1:10
         smoothedState_vectors(:,k) = smoothedState;
         smoothedGain_matrices(:,:,k) = smoothingGain;
     end % End of smoother loop
+    
     sumQ = zeros(2,2);
     for k=1:N-1
         stateError = smoothedState_vectors(:, k+1) ...
@@ -137,61 +127,23 @@ for emIterations = 1:10
     display(Qnew);
     Q = Qnew;
     
-%     sumR = zeros(2,2);
-%     numberOfNewMeasurements = 0;
-%     for k=2:N
-%         if(theta_measurements(k-1) ~= theta_measurements(k))
-%             numberOfNewMeasurements = numberOfNewMeasurements + 1;
-%             error = theta_measurements(k) - H1 * smoothedState_vectors(:,k);
-%             
-%             sumR = sumR + error * error';
-%             
-%             sumR = sumR + H1 * smoothedCovariance_matrices(:,:,k) * H1'; 
-%         end
-%     end
-%     Rnew = sumR ./ (numberOfNewMeasurements+1);
-%     display(Rnew);
-%     R=Rnew;
-%     covarianceBetweenStates_matrices = zeros(2,2,N);
-%     for k=2:N
-%         covarianceBetweenStates_matrices(:,:,k) = smoothedCovariance_matrices(:,:,k) * ...
-%                                                    smoothedGain_matrices(k-1)';
-%     end
-%     
-%     sumSum = zeros(2,2);
-%     for k=1:N-1
-%         error = smoothedState_vectors(:, k+1) ...
-%                 - A * smoothedState_vectors(:, k);
-%         minusTerm = covarianceBetweenStates_matrices(:,:, k+1) * A';
-%         sumSum = sumSum + (error * error') ...
-%                         + (A * smoothedCovariance_matrices(:,:,k) * A')...
-%                         + smoothedCovariance_matrices(:,:,k+1) ...
-%                         - minusTerm ...
-%                         - minusTerm';
-%     end
-%     Q_prev = Q;
-%     Q = 1/N .* sumSum;
-%     display(Q)
-%     
-%     sumSum = zeros(2,2);
-%     numberOfNewMeasurements = 0;
-%     for k=2:N
-%         if(theta_measurements(k-1)~=theta_measurements(k))
-%             numberOfNewMeasurements = numberOfNewMeasurements + 1;
-%             error = [theta_measurements(k); thetaDot_measurements(k)] - H1 * smoothedState_vectors(:,k);
-%             plusTerm1 = H1 * smoothedCovariance_matrices(:,:,k) * H1';
-%             sumSum = sumSum + ...
-%                     + error * error' ...
-%                     + plusTerm1;
-%         end
-%     end
-%     R_prev = R;
-%     R = 1/numberOfNewMeasurements .* sumSum;
-%     display(R);
-%     
-%     difference_vector = smoothedState_vectors - filteredState_vectors;
-%     normalized_diff = (difference_vector * difference_vector') / N;
-%     display(normalized_diff);
+    sumR = zeros(2,2);
+    for k=2:N
+        if(theta_measurements(k-1) ~= theta_measurements(k))
+            error = [theta_measurements(k);thetaDot_measurements(k)] - H1 * smoothedState_vectors(:,k);
+            
+            sumR = sumR + error * error';
+            
+            sumR = sumR + H1 * smoothedCovariance_matrices(:,:,k) * H1'; 
+        else
+            error = thetaDot_measurements(k) - H2 * smoothedState_vectors(:,k);
+            sumR(2,2) = sumR(2,2) + error * error';
+            sumR(2,2) = sumR(2,2) + H2 * smoothedCovariance_matrices(:,:,k) * H2';
+        end
+    end
+    Rnew = sumR ./ (N);
+    display(Rnew);
+    R=Rnew;
 end
 
 figure
@@ -200,30 +152,14 @@ title('Angular Position')
 hold on
 plot(t(2:N-20),smoothedState_vectors(1,2:N-20))
 hold on
-plot(t,pedal.position_unfiltered)
+plot(t,theta_measurements)
 legend('Kalman Output','Smoothed Output', 'Measurement')
-
-figure
-plot(t(2:N), filteredState_vectors(2,2:N))
-title('Angular Velocity')
-hold on
-plot(t(2:N-20), smoothedState_vectors(2,2:N-20))
-hold on
-plot(t(2:N), thetaDot_measurements(2:N))
-legend('Filtered Velocity', 'Smoothed Velocity', 'Measurement')
-save('last_iteration_100.mat')
 
 figure
 plot(t(2:N), filteredState_vectors(2,2:N))
 hold on
 plot(t(2:N-20), smoothedState_vectors(2, 2:N-20))
 hold on
-plot(t, pedal.velocity)
+plot(t, thetaDot_measurements)
 legend('Filtered Velocity','Smoothed Veloicity', 'Gyroscope')
-% hold on
-% plot(t,pedal.velocity, t, velocityMeasurementVector )
-% legend('Kalman Output', 'Measurement Gyro', 'Measurement Encoder')
-
-% angPos = angPostmp;
-
 
