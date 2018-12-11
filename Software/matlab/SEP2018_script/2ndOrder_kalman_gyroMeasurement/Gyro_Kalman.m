@@ -1,5 +1,5 @@
 %Seyit Yiðit SIZLAYAN / 1876861
-% IT IS NOT WORKING FOR NOW!
+
 %%INIT
 clc;
 close all;
@@ -16,15 +16,17 @@ B = [dt^2/2; dt];
 H1 = eye(2); % Measurement Model when encoder has come
 H2 = [0 1]; % Gyro gives just angular velocity 
 % Measurements
-theta_measurements = pedal.position_decreased;%pedal.position_unfiltered;
+theta_measurements = pedal.position_unfiltered;
 thetaDot_measurements = pedal.velocity;
 
 %% Error Covariences
 processVariance = 1e1;%0.0025;
 % Q = B * B' * processVariance;
 % Q = [1/4 * dt^4, dt^3/2 ; dt^3/2, dt^2] * processVariance;%(processVariance / dt);
+Q = [0.0369198715030800 73.8397430067125;73.8397430067119 147679.486014580];
 
 % R = diag([0.18^2/12 1e5]); % Gyro variance is taken from datasheet
+R = [0.357167483707424 120.168610904148;120.168610904148 134060.802938447];
 for emIterations = 1:1
     display(emIterations);
     %State vectors
@@ -128,10 +130,12 @@ for emIterations = 1:1
     Q = Qnew;
     
     sumR = zeros(2,2);
+    numberOfNewMeasurements = 0;
     for k=2:N
         if(theta_measurements(k-1) ~= theta_measurements(k))
-            error = [theta_measurements(k);thetaDot_measurements(k)] - H1 * smoothedState_vectors(:,k);
+            numberOfNewMeasurements = numberOfNewMeasurements+1;
             
+            error = [theta_measurements(k);thetaDot_measurements(k)] - H1 * smoothedState_vectors(:,k);
             sumR = sumR + error * error';
             
             sumR = sumR + H1 * smoothedCovariance_matrices(:,:,k) * H1'; 
@@ -141,7 +145,13 @@ for emIterations = 1:1
             sumR(2,2) = sumR(2,2) + H2 * smoothedCovariance_matrices(:,:,k) * H2';
         end
     end
-    Rnew = sumR ./ (N);
+%     display(numberOfNewMeasurements);
+%     sumR(1,1) = sumR(1,1) / numberOfNewMeasurements;
+%     sumR(1,2) = sumR(1,2) / numberOfNewMeasurements;
+%     sumR(2,1) = sumR(2,1) / numberOfNewMeasurements;
+%     sumR(2,2) = sumR(2,2) / N;
+%     Rnew = sumR;
+    Rnew = sumR ./ N;
     display(Rnew);
     R=Rnew;
 end
