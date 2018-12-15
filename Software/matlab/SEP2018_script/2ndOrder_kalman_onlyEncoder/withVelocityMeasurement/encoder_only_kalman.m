@@ -16,7 +16,7 @@ B = [dt^2/2; dt];
 H1 = eye(2); % Measurement Model when encoder has come
 
 % Measurements
-theta_measurements = pedal.position_unfiltered;
+theta_measurements = pedal.position_decreased;%pedal.position_unfiltered;
 
 %% Error Covariences
 processVariance = 5.38e3;%(0.18/dt)^2/dt;
@@ -26,7 +26,7 @@ processVariance = 5.38e3;%(0.18/dt)^2/dt;
 % Q = 1e6*eye(2);%10^(10*(rand)) .* rand(2,2);
 % R = diag([0.18^2/12 (0.18/dt)^2/dt]);
 % R = diag([0.18^2/12 5.38e3]);
-for emIterations = 1:50
+for emIterations = 1:1
     display(emIterations);
     %State vectors
     predictedState_vectors = zeros(2,N);
@@ -206,7 +206,7 @@ title('Angular Position')
 hold on
 plot(t(2:N-20),smoothedState_vectors(1,2:N-20))
 hold on
-plot(t,pedal.position_unfiltered)
+plot(t, theta_measurements)
 legend('Kalman Output','Smoothed Output', 'Measurement')
 
 figure
@@ -217,7 +217,6 @@ plot(t(2:N-20), smoothedState_vectors(2,2:N-20))
 hold on
 plot(t(2:N), thetaDot_measurements(2:N))
 legend('Filtered Velocity', 'Smoothed Velocity', 'Measurement')
-save('last_iteration_100.mat')
 
 figure
 plot(t(2:N), filteredState_vectors(2,2:N))
