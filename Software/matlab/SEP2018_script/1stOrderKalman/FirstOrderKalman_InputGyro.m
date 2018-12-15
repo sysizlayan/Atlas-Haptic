@@ -147,19 +147,24 @@ for emIterations = 1:1
    
 end
 
-figure
+fig1 = figure
 plot(t,filteredTheta_values);
 hold on
-plot(t,theta_measurements);
-hold on
 plot(t, smoothedTheta_values);
-legend('Filtered Output', 'Actual Measurement', 'Smoothed Output')
-title('Angular Position')
+hold on
+plot(t,theta_measurements);
+% ylabel('$$\dot{\theta} (^\circ /s)$$','Interpreter','latex')
+xlabel('Time (s)', 'Interpreter', 'latex')
+ylabel('$$\theta (^\circ)$$', 'Interpreter', 'latex');
+leg1 = legend('Kalman Filter', 'Measurement', 'Kalman Smoother');
+set(leg1,'Interpreter','latex');
+% set(leg1,'FontSize',17);
+title('Angular Position $$(^\circ)$$', 'Interpreter', 'latex');
 
-figure
-plot(t,predictionError_values);
-title('Prediction errors')
+% figure
+% plot(t,predictionError_values);
+% title('Prediction errors')
 
-figure
-plot(t,kalmanGain_values);
-title('Kalman Gains')
+% figure
+% plot(t,kalmanGain_values);
+% title('Kalman Gains')
