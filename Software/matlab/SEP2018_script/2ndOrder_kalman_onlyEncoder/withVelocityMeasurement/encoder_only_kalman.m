@@ -3,6 +3,8 @@
 %%INIT
 clc;
 close all;
+% clear
+% load('measurement_30_09_2018_sinus_1_0.mat')
 
 %% Data Import
 global N
@@ -17,14 +19,16 @@ H1 = eye(2); % Measurement Model when encoder has come
 
 % Measurements
 theta_measurements = pedal.position_unfiltered;
+velocityCalculator %% Just to get thetaDot measurements initially
 
 %% Error Covariences
-processVariance = (0.18/dt)^2/dt;
+processVariance = var(diff(thetaDot_measurements)/dt);%(0.18/dt)^2/dt;
+% Q = [dt^3/3, dt^2/2 ; dt^2/2, dt] * processVariance;
 
-Q = [dt^3/3, dt^2/2 ; dt^2/2, dt] * processVariance;
+encoderVariance = var(pedal.velocity - thetaDot_measurements);
+% R = diag([0.18^2/12 encoderVariance]);
 
-R = diag([0.18^2/12 5.38e3]);
-for emIterations = 1:50
+for emIterations = 1:1
     display(emIterations);
     %State vectors
     predictedState_vectors = zeros(2,N);
@@ -47,7 +51,7 @@ for emIterations = 1:50
     % Initial position is measured value, velocity is a small number
     % To prevent numerical instability
     thetaDot_measurements = zeros(N, 1);
-    thetaDot_measurements(1) = 1e-6;
+    thetaDot_measurements(1) = (theta_measurements(2)-theta_measurements(1))/dt;
     filteredState = [theta_measurements(1); thetaDot_measurements(1)];
     filteredState_vectors(:, 1) = filteredState;
     
@@ -151,6 +155,7 @@ for emIterations = 1:50
     Rnew = sumR ./ (numberOfEncoderMeasurements+1);
     display(Rnew);
     R=Rnew;
+    display(R(1,1))
 end
 
 fig1 = figure;
