@@ -18,7 +18,7 @@ d = 0;
 
 
 % Measurements
-theta_measurements = pedal.position_decreased;%pedal.position_unfiltered;
+theta_measurements = pedal.position_unfiltered;
 thetaDot_measurements = pedal.velocity;
 
 % Noise models
@@ -147,20 +147,29 @@ for emIterations = 1:1
    
 end
 
-fig1 = figure
+fig1 = figure;
 plot(t,filteredTheta_values);
 hold on
 plot(t, smoothedTheta_values);
 hold on
 plot(t,theta_measurements);
 
-% ylabel('$$\dot{\theta} (^\circ /s)$$','Interpreter','latex')
-xlabel('Time (s)', 'Interpreter', 'latex')
+set(fig1.CurrentAxes,'TickLabelInterpreter','latex');
+set(fig1.CurrentAxes,'FontSize', 16);
+leg1 = legend('Kalman Filter','Kalman Smoother', 'Encoder Measurement');
+set(leg1, 'Interpreter', 'latex')
+set(leg1, 'FontSize', 9)
 ylabel('$$\theta (^\circ)$$', 'Interpreter', 'latex');
-leg1 = legend('Kalman Filter', 'Measurement', 'Kalman Smoother');
-set(leg1,'Interpreter','latex');
-% set(leg1,'FontSize',17);
-title('Angular Position $$(^\circ)$$', 'Interpreter', 'latex');
+xlabel('Time (s)', 'Interpreter', 'latex')
+title('Angular Position vs Time', 'Interpreter', 'latex')
+
+% ylabel('$$\dot{\theta} (^\circ /s)$$','Interpreter','latex')
+% xlabel('Time (s)', 'Interpreter', 'latex')
+% ylabel('$$\theta (^\circ)$$', 'Interpreter', 'latex');
+% leg1 = legend('Kalman Filter', 'Measurement', 'Kalman Smoother');
+% set(leg1,'Interpreter','latex');
+% % set(leg1,'FontSize',17);
+% title('Angular Position $$(^\circ)$$', 'Interpreter', 'latex');
 
 % figure
 % plot(t,predictionError_values);
