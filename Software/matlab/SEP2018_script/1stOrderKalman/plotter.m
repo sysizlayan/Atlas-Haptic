@@ -6,6 +6,7 @@ hold on
 plot(t,theta_measurements);
 xlim([20.194, 20.28])
 ylim([92, 96.5])
+% xlim([20, 21])
 
 set(fig1.CurrentAxes,'TickLabelInterpreter','latex');
 set(fig1.CurrentAxes,'FontSize', 16);

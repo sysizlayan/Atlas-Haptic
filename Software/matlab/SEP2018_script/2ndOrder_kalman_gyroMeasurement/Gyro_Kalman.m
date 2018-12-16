@@ -4,6 +4,9 @@
 clc;
 close all;
 
+% load('measurement_30_09_2018_sinus_1_0.mat');
+load('QOptimized_RfromDataSheet.mat');
+
 %% Data Import
 global N
 global dt

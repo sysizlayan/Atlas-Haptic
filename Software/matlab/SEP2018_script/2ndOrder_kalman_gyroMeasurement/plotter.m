@@ -4,8 +4,10 @@ hold on
 plot(t(2:N-20),smoothedState_vectors(1,2:N-20))
 hold on
 plot(t, theta_measurements)
-xlim([20.194, 20.28])
-ylim([92, 96.5])
+% xlim([20.194, 20.28])
+% ylim([92, 96.5])
+xlim([20 21])
+
 set(fig1.CurrentAxes,'TickLabelInterpreter','latex');
 set(fig1.CurrentAxes,'FontSize', 16);
 leg1 = legend('Kalman Filter','Kalman Smoother', 'Encoder Measurement');
@@ -20,7 +22,8 @@ plot(t(2:N), filteredState_vectors(2,2:N))
 hold on
 plot(t(2:N-20), smoothedState_vectors(2, 2:N-20))
 hold on
-plot(t, pedal.velocity)
+plot(t, thetaDot_measurements)
+% xlim([20.194, 20.28])
 
 set(fig2.CurrentAxes,'TickLabelInterpreter','latex');
 set(fig2.CurrentAxes,'FontSize', 16);
