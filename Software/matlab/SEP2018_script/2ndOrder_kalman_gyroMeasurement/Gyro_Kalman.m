@@ -21,11 +21,11 @@ thetaDot_measurements = pedal.velocity;
 
 %% Error Covariences
 processVariance = var(diff(pedal.velocity)/dt);
-Q = [dt^3/3, dt^2/2 ; dt^2/2, dt] * processVariance;
+% Q = [dt^3/3, dt^2/2 ; dt^2/2, dt] * processVariance;
 
-R = diag([0.18^2/12 0.0025]); % Gyro variance is taken from datasheet
+% R = diag([0.18^2/12 0.0025]); % Gyro variance is taken from datasheet
 
-for emIterations = 1:20
+for emIterations = 1:1
     display(emIterations);
     %State vectors
     predictedState_vectors = zeros(2,N);

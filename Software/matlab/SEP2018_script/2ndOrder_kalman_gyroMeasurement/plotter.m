@@ -4,7 +4,8 @@ hold on
 plot(t(2:N-20),smoothedState_vectors(1,2:N-20))
 hold on
 plot(t, theta_measurements)
-
+xlim([20.194, 20.28])
+ylim([92, 96.5])
 set(fig1.CurrentAxes,'TickLabelInterpreter','latex');
 set(fig1.CurrentAxes,'FontSize', 16);
 leg1 = legend('Kalman Filter','Kalman Smoother', 'Encoder Measurement');

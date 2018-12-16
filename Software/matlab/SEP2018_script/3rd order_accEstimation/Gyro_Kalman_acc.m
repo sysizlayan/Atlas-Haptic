@@ -1,5 +1,5 @@
 %Seyit Yiðit SIZLAYAN / 1876861
-
+% Not working well, will be inspected later!
 %%INIT
 clc;
 close all;
@@ -20,15 +20,13 @@ H2 = [0 1 0; 0 0 1];
 theta_measurements = pedal.position_unfiltered;
 thetaDot_measurements = pedal.velocity;
 thetaDoubleDot_measurements = zeros(1,N);
-
+thetaDoubleDot_measurements(1) = 1e-6;
 %% Error Covariences
 processVariance = var(diff(thetaDot_measurements)./dt);
-% Q = B * B' * processVariance;
-Q = B * B' * (processVariance / dt);
+Q = B * B' * (processVariance);
 
-R = diag([0.18^2/12 0.025 processVariance]); % Gyro variance is taken from datasheet
-% R = [0.357167483707424 120.168610904148;120.168610904148 134060.802938447];
-for emIterations = 1:50
+R = diag([0.18^2/12 0.025 1e2]); % Gyro variance is taken from datasheet
+for emIterations = 1:20
     display(emIterations);
     %State vectors
     predictedState_vectors = zeros(3,N);
@@ -48,11 +46,8 @@ for emIterations = 1:50
     filteredCovariance_matrices(:,:,1) = R;
     predictedCovariance_matrices(:,:,1) = R;
     
-    filteredState = [theta_measurements(1); thetaDot_measurements(1); (pedal.velocity(2)-pedal.velocity(1))/dt];
+    filteredState = [theta_measurements(1); thetaDot_measurements(1); thetaDoubleDot_measurements(1)];
     filteredState_vectors(:, 1) = filteredState;
-        
-    kalmanGain = 0;
-    velocityMeasurement = 0;
     for k=2:N
         accMeasurement = (thetaDot_measurements(k) - thetaDot_measurements(k-1)) / dt;
         
@@ -65,7 +60,7 @@ for emIterations = 1:50
             measurementVector = [theta_measurements(k);thetaDot_measurements(k); accMeasurement];
             errorVector = measurementVector - (H1 * predictedState);
 
-            kalmanGain = predictedCovariance_matrix * H1' * pinv(H1 * predictedCovariance_matrix * H1' + R);
+            kalmanGain = predictedCovariance_matrix * H1' / (H1 * predictedCovariance_matrix * H1' + R);
 
             filteredState = predictedState + kalmanGain * errorVector;
             filteredCovariance_matrix = (eye(3) - kalmanGain*H1) * predictedCovariance_matrix;
@@ -73,7 +68,7 @@ for emIterations = 1:50
             measurementVector = [thetaDot_measurements(k); accMeasurement];
             errorVector = measurementVector - H2*predictedState;
             
-            kalmanGain = predictedCovariance_matrix * H2' * pinv(H2*(predictedCovariance_matrix+R)*H2');
+            kalmanGain = predictedCovariance_matrix * H2' / (H2*(predictedCovariance_matrix+R)*H2');
             
             filteredState = predictedState + kalmanGain * errorVector;
             filteredCovariance_matrix = (eye(3) - kalmanGain*H2) * predictedCovariance_matrix;
@@ -132,36 +127,36 @@ for emIterations = 1:50
     Qnew = sumQ ./ N;
     display(Qnew);
     Q = Qnew;
-    
-    sumR = zeros(3,3);
-    numberOfNewMeasurements = 0;
-    for k=2:N
-        if(theta_measurements(k-1) ~= theta_measurements(k))
-            numberOfNewMeasurements = numberOfNewMeasurements+1;
-            error = [theta_measurements(k);thetaDot_measurements(k);thetaDoubleDot_measurements(k)] - H1 * smoothedState_vectors(:,k);
-            sumR = sumR + error * error';
-            sumR = sumR + H1 * smoothedCovariance_matrices(:,:,k) * H1'; 
-        else
-            error = [thetaDot_measurements(k);thetaDoubleDot_measurements(k)] - H2 * smoothedState_vectors(:,k);
-            additionMatrix = error * error' + H2 * smoothedCovariance_matrices(:,:,k) * H2';
-            sumR(2,2) = additionMatrix(1,1);
-            sumR(2,3) = additionMatrix(1,2);
-            sumR(3,2) = additionMatrix(2,1);
-            sumR(3,3) = additionMatrix(2,2);
-        end
-    end
-    sumR(1,1) = sumR(1,1) / numberOfNewMeasurements;
-    sumR(1,2) = sumR(1,2) / numberOfNewMeasurements;
-    sumR(1,3) = sumR(1,3) / numberOfNewMeasurements;
-    sumR(2,1) = sumR(2,1) / numberOfNewMeasurements;
-    sumR(3,1) = sumR(3,1) / numberOfNewMeasurements;
-    sumR(2,2) = sumR(2,2) / N;
-    sumR(2,3) = sumR(2,3) / N;
-    sumR(3,2) = sumR(3,2) / N;
-    sumR(3,3) = sumR(3,3) / N;
-    Rnew = sumR;
-    display(Rnew);
-    R=Rnew;
+%     
+%     sumR = zeros(3,3);
+%     numberOfNewMeasurements = 0;
+%     for k=2:N
+%         if(theta_measurements(k-1) ~= theta_measurements(k))
+%             numberOfNewMeasurements = numberOfNewMeasurements+1;
+%             error = [theta_measurements(k);thetaDot_measurements(k);thetaDoubleDot_measurements(k)] - H1 * smoothedState_vectors(:,k);
+%             sumR = sumR + error * error';
+%             sumR = sumR + H1 * smoothedCovariance_matrices(:,:,k) * H1'; 
+%         else
+%             error = [thetaDot_measurements(k);thetaDoubleDot_measurements(k)] - H2 * smoothedState_vectors(:,k);
+%             additionMatrix = error * error' + H2 * smoothedCovariance_matrices(:,:,k) * H2';
+%             sumR(2,2) = additionMatrix(1,1);
+%             sumR(2,3) = additionMatrix(1,2);
+%             sumR(3,2) = additionMatrix(2,1);
+%             sumR(3,3) = additionMatrix(2,2);
+%         end
+%     end
+%     sumR(1,1) = sumR(1,1) / numberOfNewMeasurements;
+%     sumR(1,2) = sumR(1,2) / numberOfNewMeasurements;
+%     sumR(1,3) = sumR(1,3) / numberOfNewMeasurements;
+%     sumR(2,1) = sumR(2,1) / numberOfNewMeasurements;
+%     sumR(3,1) = sumR(3,1) / numberOfNewMeasurements;
+%     sumR(2,2) = sumR(2,2) / N;
+%     sumR(2,3) = sumR(2,3) / N;
+%     sumR(3,2) = sumR(3,2) / N;
+%     sumR(3,3) = sumR(3,3) / N;
+%     Rnew = sumR;
+%     display(Rnew);
+%     R=Rnew;
 end
 
 figure
