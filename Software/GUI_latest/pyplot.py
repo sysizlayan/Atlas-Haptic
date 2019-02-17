@@ -162,7 +162,7 @@ pygame.display.set_caption('Target Tracking')
 
 redColor   = (255, 0, 0)
 blackColor = (0, 0, 0)
-handleLength = 400  # Line size
+handleLength = 200  # Line size
 handleThickness = 5
 targetRadius = 25
 pedalRadius = 35
@@ -218,7 +218,7 @@ while True:
             pygame.display.set_caption('Target Tracking')
             isWindowReady = True
         while not isWindowClosed and experimentState == 1:
-            clock.tick(260)
+            clock.tick(30)
             for e in pygame.event.get():
                 if e.type == pygame.QUIT:
                     isWindowClosed = True

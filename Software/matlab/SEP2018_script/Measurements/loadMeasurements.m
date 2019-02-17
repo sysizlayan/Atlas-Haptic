@@ -10,13 +10,13 @@ global dt
 global N
 global thesisPath
 
-thesisPath = "C:\Thesis\";
+thesisPath = "C:\Users\Yigit\Desktop\workspace\Atlas-Haptic\data\measurement5_1.5hz\";
 
 
 dt = 1e-3;
 
-filenameSTR = input('File Name?', 's');
-filename = strcat(filenameSTR, ".csv");
+filenameSTR = "measurement5_1.5hz";%input('File Name?', 's');
+filename = "C:\Users\Yigit\Desktop\workspace\Atlas-Haptic\data\measurement5_1.5hz\lastReadData.csv";
 M = csvread(filename);
 
 t                           = M(:,1);
@@ -55,12 +55,12 @@ pedal.position_decreased = sampleDecreaser(pedal.position_unfiltered, 2000, 10);
 set(experiment,'PaperPositionMode','auto');         
 set(experiment,'PaperOrientation','landscape');
 set(experiment,'Position',[50 50 1200 800]);
-print(experiment, '-dpdf', strcat(thesisPath, 'figure/measurements/' , filenameSTR, '.pdf'));
+print(experiment, '-dpdf', strcat(thesisPath, 'figure/' , filenameSTR, '.pdf'));
 
-saveas(experiment,strcat(thesisPath, 'figure/measurements/' , filenameSTR,'.pdf'),'pdf');
+saveas(experiment,strcat(thesisPath, 'figure/' , filenameSTR,'.pdf'),'pdf');
 figurePath = strcat(thesisPath, 'figure/');
 
-saveLocation = strcat(thesisPath, 'data/measurements/' , filenameSTR,'.mat');
+saveLocation = strcat(thesisPath, 'data/' , filenameSTR,'.mat');
 dataPath = strcat(thesisPath, 'data/');
 
 save(saveLocation);
