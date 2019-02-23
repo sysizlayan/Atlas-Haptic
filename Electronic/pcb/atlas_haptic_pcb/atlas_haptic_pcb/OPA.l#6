@@ -245,25 +245,21 @@
 </package>
 <package name="ISO1541">
 <wire x1="-4.445" y1="6.35" x2="-5.715" y2="6.35" width="0.2032" layer="21"/>
-<wire x1="-4.445" y1="-6.35" x2="-5.715" y2="-6.35" width="0.2032" layer="21"/>
+<wire x1="-4.445" y1="-3.81" x2="-5.715" y2="-3.81" width="0.2032" layer="21"/>
 <pad name="1" x="-5.08" y="5.08" drill="1.1176" diameter="1.8796" shape="long"/>
 <pad name="2" x="-5.08" y="2.54" drill="1.1176" diameter="1.8796" shape="long"/>
 <pad name="3" x="-5.08" y="0" drill="1.1176" diameter="1.8796" shape="long"/>
 <pad name="4" x="-5.08" y="-2.54" drill="1.1176" diameter="1.8796" shape="long"/>
-<pad name="5" x="-5.08" y="-5.08" drill="1.1176" diameter="1.8796" shape="long"/>
-<rectangle x1="-5.334" y1="-5.334" x2="-4.826" y2="-4.826" layer="51" rot="R270"/>
 <rectangle x1="-5.334" y1="-2.794" x2="-4.826" y2="-2.286" layer="51" rot="R270"/>
 <rectangle x1="-5.334" y1="-0.254" x2="-4.826" y2="0.254" layer="51" rot="R270"/>
 <rectangle x1="-5.334" y1="2.286" x2="-4.826" y2="2.794" layer="51" rot="R270"/>
 <rectangle x1="-5.334" y1="4.826" x2="-4.826" y2="5.334" layer="51" rot="R270"/>
 <wire x1="5.715" y1="6.35" x2="4.445" y2="6.35" width="0.2032" layer="21"/>
-<wire x1="5.715" y1="-6.35" x2="4.445" y2="-6.35" width="0.2032" layer="21"/>
-<pad name="7" x="5.08" y="5.08" drill="1.1176" diameter="1.8796" shape="long"/>
-<pad name="8" x="5.08" y="2.54" drill="1.1176" diameter="1.8796" shape="long"/>
-<pad name="9" x="5.08" y="0" drill="1.1176" diameter="1.8796" shape="long"/>
-<pad name="10" x="5.08" y="-2.54" drill="1.1176" diameter="1.8796" shape="long"/>
-<pad name="11" x="5.08" y="-5.08" drill="1.1176" diameter="1.8796" shape="long"/>
-<rectangle x1="4.826" y1="-5.334" x2="5.334" y2="-4.826" layer="51" rot="R270"/>
+<wire x1="5.715" y1="-3.81" x2="4.445" y2="-3.81" width="0.2032" layer="21"/>
+<pad name="8" x="5.08" y="5.08" drill="1.1176" diameter="1.8796" shape="long"/>
+<pad name="7" x="5.08" y="2.54" drill="1.1176" diameter="1.8796" shape="long"/>
+<pad name="6" x="5.08" y="0" drill="1.1176" diameter="1.8796" shape="long"/>
+<pad name="5" x="5.08" y="-2.54" drill="1.1176" diameter="1.8796" shape="long"/>
 <rectangle x1="4.826" y1="-2.794" x2="5.334" y2="-2.286" layer="51" rot="R270"/>
 <rectangle x1="4.826" y1="-0.254" x2="5.334" y2="0.254" layer="51" rot="R270"/>
 <rectangle x1="4.826" y1="2.286" x2="5.334" y2="2.794" layer="51" rot="R270"/>
