@@ -57,8 +57,10 @@
 #define MOTOR_DIRECTION_PIN_GPIO_Port GPIOA
 #define VCP_TX_Pin GPIO_PIN_2
 #define VCP_TX_GPIO_Port GPIOA
-#define CURRENT_SAMPLER_PIN_Pin GPIO_PIN_4
-#define CURRENT_SAMPLER_PIN_GPIO_Port GPIOA
+#define CURRENT_COMMAND_PIN_Pin GPIO_PIN_3
+#define CURRENT_COMMAND_PIN_GPIO_Port GPIOA
+#define CURRENT_FEEDBACK_PIN_Pin GPIO_PIN_4
+#define CURRENT_FEEDBACK_PIN_GPIO_Port GPIOA
 #define LED1_Pin GPIO_PIN_11
 #define LED1_GPIO_Port GPIOA
 #define LED0_Pin GPIO_PIN_12
@@ -69,10 +71,6 @@
 #define SWCLK_GPIO_Port GPIOA
 #define VCP_RX_Pin GPIO_PIN_15
 #define VCP_RX_GPIO_Port GPIOA
-#define SCL_SLAVE_PIN_Pin GPIO_PIN_6
-#define SCL_SLAVE_PIN_GPIO_Port GPIOB
-#define SDA_SLAVE_PIN_Pin GPIO_PIN_7
-#define SDA_SLAVE_PIN_GPIO_Port GPIOB
 
 /* ########################## Assert Selection ############################## */
 /**

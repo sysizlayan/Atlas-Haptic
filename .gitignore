@@ -24,3 +24,4 @@ Software/.metadata/
 *.xmi
 Software/GUI_latest/lastReadData.csv
 *.pyc
+*.xml
