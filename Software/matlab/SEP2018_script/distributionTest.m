@@ -1,5 +1,5 @@
-t = 0:1e-5:1;
-pedal.groundTruthTheta = 70 * sin(2*pi*1*t);
+t = 0:1e-4:3;
+pedal.groundTruthTheta = 70 * sin(2*pi*1*t);%70 * chirp(t,0.5,10,1);%70 * sin(2*pi*1*t);
 % figure
 % plot(t, pedal.groundTruthTheta);
 % title("Base Angular Position")
@@ -69,12 +69,12 @@ end
 
 encoderSimWithoutNoise = reSampledSignal;
 
-% figure
-% plot(t, encoderSimWithoutNoise);
-% hold on
-% plot(t, pedal.groundTruthTheta);
-% title("W/O Noise");
-% legend(strcat("CPR: ", num2str(CPR)), "Actual Measruement")
+figure
+plot(t, encoderSimWithoutNoise);
+hold on
+plot(t, pedal.groundTruthTheta);
+title("W/O Noise");
+legend(strcat("CPR: ", num2str(CPR)), "Actual Measruement")
 
 
 
@@ -157,13 +157,13 @@ encoderSimWithNoise = reSampledSignal;
 
 figure
 subplot(1,2,1)
-plot(x_woNoise,p_woNoise./sum(p_woNoise)); %PDF
+plot(x_woNoise,p_woNoise./sum(p_woNoise), 'o'); %PDF
 title("PDF of noiseless encoder")
 xlim([-0.3,0.3])
 ylim([0, 0.16])
 grid on
 subplot(1,2,2)
-plot(x_wNoise,p_wNoise./sum(p_wNoise)); %PDF
+plot(x_wNoise,p_wNoise./sum(p_wNoise), 'o'); %PDF
 title("PDF of noisy encoder")
 xlim([-0.3,0.3])
 ylim([0, 0.16])
