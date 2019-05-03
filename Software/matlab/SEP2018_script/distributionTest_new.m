@@ -1,20 +1,21 @@
-t = -0.25:1e-5:0.25;
-signal_itself = 100 * sin(2*pi*1*t);
+t = 0:1e-6:0.475;
+signal_itself = 90 * sin(2*pi*0.5*t);
 CPR = 2000;
 
 N = length(signal_itself);
 
 samplePoints = -180+360/CPR:360/CPR:180;
 reSampledSignal = zeros(N,1);
-reSampledSignal(1) = signal_itself(1);
+% reSampledSignal(1) = signal_itself(1);
 lastIndex = 0;
 for j=2:length(samplePoints)
-     if(signal_itself(1) == samplePoints(j))
+     if(signal_itself(1) == samplePoints(j) || signal_itself(1)>samplePoints(j-1) && signal_itself(1)<samplePoints(j) )
         lastIndex = j;
-     elseif(signal_itself(1)>samplePoints(j-1) && signal_itself(1)<samplePoints(j))
-         lastIndex = j;
+        break;
      end
 end
+
+reSampledSignal(1) = samplePoints(j-1);
 for i=2:N
     derivative = signal_itself(i) - signal_itself(i-1);
     if(derivative == 0)
@@ -38,18 +39,23 @@ for i=2:N
 end
 encoderSimWithoutNoise = reSampledSignal;
 
-figure
-plot(t, encoderSimWithoutNoise);
-hold on
-plot(t, signal_itself);
-legend(strcat("CPR: ", num2str(CPR)), "Actual Measruement")
-
+% figure
+% plot(t, encoderSimWithoutNoise);
+% hold on
+% plot(t, signal_itself);
+% legend(strcat("CPR: ", num2str(CPR)), "Actual Measruement")
+% title("W/O Noise")
 
 
 noiseSignal = normrnd(0, 0.02, [length(samplePoints),1]);
+figure
+plot(noiseSignal)
+title("Noise")
+display(max(abs(noiseSignal)))
 % figure
 % histogram(noiseSignal);
 % 
+samplePointsWoNoise= samplePoints;
 samplePoints = samplePoints + noiseSignal';
 
 reSampledSignal = zeros(N,1);
@@ -68,45 +74,57 @@ for i=2:N
         reSampledSignal(i) = reSampledSignal(i-1);
     elseif(derivative > 0)
         if(signal_itself(i) > samplePoints(lastIndex+1))
-            reSampledSignal(i) = samplePoints(lastIndex+1);
+            reSampledSignal(i) = samplePointsWoNoise(lastIndex+1);
             lastIndex = lastIndex + 1;
         else
-            reSampledSignal(i) = samplePoints(lastIndex);
+            reSampledSignal(i) = samplePointsWoNoise(lastIndex);
         end
         
     else
         if(signal_itself(i) < samplePoints(lastIndex-1))
-            reSampledSignal(i) = samplePoints(lastIndex-1);
+            reSampledSignal(i) = samplePointsWoNoise(lastIndex-1);
             lastIndex = lastIndex - 1;
         else
-            reSampledSignal(i) = samplePoints(lastIndex);
+            reSampledSignal(i) = samplePointsWoNoise(lastIndex);
         end
     end
 end
 encoderSimWithNoise = reSampledSignal;
 figure
-plot(t, encoderSimWithNoise);
+plot(t, encoderSimWithNoise, t, encoderSimWithoutNoise);
 hold on
 plot(t, signal_itself);
-legend(strcat("CPR: ", num2str(CPR)), "Actual Measruement")
+set(gca,'ytick',samplePoints)
+grid on
+legend("w/ noise", "w/o noise", "Actual Measurement")
+title("w/ noise")
+
+errorWithoutNoise = signal_itself-encoderSimWithoutNoise';
+errorWithoutNoise = errorWithoutNoise(100:end-100);
+errorWithNoise = signal_itself-encoderSimWithNoise';
+errorWithNoise = errorWithNoise(100:end-100);
+t = t(100:end-100);
 
 figure
-plot(signal_itself-encoderSimWithoutNoise')
-[p_woNoise,x_woNoise] = hist(signal_itself-encoderSimWithoutNoise', 100); 
-[p_wNoise,x_wNoise] = hist(signal_itself-encoderSimWithNoise', 100); 
+plot(t, errorWithoutNoise, t, errorWithNoise);
+title("Errors");
+legend("W/o Noise", "w/ noise");
+
+[p_woNoise,x_woNoise] = hist(errorWithoutNoise, 20); 
+[p_wNoise,x_wNoise] = hist(errorWithNoise, 20); 
 
 figure
 subplot(1,2,1)
-plot(x_woNoise,p_woNoise./sum(p_woNoise), "o"); %PDF
+plot(x_woNoise,p_woNoise./sum(p_woNoise),"o"); %PDF
 title("PDF of noiseless encoder")
-xlim([-0.2,0.4])
-ylim([0, 0.03])
+xlim([-0.4,0.4])
+ylim([0, 0.2])
 grid on
 subplot(1,2,2)
 plot(x_wNoise,p_wNoise./sum(p_wNoise), "o"); %PDF
 title("PDF of noisy encoder")
-xlim([-0.2,0.4])
-ylim([0, 0.03])
+xlim([-0.4,0.4])
+ylim([0, 0.2])
 grid on
 
 
