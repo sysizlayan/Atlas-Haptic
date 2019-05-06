@@ -1,4 +1,4 @@
-t = 0:1e-4:3;
+t = 0:1e-5:0.25;
 pedal.groundTruthTheta = 70 * sin(2*pi*1*t);%70 * chirp(t,0.5,10,1);%70 * sin(2*pi*1*t);
 % figure
 % plot(t, pedal.groundTruthTheta);
@@ -78,7 +78,7 @@ legend(strcat("CPR: ", num2str(CPR)), "Actual Measruement")
 
 
 
-noiseSignal = normrnd(0, 0.02, [length(samplePoints),1]);
+noiseSignal = normrnd(0, 0.09, [length(samplePoints),1]);
 % figure
 % histogram(noiseSignal);
 % 
@@ -138,12 +138,12 @@ end
 % 
 encoderSimWithNoise = reSampledSignal;
 % 
-% figure
-% plot(t, encoderSimWithNoise);
-% hold on
-% plot(t, pedal.groundTruthTheta);
-% title("Noisy")
-% legend(strcat("CPR: ", num2str(CPR)), "Actual Measruement")
+figure
+plot(t, encoderSimWithNoise);
+hold on
+plot(t, pedal.groundTruthTheta);
+title("Noisy")
+legend(strcat("CPR: ", num2str(CPR)), "Actual Measruement")
 % 
 % % figure
 % % plot(t, pedal.groundTruthTheta-encoderSimWithoutNoise')
@@ -152,8 +152,8 @@ encoderSimWithNoise = reSampledSignal;
 % % figure
 % % plot(t, pedal.groundTruthTheta-encoderSimWithNoise')
 % % title("Error with noiseless encoder")
-[p_woNoise,x_woNoise] = hist(pedal.groundTruthTheta-encoderSimWithoutNoise'); 
-[p_wNoise,x_wNoise] = hist(pedal.groundTruthTheta-encoderSimWithNoise'); 
+[p_woNoise,x_woNoise] = hist(pedal.groundTruthTheta-encoderSimWithoutNoise', 20); 
+[p_wNoise,x_wNoise] = hist(pedal.groundTruthTheta-encoderSimWithNoise', 20); 
 
 figure
 subplot(1,2,1)

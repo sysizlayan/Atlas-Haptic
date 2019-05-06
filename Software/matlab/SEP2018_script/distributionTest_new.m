@@ -1,5 +1,5 @@
-t = 0:1e-6:0.475;
-signal_itself = 90 * sin(2*pi*0.5*t);
+t = 0:1e-6:0.245;
+signal_itself = 90 * sin(2*pi*1*t);
 CPR = 2000;
 
 N = length(signal_itself);
@@ -47,7 +47,7 @@ encoderSimWithoutNoise = reSampledSignal;
 % title("W/O Noise")
 
 
-noiseSignal = normrnd(0, 0.02, [length(samplePoints),1]);
+noiseSignal = normrnd(0, /CPR, [length(samplePoints),1]);
 figure
 plot(noiseSignal)
 title("Noise")
@@ -117,13 +117,13 @@ figure
 subplot(1,2,1)
 plot(x_woNoise,p_woNoise./sum(p_woNoise),"o"); %PDF
 title("PDF of noiseless encoder")
-xlim([-0.4,0.4])
+xlim([-2,2])
 ylim([0, 0.2])
 grid on
 subplot(1,2,2)
 plot(x_wNoise,p_wNoise./sum(p_wNoise), "o"); %PDF
 title("PDF of noisy encoder")
-xlim([-0.4,0.4])
+xlim([-2,2])
 ylim([0, 0.2])
 grid on
 
