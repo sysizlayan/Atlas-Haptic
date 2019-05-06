@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Move &apos;massStatesCalculation.h, pedalVariables.h, pointersForPrint.h, printFloat.h, simulationVariables_forSpringMassDamper.h&apos; to &apos;simulation&apos;" description="Move 5 resources to &apos;simulation&apos;" destination="Inc/simulation" element1="Src/simulation/massStatesCalculation.h" element2="Src/simulation/pedalVariables.h" element3="Src/simulation/pointersForPrint.h" element4="Src/simulation/printFloat.h" element5="Src/simulation/simulationVariables_forSpringMassDamper.h" flags="7" id="org.eclipse.ltk.core.refactoring.move.resources" resources="5" stamp="1537808065587" updateReferences="true"/>
-</session>

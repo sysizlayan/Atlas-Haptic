@@ -1,1 +1,1 @@
-{"forceGain":-1.0,"forceBias":1868,"experimentPeriod":150000,"kSpring":10.0,"bDamper":2.0,"numberFreq":1,"freqs":[1.5],"phases":[0.0],"magnitudes":[45.0]}
+{"forceGain":-0.186,"forceBias":1868,"experimentPeriod":150000,"kSpring":10.0,"bDamper":2.0,"numberFreq":1,"freqs":[4.0],"phases":[0.0],"magnitudes":[45.0]}

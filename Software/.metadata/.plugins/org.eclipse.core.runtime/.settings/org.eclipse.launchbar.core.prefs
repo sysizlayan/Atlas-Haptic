@@ -1,8 +1,0 @@
-LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/arch=x86
-LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/os=win32
-configDescList=org.eclipse.launchbar.core.descriptorType.default\:atlasHaptic_nucleo767ZI.elf
-eclipse.preferences.version=1
-org.eclipse.launchbar.core.descriptorType.default\:atlasHaptic_nucleo767ZI.elf/activeLaunchMode=debug
-org.eclipse.launchbar.core.descriptorType.default\:atlasHaptic_nucleo767ZI.elf/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local
-org.eclipse.launchbar.core.descriptorType.default\:atlas_haptic.elf/activeLaunchMode=debug
-org.eclipse.launchbar.core.descriptorType.default\:atlas_haptic.elf/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local
