@@ -47,7 +47,7 @@ encoderSimWithoutNoise = reSampledSignal;
 % title("W/O Noise")
 
 
-noiseSignal = normrnd(0, /CPR, [length(samplePoints),1]);
+noiseSignal = normrnd(0, 45/CPR, [length(samplePoints),1]);
 figure
 plot(noiseSignal)
 title("Noise")
@@ -99,10 +99,10 @@ grid on
 legend("w/ noise", "w/o noise", "Actual Measurement")
 title("w/ noise")
 
-errorWithoutNoise = signal_itself-encoderSimWithoutNoise';
-errorWithoutNoise = errorWithoutNoise(100:end-100);
-errorWithNoise = signal_itself-encoderSimWithNoise';
-errorWithNoise = errorWithNoise(100:end-100);
+errorWithoutNoise1 = signal_itself-encoderSimWithoutNoise';
+errorWithoutNoise = errorWithoutNoise1(100:end-100)-180/CPR;
+errorWithNoise1 = signal_itself-encoderSimWithNoise';
+errorWithNoise = errorWithNoise1(100:end-100)-180/CPR;
 t = t(100:end-100);
 
 figure
@@ -117,19 +117,19 @@ figure
 subplot(1,2,1)
 plot(x_woNoise,p_woNoise./sum(p_woNoise),"o"); %PDF
 title("PDF of noiseless encoder")
-xlim([-2,2])
-ylim([0, 0.2])
+xlim([-0.2,0.2])
+ylim([0, 0.1])
 grid on
 subplot(1,2,2)
 plot(x_wNoise,p_wNoise./sum(p_wNoise), "o"); %PDF
 title("PDF of noisy encoder")
-xlim([-2,2])
-ylim([0, 0.2])
+xlim([-0.2,0.2])
+ylim([0, 0.1])
 grid on
 
 
-[f_woNoise,x1_woNoise] = ecdf(signal_itself-encoderSimWithoutNoise'); 
-[f_wNoise,x1_wNoise] = ecdf(signal_itself-encoderSimWithNoise');
+[f_woNoise,x1_woNoise] = ecdf(errorWithoutNoise); 
+[f_wNoise,x1_wNoise] = ecdf(errorWithNoise);
 % 
 figure
 subplot(1,2,1)
