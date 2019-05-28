@@ -1,5 +1,7 @@
-t = 0:1e-6:0.245;
+t = 0:1e-5:0.245;
 signal_itself = 90 * sin(2*pi*1*t);
+downSampled_signal_itself = downsample(signal_itself, 100);
+
 CPR = 2000;
 
 N = length(signal_itself);
@@ -38,6 +40,7 @@ for i=2:N
     end
 end
 encoderSimWithoutNoise = reSampledSignal;
+downSampled_encoderSimWithoutNoise = downsample(encoderSimWithoutNoise, 100);
 
 % figure
 % plot(t, encoderSimWithoutNoise);
@@ -51,7 +54,7 @@ noiseSignal = normrnd(0, 45/CPR, [length(samplePoints),1]);
 figure
 plot(noiseSignal)
 title("Noise")
-display(max(abs(noiseSignal)))
+%display(max(abs(noiseSignal)))
 % figure
 % histogram(noiseSignal);
 % 
@@ -90,6 +93,8 @@ for i=2:N
     end
 end
 encoderSimWithNoise = reSampledSignal;
+downSampled_encoderSimWithNoise = downsample(encoderSimWithNoise, 100);
+
 figure
 plot(t, encoderSimWithNoise, t, encoderSimWithoutNoise);
 hold on
@@ -105,6 +110,9 @@ errorWithNoise1 = signal_itself-encoderSimWithNoise';
 errorWithNoise = errorWithNoise1(100:end-100)-180/CPR;
 t = t(100:end-100);
 
+error1 = downSampled_signal_itself - downSampled_encoderSimWithoutNoise';
+error2 = downSampled_signal_itself - downSampled_encoderSimWithNoise';
+
 figure
 plot(t, errorWithoutNoise, t, errorWithNoise);
 title("Errors");
@@ -113,7 +121,7 @@ legend("W/o Noise", "w/ noise");
 [p_woNoise,x_woNoise] = hist(errorWithoutNoise, 20); 
 [p_wNoise,x_wNoise] = hist(errorWithNoise, 20); 
 
-figure
+pmfFig = figure;
 subplot(1,2,1)
 plot(x_woNoise,p_woNoise./sum(p_woNoise),"o"); %PDF
 title("PDF of noiseless encoder")
@@ -127,11 +135,42 @@ xlim([-0.2,0.2])
 ylim([0, 0.1])
 grid on
 
+set(pmfFig.CurrentAxes,'TickLabelInterpreter','latex');
+set(pmfFig, 'PaperPositionMode', 'auto');
+set(pmfFig, 'PaperOrientation','landscape');
+set(pmfFig, 'Position', [50 50 1200 800]);
+print(pmfFig, '-dpdf', './pmfTest.pdf','-fillpage');
+
+
+
+[ds_p_woNoise,ds_x_woNoise] = hist(error1, 50); 
+[ds_p_wNoise,ds_x_wNoise] = hist(error2, 50);
+
+pmfFig2 = figure;
+subplot(1,2,1)
+plot(ds_x_woNoise,ds_p_woNoise./sum(ds_p_woNoise),"o"); %PDF
+title("PDF of noiseless encoder-downSampled")
+% xlim([-0.2,0.2])
+% ylim([0, 0.1])
+grid on
+subplot(1,2,2)
+plot(ds_x_wNoise,ds_p_wNoise./sum(ds_p_wNoise), "o"); %PDF
+title("PDF of noisy encoder-downSampled")
+% xlim([-0.2,0.2])
+% ylim([0, 0.1])
+grid on
+
+set(pmfFig2.CurrentAxes,'TickLabelInterpreter','latex');
+set(pmfFig2, 'PaperPositionMode', 'auto');
+set(pmfFig2, 'PaperOrientation','landscape');
+set(pmfFig2, 'Position', [50 50 1200 800]);
+print(pmfFig2, '-dpdf', './pmfTest.pdf2','-fillpage');
+
 
 [f_woNoise,x1_woNoise] = ecdf(errorWithoutNoise); 
 [f_wNoise,x1_wNoise] = ecdf(errorWithNoise);
 % 
-figure
+cdfFig = figure;
 subplot(1,2,1)
 plot(x1_woNoise, f_woNoise); %CDF
 title("CDF of noiseless encoder")
@@ -140,3 +179,9 @@ subplot(1,2,2)
 plot(x1_wNoise, f_wNoise)
 title("CDF of noisy encoder")
 grid on
+
+set(cdfFig.CurrentAxes,'TickLabelInterpreter','latex');
+set(cdfFig, 'PaperPositionMode', 'auto');
+set(cdfFig, 'PaperOrientation','landscape');
+set(cdfFig, 'Position', [50 50 1200 800]);
+print(cdfFig, '-dpdf', './cdfTest.pdf','-fillpage');

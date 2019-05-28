@@ -1,0 +1,590 @@
+<!--This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License (CC BY-SA) with Design Exception 1.0-->
+<eagle version="7.1.0">
+<drawing>
+<settings>
+<setting alwaysvectorfont="no"/>
+<setting verticaltext="up"/>
+</settings>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<layers>
+<layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
+<layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
+<layer number="17" name="Pads" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="18" name="Vias" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="yes"/>
+<layer number="20" name="Dimension" color="15" fill="1" visible="yes" active="yes"/>
+<layer number="21" name="tPlace" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="22" name="bPlace" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="yes"/>
+<layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="yes"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="26" name="bNames" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="27" name="tValues" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="28" name="bValues" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="29" name="tStop" color="7" fill="3" visible="yes" active="yes"/>
+<layer number="30" name="bStop" color="7" fill="6" visible="no" active="yes"/>
+<layer number="31" name="tCream" color="7" fill="4" visible="yes" active="yes"/>
+<layer number="32" name="bCream" color="7" fill="5" visible="no" active="yes"/>
+<layer number="33" name="tFinish" color="6" fill="3" visible="no" active="yes"/>
+<layer number="34" name="bFinish" color="6" fill="6" visible="no" active="yes"/>
+<layer number="35" name="tGlue" color="7" fill="4" visible="no" active="yes"/>
+<layer number="36" name="bGlue" color="7" fill="5" visible="no" active="yes"/>
+<layer number="37" name="tTest" color="7" fill="1" visible="no" active="yes"/>
+<layer number="38" name="bTest" color="7" fill="1" visible="no" active="yes"/>
+<layer number="39" name="tKeepout" color="4" fill="11" visible="yes" active="yes"/>
+<layer number="40" name="bKeepout" color="1" fill="11" visible="yes" active="yes"/>
+<layer number="41" name="tRestrict" color="4" fill="10" visible="yes" active="yes"/>
+<layer number="42" name="bRestrict" color="1" fill="10" visible="yes" active="yes"/>
+<layer number="43" name="vRestrict" color="2" fill="10" visible="yes" active="yes"/>
+<layer number="44" name="Drills" color="7" fill="1" visible="no" active="yes"/>
+<layer number="45" name="Holes" color="7" fill="1" visible="no" active="yes"/>
+<layer number="46" name="Milling" color="3" fill="1" visible="no" active="yes"/>
+<layer number="47" name="Measures" color="7" fill="1" visible="no" active="yes"/>
+<layer number="48" name="Document" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="49" name="Reference" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="51" name="tDocu" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="52" name="bDocu" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="90" name="Modules" color="5" fill="1" visible="yes" active="yes"/>
+<layer number="91" name="Nets" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="92" name="Busses" color="1" fill="1" visible="yes" active="yes"/>
+<layer number="93" name="Pins" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="94" name="Symbols" color="4" fill="1" visible="yes" active="yes"/>
+<layer number="95" name="Names" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="96" name="Values" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="97" name="Info" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="98" name="Guide" color="6" fill="1" visible="yes" active="yes"/>
+</layers>
+<library>
+<packages>
+<package name="QFP50P2200X2200X160-144N">
+<circle x="-12.14" y="9.03" radius="0.1" width="0.2" layer="21"/>
+<circle x="-12.14" y="9.03" radius="0.1" width="0.2" layer="51"/>
+<wire x1="-11.71" y1="-11.71" x2="11.71" y2="-11.71" width="0.05" layer="39"/>
+<wire x1="-11.71" y1="11.71" x2="11.71" y2="11.71" width="0.05" layer="39"/>
+<wire x1="-11.71" y1="-11.71" x2="-11.71" y2="11.71" width="0.05" layer="39"/>
+<wire x1="11.71" y1="-11.71" x2="11.71" y2="11.71" width="0.05" layer="39"/>
+<wire x1="-10" y1="10" x2="10" y2="10" width="0.1524" layer="51"/>
+<wire x1="10" y1="10" x2="10" y2="-10" width="0.1524" layer="51"/>
+<wire x1="10" y1="-10" x2="-10" y2="-10" width="0.1524" layer="51"/>
+<wire x1="-10" y1="-10" x2="-10" y2="10" width="0.1524" layer="51"/>
+<wire x1="-10" y1="9.1" x2="-10" y2="10" width="0.1524" layer="21"/>
+<wire x1="-10" y1="10" x2="-9.1" y2="10" width="0.1524" layer="21"/>
+<wire x1="-10" y1="-9.1" x2="-10" y2="-10" width="0.1524" layer="21"/>
+<wire x1="-10" y1="-10" x2="-9.1" y2="-10" width="0.1524" layer="21"/>
+<wire x1="9.1" y1="-10" x2="10" y2="-10" width="0.1524" layer="21"/>
+<wire x1="10" y1="-10" x2="10" y2="-9.1" width="0.1524" layer="21"/>
+<wire x1="9.1" y1="10" x2="10" y2="10" width="0.1524" layer="21"/>
+<wire x1="10" y1="10" x2="10" y2="9.1" width="0.1524" layer="21"/>
+<text x="-11.4398" y="13.982" size="2.54218" layer="25">&gt;NAME</text>
+<text x="-11.4391" y="-16.5232" size="2.54203" layer="27">&gt;VALUE</text>
+<smd name="37" x="-8.75" y="-10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="38" x="-8.25" y="-10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="39" x="-7.75" y="-10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="40" x="-7.25" y="-10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="41" x="-6.75" y="-10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="42" x="-6.25" y="-10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="43" x="-5.75" y="-10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="44" x="-5.25" y="-10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="45" x="-4.75" y="-10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="46" x="-4.25" y="-10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="47" x="-3.75" y="-10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="48" x="-3.25" y="-10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="49" x="-2.75" y="-10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="50" x="-2.25" y="-10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="51" x="-1.75" y="-10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="52" x="-1.25" y="-10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="53" x="-0.75" y="-10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="54" x="-0.25" y="-10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="55" x="0.25" y="-10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="56" x="0.75" y="-10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="57" x="1.25" y="-10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="58" x="1.75" y="-10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="59" x="2.25" y="-10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="60" x="2.75" y="-10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="61" x="3.25" y="-10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="62" x="3.75" y="-10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="63" x="4.25" y="-10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="64" x="4.75" y="-10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="65" x="5.25" y="-10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="66" x="5.75" y="-10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="67" x="6.25" y="-10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="68" x="6.75" y="-10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="69" x="7.25" y="-10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="70" x="7.75" y="-10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="71" x="8.25" y="-10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="72" x="8.75" y="-10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="109" x="8.75" y="10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="110" x="8.25" y="10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="111" x="7.75" y="10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="112" x="7.25" y="10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="113" x="6.75" y="10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="114" x="6.25" y="10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="115" x="5.75" y="10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="116" x="5.25" y="10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="117" x="4.75" y="10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="118" x="4.25" y="10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="119" x="3.75" y="10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="120" x="3.25" y="10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="121" x="2.75" y="10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="122" x="2.25" y="10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="123" x="1.75" y="10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="124" x="1.25" y="10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="125" x="0.75" y="10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="126" x="0.25" y="10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="127" x="-0.25" y="10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="128" x="-0.75" y="10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="129" x="-1.25" y="10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="130" x="-1.75" y="10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="131" x="-2.25" y="10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="132" x="-2.75" y="10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="133" x="-3.25" y="10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="134" x="-3.75" y="10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="135" x="-4.25" y="10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="136" x="-4.75" y="10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="137" x="-5.25" y="10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="138" x="-5.75" y="10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="139" x="-6.25" y="10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="140" x="-6.75" y="10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="141" x="-7.25" y="10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="142" x="-7.75" y="10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="143" x="-8.25" y="10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="144" x="-8.75" y="10.68" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="1" x="-10.68" y="8.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="2" x="-10.68" y="8.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="3" x="-10.68" y="7.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="4" x="-10.68" y="7.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="5" x="-10.68" y="6.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="6" x="-10.68" y="6.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="7" x="-10.68" y="5.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="8" x="-10.68" y="5.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="9" x="-10.68" y="4.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="10" x="-10.68" y="4.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="11" x="-10.68" y="3.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="12" x="-10.68" y="3.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="13" x="-10.68" y="2.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="14" x="-10.68" y="2.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="15" x="-10.68" y="1.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="16" x="-10.68" y="1.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="17" x="-10.68" y="0.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="18" x="-10.68" y="0.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="19" x="-10.68" y="-0.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="20" x="-10.68" y="-0.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="21" x="-10.68" y="-1.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="22" x="-10.68" y="-1.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="23" x="-10.68" y="-2.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="24" x="-10.68" y="-2.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="25" x="-10.68" y="-3.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="26" x="-10.68" y="-3.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="27" x="-10.68" y="-4.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="28" x="-10.68" y="-4.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="29" x="-10.68" y="-5.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="30" x="-10.68" y="-5.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="31" x="-10.68" y="-6.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="32" x="-10.68" y="-6.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="33" x="-10.68" y="-7.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="34" x="-10.68" y="-7.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="35" x="-10.68" y="-8.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="36" x="-10.68" y="-8.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="73" x="10.68" y="-8.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="74" x="10.68" y="-8.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="75" x="10.68" y="-7.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="76" x="10.68" y="-7.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="77" x="10.68" y="-6.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="78" x="10.68" y="-6.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="79" x="10.68" y="-5.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="80" x="10.68" y="-5.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="81" x="10.68" y="-4.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="82" x="10.68" y="-4.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="83" x="10.68" y="-3.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="84" x="10.68" y="-3.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="85" x="10.68" y="-2.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="86" x="10.68" y="-2.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="87" x="10.68" y="-1.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="88" x="10.68" y="-1.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="89" x="10.68" y="-0.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="90" x="10.68" y="-0.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="91" x="10.68" y="0.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="92" x="10.68" y="0.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="93" x="10.68" y="1.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="94" x="10.68" y="1.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="95" x="10.68" y="2.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="96" x="10.68" y="2.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="97" x="10.68" y="3.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="98" x="10.68" y="3.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="99" x="10.68" y="4.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="100" x="10.68" y="4.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="101" x="10.68" y="5.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="102" x="10.68" y="5.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="103" x="10.68" y="6.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="104" x="10.68" y="6.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="105" x="10.68" y="7.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="106" x="10.68" y="7.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="107" x="10.68" y="8.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="108" x="10.68" y="8.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+</package>
+</packages>
+<symbols>
+<symbol name="STM32F767ZIT6_SECTION1">
+<wire x1="-15.24" y1="17.78" x2="15.24" y2="17.78" width="0.41" layer="94"/>
+<wire x1="15.24" y1="17.78" x2="15.24" y2="-15.24" width="0.41" layer="94"/>
+<wire x1="15.24" y1="-15.24" x2="-15.24" y2="-15.24" width="0.41" layer="94"/>
+<wire x1="-15.24" y1="-15.24" x2="-15.24" y2="17.78" width="0.41" layer="94"/>
+<text x="-15.2537" y="20.3383" size="2.54229" layer="95">&gt;NAME</text>
+<text x="-15.2457" y="-20.3276" size="2.54096" layer="96">&gt;VALUE</text>
+<pin name="BOOT0(VPP)" x="-20.32" y="12.7" length="middle" direction="in"/>
+<pin name="NRST" x="-20.32" y="2.54" length="middle"/>
+<pin name="PDR_ON" x="20.32" y="15.24" length="middle" direction="pwr" rot="R180"/>
+<pin name="VBAT" x="20.32" y="12.7" length="middle" direction="pwr" rot="R180"/>
+<pin name="VCAP_1" x="20.32" y="10.16" length="middle" direction="pwr" rot="R180"/>
+<pin name="VCAP_2" x="20.32" y="7.62" length="middle" direction="pwr" rot="R180"/>
+<pin name="VDD" x="20.32" y="5.08" length="middle" direction="pwr" rot="R180"/>
+<pin name="VDDA" x="20.32" y="2.54" length="middle" direction="pwr" rot="R180"/>
+<pin name="VDDSDMMC" x="20.32" y="0" length="middle" direction="pwr" rot="R180"/>
+<pin name="VDDUSB" x="20.32" y="-2.54" length="middle" direction="pwr" rot="R180"/>
+<pin name="VREFP" x="20.32" y="-5.08" length="middle" direction="pwr" rot="R180"/>
+<pin name="VSS" x="20.32" y="-10.16" length="middle" direction="pwr" rot="R180"/>
+<pin name="VSSA" x="20.32" y="-12.7" length="middle" direction="pwr" rot="R180"/>
+</symbol>
+<symbol name="STM32F767ZIT6_SECTION2">
+<wire x1="-76.2" y1="20.32" x2="76.2" y2="20.32" width="0.41" layer="94"/>
+<wire x1="76.2" y1="20.32" x2="76.2" y2="-22.86" width="0.41" layer="94"/>
+<wire x1="76.2" y1="-22.86" x2="-76.2" y2="-22.86" width="0.41" layer="94"/>
+<wire x1="-76.2" y1="-22.86" x2="-76.2" y2="20.32" width="0.41" layer="94"/>
+<text x="-76.2754" y="22.8826" size="2.54251" layer="95">&gt;NAME</text>
+<text x="-76.2873" y="-27.972" size="2.54291" layer="96">&gt;VALUE</text>
+<pin name="PA0-WKUP(TIM2_CH1/TIM2_ETR,TIM5_CH1,TIM8_ETR,USART2_CTS,UART4_TX,SAI2_SD_B,ETH_MII_CRS,ADC1_IN0,ADC2_IN0,ADC3_IN0,WKUP1)" x="-81.28" y="17.78" length="middle"/>
+<pin name="PA10(TIM1_CH3,USART1_RX,LCD_B4,OTG_FS_ID,MDIOS_MDIO,DCMI_D1,LCD_B1)" x="-81.28" y="-7.62" length="middle"/>
+<pin name="PA11(TIM1_CH4,SPI2_NSS/I2S2_WS,UART4_RX,USART1_CTS,CAN1_RX,OTG_FS_DM,LCD_R4)" x="-81.28" y="-10.16" length="middle"/>
+<pin name="PA12(TIM1_ETR,SPI2_SCK/I2S2_CK,UART4_TX,USART1_RTS,CAN1_TX,OTG_FS_DP,LCD_R5)" x="-81.28" y="-12.7" length="middle"/>
+<pin name="PA13(JTMS-SWDIO)" x="-81.28" y="-15.24" length="middle"/>
+<pin name="PA14(JTCK-SWCLK)" x="-81.28" y="-17.78" length="middle" function="clk"/>
+<pin name="PA15(JTDI,TIM2_CH1/TIM2_ETR,HDMI_CEC,SPI_NSS/I2S1_WS,SPI3_NSS/I2S3_WS,SPI6_NSS,UART4_RTS,CAN3_TX,UART7_TX)" x="-81.28" y="-20.32" length="middle"/>
+<pin name="PA1(TIM2_CH2,TIM5_CH2,USART2_RTS,UART4_RX,QUADSPI_BK1_IO3,SAI2_MCLK_B,ETH_MII_RX_CLK/ETH_RMII_REF_CLK,LCD_R2)" x="-81.28" y="15.24" length="middle" function="clk"/>
+<pin name="PA2(TIM2_CH3,TIM5_CH3,TIM9_CH1,USART2_TX,SAI2_SCK_B,ETH_MDIO,MDIOS_MDIO,LCD_R1,ADC1_IN2,ADC2_IN2,ADC3_IN2,WKUP2)" x="-81.28" y="12.7" length="middle"/>
+<pin name="PA3(TIM2_CH4,TIM5_CH4,TIM9_CH2,USART2_RX,LCD_B2,OTG_HS_ULPI_D0,ETH_MII_COL,LCD_B5,ADC1_IN3,ADC2_IN3,ADC3_IN3)" x="-81.28" y="10.16" length="middle"/>
+<pin name="PA4(SPI1_NSS/I2S1_WS,SPI3_NSS/I2S3_WS,USART2_CK,SPI6_NSS,OTG_HS_SOF,DCMI_HSYNC,LCD_VSYNC,ADC1_IN4,ADC2_IN4,DAC_OUT1)" x="-81.28" y="7.62" length="middle"/>
+<pin name="PA5(TIM2_CH1/TIM2_ETR,TIM8_CH1N,SPI1_SCK/I2S1_CK,SPI6_SCK,OTG_HS_ULPI_CK,LCD_R4,ADC1_IN5,ADC2_IN5,DAC_OUT2)" x="-81.28" y="5.08" length="middle"/>
+<pin name="PA6(TIM1_BKIN,TIM3_CH1,TIM6_BKIN,SPI1_MISO,SPI6_MISO,TIM13_CH1,MDIOS_MDC,DCMI_PIXCLK,LCD_G2,ADC1_IN6,ADC2_IN6)" x="-81.28" y="2.54" length="middle" function="clk"/>
+<pin name="PA7(TIM1_CH1N,TIM3_CH2,TIM8_CH1N,SPI1_MOSI/I2S1_SD,SPI6_MOSI,TIM14_CH1,ETH_MII_RX_DV/ETH_RMII_CRS_DV,FMC_SDNWE)" x="-81.28" y="0" length="middle"/>
+<pin name="PA8(MCO1,TIM1_CH1,TIM8_BKIN2,I2C3_SCL,USART1_CK,OTG_FS_SOF,CAN3_RX,UART7_RX,LCD_B3,LCD_R6)" x="-81.28" y="-2.54" length="middle"/>
+<pin name="PA9(TIM1_CH2,I2C3_SMBA,SPI2_SCK/I2S2_CK,USART1_TX,DCMI_D0,LCD_R5)" x="-81.28" y="-5.08" length="middle"/>
+</symbol>
+<symbol name="STM32F767ZIT6_SECTION3">
+<wire x1="-91.44" y1="20.32" x2="91.44" y2="20.32" width="0.41" layer="94"/>
+<wire x1="91.44" y1="20.32" x2="91.44" y2="-22.86" width="0.41" layer="94"/>
+<wire x1="91.44" y1="-22.86" x2="-91.44" y2="-22.86" width="0.41" layer="94"/>
+<wire x1="-91.44" y1="-22.86" x2="-91.44" y2="20.32" width="0.41" layer="94"/>
+<text x="-91.4602" y="22.865" size="2.54056" layer="95">&gt;NAME</text>
+<text x="-91.5059" y="-27.9601" size="2.54183" layer="96">&gt;VALUE</text>
+<pin name="PB0(TIM1_CH2N,TIM3_CH3,TIM8_CH2N,DFSDM1_CKOUT,UART4_CTS,LCD_R3,OTG_HS_ULPI_D1,ETH_MII_RXD2,LCD_G1,ADC1_IN8,ADC2_IN8)" x="-96.52" y="17.78" length="middle"/>
+<pin name="PB10(TIM2_CH3,I2C2_SCL,SPI_SCK/I2S2_CK,DFSDM1_DATIN7,USART3_TX,QUADSPI_BK1_NCS,OTG_HS_ULPI_D3,ETH_MII_RX_ER,LCD_G4)" x="-96.52" y="-7.62" length="middle"/>
+<pin name="PB11(TIM2_CH4,I2C2_SDA,DFSDM1_CKIN7,USART3_RX,OTG_HS_ULPI_D4,ETH_MII_TX_EN/ETH_RMII_TX,DSI_TE,LCD_G5)" x="-96.52" y="-10.16" length="middle"/>
+<pin name="PB12(TIM1_BKIN,I2C2_SMBA,SPI2_NSS/I2S2_WS,DFSDM1_DATIN1,USART3_CK,UART5_RX,CAN2_RX,OTG_HS_ULPI_D5,ETH_MII_TXD0/ETH_RMII_TXD0,OTG_HS_ID)" x="-96.52" y="-12.7" length="middle"/>
+<pin name="PB13(TIM1_CH1N,SPI2_SCK/I2S2_CK,DFSDM1_CKIN1,USART3_CTS,UART5_TX,CAN2_TX,OTG_HS_ULPI_D6,ETH_MII_TXD1/ETH_RMII_TXD1)" x="-96.52" y="-15.24" length="middle"/>
+<pin name="PB14(TIM1_CH2N,TIM8_CH2N,USART1_TX,SPI2_MISO,DFSDM1_DATIN2,USART3_RTS,UART4_RTS,TIM12_CH1,SDMMC2_D0,OTG_HS_DM)" x="-96.52" y="-17.78" length="middle"/>
+<pin name="PB15(RTC_REFIN,TIM1_CH3N,TIM8_CH3N,USART1_RX,SPI2_MOSI/I2S2_SD,DFSDM1_CKIN2,UART4_CTS,TIM12_CH2,SDMMC2_D1,OTG_HS_DP)" x="-96.52" y="-20.32" length="middle"/>
+<pin name="PB1(TIM1_CH3N,TIM3_CH4,TIM8_CH3N,DFSDM1_DATIN1,LCD_R6,OTG_HS_ULPI_D2,ETH_MII_RXD3,LCD_G0,ADC1_IN9,ADC2_IN9)" x="-96.52" y="15.24" length="middle"/>
+<pin name="PB2(SAI1_SD_A,SPI3_MOSI/I2S3_SD,QUADSPI_CLK,DFSDM1_CKIN1)" x="-96.52" y="12.7" length="middle" function="clk"/>
+<pin name="PB3(JTDO/TRACESWO,TIM2_CH2,SPI1_SCK/I2S1_CK,SPI3_SCK/I2S3_CK,SPI6_SCK,SDMMC2_D2,CAN3_RX,UART7_RX)" x="-96.52" y="10.16" length="middle"/>
+<pin name="PB4(NJTRST,TIM3_CH1,SPI1_MISO,SPI3_MISO,SPI2_NSS/I2S2_WS,SPI6_MISO,SDMMC2_D3,CAN3_TX,UART7_TX)" x="-96.52" y="7.62" length="middle"/>
+<pin name="PB5(UART5_RX,TIM3_CH2,I2C1_SMBA,SPI1_MOSI/I2S1_SD,SPI3_MOSI/I2S3_SD,SPI6_MOSI,CAN2_RX,OTG_HS_ULPI_D7,ETH_PPS_OUT,FMC_SDCKE1,DCMI_D10,LCD_G7)" x="-96.52" y="5.08" length="middle"/>
+<pin name="PB6(UART5_TX,TIM4_CH1,HDMI_CEC,I2C1_SCL,DFSDM1_DATIN5,USART1_TX,CAN2_TX,QUADSPI_BK1_NCS,I2C4_SCL,FMC_SDNE1,DCMI_D5)" x="-96.52" y="2.54" length="middle"/>
+<pin name="PB7(TIM4_CH2,I2C1_SDA,DFSDM1_CKIN5,USART1_RX,I2C4_SDA,FMC_NL,DCMI_VSYNC)" x="-96.52" y="0" length="middle"/>
+<pin name="PB8(I2C4_SCL,TIM4_CH3,TIM10_CH1,I2C1_SCL,DFSDM1_CKIN7,UART5_RX,CAN1_RX,SDMMC2_D4,ETH_MII_TXD3,SDMMC1_D4,DCMI_D6,LCD_B6)" x="-96.52" y="-2.54" length="middle"/>
+<pin name="PB9(I2C4_SDA,TIM4_CH4,TIM11_CH1,I2C1_SDA,SPI2_NSS/I2S2_WS,DFSDM1_DATIN7,UART5_TX,CAN1_TX,SDMMC2_D5,I2C4_SMBA,SDMMC1_D5,DCMI_D7,LCD_B7)" x="-96.52" y="-5.08" length="middle"/>
+</symbol>
+<symbol name="STM32F767ZIT6_SECTION4">
+<wire x1="-81.28" y1="20.32" x2="81.28" y2="20.32" width="0.41" layer="94"/>
+<wire x1="81.28" y1="20.32" x2="81.28" y2="-22.86" width="0.41" layer="94"/>
+<wire x1="81.28" y1="-22.86" x2="-81.28" y2="-22.86" width="0.41" layer="94"/>
+<wire x1="-81.28" y1="-22.86" x2="-81.28" y2="20.32" width="0.41" layer="94"/>
+<text x="-81.3984" y="22.8933" size="2.5437" layer="95">&gt;NAME</text>
+<text x="-81.3213" y="-27.9542" size="2.54129" layer="96">&gt;VALUE</text>
+<pin name="PC0(DFSDM1_CKIN0,DFSDM1_DATIN4,SAI2_FS_B,OTG_HS_ULPI_STP,FMC_SDNWE,LCD_R5,ADC1_IN10,ADC2_IN10,ADC3_IN10)" x="-86.36" y="17.78" length="middle"/>
+<pin name="PC10(DFSDM1_CKIN5,SPI3_SCK/I2S3_CK,USART3_TX,UART4_TX,QUADSPI_BK1_IO1,SDMMC1_D2,DCMI_D8,LCD_R2)" x="-86.36" y="-7.62" length="middle"/>
+<pin name="PC11(DFSDM1_DATIN5,SPI3_MISO,USART3_RX,UART4_RX,QUADSPI_BK2_NCS,SDMMC1_D3,DCMI_D4)" x="-86.36" y="-10.16" length="middle"/>
+<pin name="PC12(TRACED3,SPI3_MOSI/I2S3_SD,USART3_CK,UART5_TX,SDMMC1_CK,DCMI_D9)" x="-86.36" y="-12.7" length="middle"/>
+<pin name="PC13(RTC_TAMP2/RTS_TS/WKUP5)" x="-86.36" y="-15.24" length="middle"/>
+<pin name="PC14-OSC32_IN" x="-86.36" y="-17.78" length="middle"/>
+<pin name="PC15-OSC32_OUT" x="-86.36" y="-20.32" length="middle"/>
+<pin name="PC1(TRACED0,DFSDM1_DATIN0,SAI2_MOSI/I2S2_SD,SAI1_SD_A,DFSDM1_CKIN4,ETH_MDC,MDIOS_MDC,ADC1_IN11,ADC2_IN11,ADC3_IN11,RTC_TAMP3)" x="-86.36" y="15.24" length="middle"/>
+<pin name="PC2(DFSDM1_CKIN1,SPI2_MISO,DFSDM1_CKOUT,OTG_HS_ULPI_DIR,ETH_MII_TXD2,FMC_SDNE0,ADC1_IN12,ADC2_IN12,ADC3_IN13)" x="-86.36" y="12.7" length="middle"/>
+<pin name="PC3(DFSDM1_DATIN1,SPI2_MOSI/I2S2_SD,OTG_HS_ULPI_NXT,ETH_MII_TX_CLK,FMC_SDCKE0,ADC1_IN13,ADC2_IN13,ADC3_IN13)" x="-86.36" y="10.16" length="middle" function="clk"/>
+<pin name="PC4(DFSDM1_CKIN2,I2S1_MCK,SPDIF_RX2,ETH_MII_RXD0/ETH_RMII_RXD0,FMC_SDNE0,ADC1_IN14,ADC2_IN14)" x="-86.36" y="7.62" length="middle"/>
+<pin name="PC5(DFSDM1_DATIN2,SPDIF_RX3,ETH_MII_RXD1/ETH_RMII_RXD1,FMC_SDCKE0,ADC1_IN15,ADC2_IN15)" x="-86.36" y="5.08" length="middle"/>
+<pin name="PC6(TIM3_CH1,TIM8_CH1,I2S2_MCK,DFSDM1_CKIN3,USART6_TX,TMC_NWAIT,SDMMC2_D6,SDMMC1_D6,DCMI_D0,LCD_HSYNC)" x="-86.36" y="2.54" length="middle"/>
+<pin name="PC7(TIM3_CH2,TIM8_CH2,I2S3_MCK,DFSDM1_DATIN3,USART6_RX,FMC_NE1,SDMMC2_D7,SDMMC1_D7,DCMI_D1,LCD_G6)" x="-86.36" y="0" length="middle"/>
+<pin name="PC8(TRACED1,TIM3_CH3,TIM8_CH3,UART5_RTS,USART6_CK,FMC_NE2/FMC_NCE,SDMMC1_D0,DCMI_D2)" x="-86.36" y="-2.54" length="middle"/>
+<pin name="PC9(MCO2,TIM3_CH4,TIM8_CH4,I2S3_SDA,I2S_CKIN,UART5_CTS,QUADSPI_BK1_IO0,LCD_G3,SDMMC12_D1,DCMI_D3,LCD_B2)" x="-86.36" y="-5.08" length="middle"/>
+</symbol>
+<symbol name="STM32F767ZIT6_SECTION5">
+<wire x1="-68.58" y1="20.32" x2="68.58" y2="20.32" width="0.41" layer="94"/>
+<wire x1="68.58" y1="20.32" x2="68.58" y2="-22.86" width="0.41" layer="94"/>
+<wire x1="68.58" y1="-22.86" x2="-68.58" y2="-22.86" width="0.41" layer="94"/>
+<wire x1="-68.58" y1="-22.86" x2="-68.58" y2="20.32" width="0.41" layer="94"/>
+<text x="-68.5954" y="22.8651" size="2.54057" layer="95">&gt;NAME</text>
+<text x="-68.6928" y="-27.9859" size="2.54418" layer="96">&gt;VALUE</text>
+<pin name="PD0(DFSDN1_CKIN6,DFSDM1_DATIN7,UART4_RX,CAN1_RX,FMC_D2)" x="-73.66" y="17.78" length="middle"/>
+<pin name="PD10(DFSDM1_CKOUT,USART3_CK,FMC_D15,LCD_B3)" x="-73.66" y="-7.62" length="middle"/>
+<pin name="PD11(I2C4_SMBA,USART3_CTS,QUADSPI_BK1_IO0,SAI2_SD_A,FMC_A16/FMC_CLE)" x="-73.66" y="-10.16" length="middle"/>
+<pin name="PD12(TIM4_CH1,LPTIM1_IN1,I2C4_SCL,USART3_RTS,QUADSPI_BK1_IO1,SAI2_FS_A,FMC_A17/FMC_ALE)" x="-73.66" y="-12.7" length="middle"/>
+<pin name="PD13(TIM4_CH2,LPTIM1_OUT,I2C4_SDA,QUADSPI_BK_IO3,SAI2_SCK_A,FMC_A18)" x="-73.66" y="-15.24" length="middle"/>
+<pin name="PD14(TIM4_CH3,UART8_CTS,FMC_D0)" x="-73.66" y="-17.78" length="middle"/>
+<pin name="PD15(TIM4_CH4,UART8_RTS,FMC_D1)" x="-73.66" y="-20.32" length="middle"/>
+<pin name="PD1(DFSDN1_DATIN6,DFSDM1_CKIN7,UART4_TX,CAN1_TX,FMC_D3)" x="-73.66" y="15.24" length="middle"/>
+<pin name="PD2(TRACED2,TIM3_ETR,UART5_RX,SDMMC1_CMD,DCMI_D11)" x="-73.66" y="12.7" length="middle"/>
+<pin name="PD3(DFSDM1_CKOUT,SPI2_SCK/I2S2_CK,DFSDM1_DATIN0,USART2_CTS,FMC_CLK,DCMI_D5,LCD_G7)" x="-73.66" y="10.16" length="middle" function="clk"/>
+<pin name="PD4(DFSDM1_CKIN0,USART2_RTS,FMC_NOE)" x="-73.66" y="7.62" length="middle"/>
+<pin name="PD5(USART2_TX,FMC_NWE)" x="-73.66" y="5.08" length="middle"/>
+<pin name="PD6(DFSDM1_CKIN4,SPI4_MOSI/I2S3_SD,SAI1_SD_A,USART2_RX,DFSDM1_DATIN1,SDMMC2_CK,FMC_NWAIT,DCMI_D10,LCD_B2)" x="-73.66" y="2.54" length="middle"/>
+<pin name="PD7(DFSDM1_DATIN4,SPI4_MOSI/I2S1_SD,DFSDM1_CKIN1,USART2_CK,SPDIF_RX0,SDMMC2_CMD,FMC_NE1)" x="-73.66" y="0" length="middle"/>
+<pin name="PD8(DFSDM1_CKIN3,USART3_TX,SPDIF_RX1,FMC_D13)" x="-73.66" y="-2.54" length="middle"/>
+<pin name="PD9(DFSDM1_DATIN3,USART3_RX,FMC_D14)" x="-73.66" y="-5.08" length="middle"/>
+</symbol>
+<symbol name="STM32F767ZIT6_SECTION6">
+<wire x1="-55.88" y1="20.32" x2="55.88" y2="20.32" width="0.41" layer="94"/>
+<wire x1="55.88" y1="20.32" x2="55.88" y2="-22.86" width="0.41" layer="94"/>
+<wire x1="55.88" y1="-22.86" x2="-55.88" y2="-22.86" width="0.41" layer="94"/>
+<wire x1="-55.88" y1="-22.86" x2="-55.88" y2="20.32" width="0.41" layer="94"/>
+<text x="-55.9671" y="22.8956" size="2.54396" layer="95">&gt;NAME</text>
+<text x="-55.9522" y="-27.9761" size="2.54328" layer="96">&gt;VALUE</text>
+<pin name="PE0(TIM4_ETR,LPTIM1_ETR,UART8_RX,SAI2_MCLK_A,FMC_NBL0,DCMI_D2)" x="-60.96" y="17.78" length="middle" function="clk"/>
+<pin name="PE10(TIM1_CH2N,DFSDM1_DATIN4,UART7_CTS,QUADSPI_BK2_IO3,FMC_D7)" x="-60.96" y="-7.62" length="middle"/>
+<pin name="PE11(TIM1_CH2,SPI4_NSS,DFSDM1_CKIN4,SAI2_SD_B,FMC_D8,LCD_G3)" x="-60.96" y="-10.16" length="middle"/>
+<pin name="PE12(TIM1_CH3N,SPI4_SCK,DFSDM1_DATIN5,SAI2_SCK_B,FMC_D9,LCD_B4)" x="-60.96" y="-12.7" length="middle"/>
+<pin name="PE13(TIM1_CH3,SPI4_MISO,DFSDM1_CKIN5,SAI2_FS_B,FMC_D10,LCD_DE)" x="-60.96" y="-15.24" length="middle"/>
+<pin name="PE14(TIM1_CH4,SPI4_MOSI,SAI2_MCLK_B,FMC_D11,LCD_CLK)" x="-60.96" y="-17.78" length="middle" function="clk"/>
+<pin name="PE15(TIM1_BKIN,FMC_D12,LCD_R7)" x="-60.96" y="-20.32" length="middle"/>
+<pin name="PE1(LPTIM1_IN2,UART8_TX,FMC_NBL1,DCMI_D3)" x="-60.96" y="15.24" length="middle"/>
+<pin name="PE2(TRACECLK,SP14_SCK,SAI1_MCLK_A,QUADSPI_BK1_IO2,ETH_MII_TXD3,FMC_A23)" x="-60.96" y="12.7" length="middle" function="clk"/>
+<pin name="PE3(TRACED0,SAI1_SD_B,FMC_A19)" x="-60.96" y="10.16" length="middle"/>
+<pin name="PE4(TRACED1,SPI4_NSS,SAI1_FS_A,DFSDM1_DATIN3,FMC_A20,DCMI_D4,LCD_B0)" x="-60.96" y="7.62" length="middle"/>
+<pin name="PE5(TRACED2,TIM9_CH1,SPI4_MISO,SAI1_SCK_A,DFSDM1_CKIN3,FMC_A21,DCMI_D6,LCD_G0)" x="-60.96" y="5.08" length="middle"/>
+<pin name="PE6(TRACED3,TIM1_BKIN2,TIM9_CH2,SPI4_MOSI,SAI1_SD_A,SAI2_MCLK_B,FMC_A22,DCMI_D7,LCD_G1)" x="-60.96" y="2.54" length="middle" function="clk"/>
+<pin name="PE7(TIM1_ETR,DFSDM1_DATIN2,UART7_RX,QUADSPI_BK2_IO0,FMC_D4)" x="-60.96" y="0" length="middle"/>
+<pin name="PE8(TIM1_CH1N,DFSDM1_CKIN2,UART7_TX,QUADSPI_BK2_IO1,FMC_D5)" x="-60.96" y="-2.54" length="middle"/>
+<pin name="PE9(TIM1_CH1,DFSDM1_CKOUT,UART7_RTS,QUADSPI_BK2_IO2,FMC_D6)" x="-60.96" y="-5.08" length="middle"/>
+</symbol>
+<symbol name="STM32F767ZIT6_SECTION7">
+<wire x1="-45.72" y1="20.32" x2="45.72" y2="20.32" width="0.41" layer="94"/>
+<wire x1="45.72" y1="20.32" x2="45.72" y2="-22.86" width="0.41" layer="94"/>
+<wire x1="45.72" y1="-22.86" x2="-45.72" y2="-22.86" width="0.41" layer="94"/>
+<wire x1="-45.72" y1="-22.86" x2="-45.72" y2="20.32" width="0.41" layer="94"/>
+<text x="-45.7256" y="22.8628" size="2.54031" layer="95">&gt;NAME</text>
+<text x="-45.7533" y="-27.9604" size="2.54185" layer="96">&gt;VALUE</text>
+<pin name="PF0(I2C2_SDA,FMC_A0)" x="-50.8" y="17.78" length="middle"/>
+<pin name="PF10(QUADSPI_CLK,DCMI_D11,LCD_DE,ADC3_IN8)" x="-50.8" y="-7.62" length="middle" function="clk"/>
+<pin name="PF11(SPI5_MOSI,SAI2_SD_B,FMC_SDNRAS,DCMI_D12)" x="-50.8" y="-10.16" length="middle"/>
+<pin name="PF12(FMC_A6)" x="-50.8" y="-12.7" length="middle"/>
+<pin name="PF13(I2C4_SMBA,DFSDM1_DATIN6,FMC_A7)" x="-50.8" y="-15.24" length="middle"/>
+<pin name="PF14(I2C4_SCL,DFSDM1_CKIN6,FMC_A8)" x="-50.8" y="-17.78" length="middle"/>
+<pin name="PF15(I2C4_SDA,FMC_A9)" x="-50.8" y="-20.32" length="middle"/>
+<pin name="PF1(I2C2_SCL,FMC_A1)" x="-50.8" y="15.24" length="middle"/>
+<pin name="PF2(I2C2_SMBA,FCM_A2)" x="-50.8" y="12.7" length="middle"/>
+<pin name="PF3(FMC_A3,ADC3_IN9)" x="-50.8" y="10.16" length="middle"/>
+<pin name="PF4(FMC_A4,ADC3_IN14)" x="-50.8" y="7.62" length="middle"/>
+<pin name="PF5(FMC_A5,ADC3_IN15)" x="-50.8" y="5.08" length="middle"/>
+<pin name="PF6(TIM10_CH1,SPI5_NSS,SAI1_SD_B,UART7_RX,QUADSPI_BK1_IO3,ADC3_IN4)" x="-50.8" y="2.54" length="middle"/>
+<pin name="PF7(TIM11_CH1,SPI5_SCK,SAI1_MCK_B,UART7_TX,QUADSPI_BK1_IO2,ADC3_IN5)" x="-50.8" y="0" length="middle"/>
+<pin name="PF8(SPI5_MISO,SAI1_SCK_B,UART7_RTS,TIM13_CH1,QUADSPI_BK1_IO0,ADC3_IN6)" x="-50.8" y="-2.54" length="middle"/>
+<pin name="PF9(SPI5_MOSI,SAI1_FS_B,UART7_CTS,TIM14_CH1,QUADSPI_BK1_IO1,ADC3_IN7)" x="-50.8" y="-5.08" length="middle"/>
+</symbol>
+<symbol name="STM32F767ZIT6_SECTION8">
+<wire x1="-68.58" y1="20.32" x2="68.58" y2="20.32" width="0.41" layer="94"/>
+<wire x1="68.58" y1="20.32" x2="68.58" y2="-22.86" width="0.41" layer="94"/>
+<wire x1="68.58" y1="-22.86" x2="-68.58" y2="-22.86" width="0.41" layer="94"/>
+<wire x1="-68.58" y1="-22.86" x2="-68.58" y2="20.32" width="0.41" layer="94"/>
+<text x="-68.7018" y="22.9006" size="2.54451" layer="95">&gt;NAME</text>
+<text x="-68.6995" y="-27.9887" size="2.54443" layer="96">&gt;VALUE</text>
+<pin name="PG0(FMC_A10)" x="-73.66" y="17.78" length="middle"/>
+<pin name="PG10(SPI1_NSS/I2S1_WS,LCD_G3,SAI2_SD_B,SDMMC2_D1,FMC_NE3,DCMI_D2,LCD_B2)" x="-73.66" y="-7.62" length="middle"/>
+<pin name="PG11(SPI1_SCK/I2S1_CK,SPDIF_RX0,SDMMC2_D2,ETH_MII_TX_EN/ETH_RMII_TX_EN,DCMI_D3,LCD_B3)" x="-73.66" y="-10.16" length="middle"/>
+<pin name="PG12(LPTIM1_IN1,SPI6_MISO,SPDIF_RX1,USART6_RTS,LCD_B4,SDMMC2_D3,FMC_NE4,LCD_B1)" x="-73.66" y="-12.7" length="middle"/>
+<pin name="PG13(TRACED0,LPTIM1_OUT,SPI6_SCK,USART6_CTS,ETH_MII_TXD0/ETH_RMII_TXD0,FMC_A24,LCD_R0)" x="-73.66" y="-15.24" length="middle"/>
+<pin name="PG14(TRACED1,LPTIM1_ETR,SPI6_MOSI,USART6_TX,QUADSPI_BK2_IO3,ETH_MII_TXD1/ETH_RMII_TXD1,FMC_A25,LCD_B0)" x="-73.66" y="-17.78" length="middle"/>
+<pin name="PG15(USART6_CTS,FMC_SDNCAS,DCMI_D13)" x="-73.66" y="-20.32" length="middle"/>
+<pin name="PG1(FMC_A11)" x="-73.66" y="15.24" length="middle"/>
+<pin name="PG2(FMC_A12)" x="-73.66" y="12.7" length="middle"/>
+<pin name="PG3(FMC_A13)" x="-73.66" y="10.16" length="middle"/>
+<pin name="PG4(FMC_A14/FMC_BA0)" x="-73.66" y="7.62" length="middle"/>
+<pin name="PG5(FMC_A15/FMC_BA1)" x="-73.66" y="5.08" length="middle"/>
+<pin name="PG6(FMC_NE3,DCMI_D12,LCD_R7))" x="-73.66" y="2.54" length="middle"/>
+<pin name="PG7(SAI1_MCLK_A,USART6_CK,FMC_INT,DCMII_D13,LCD_CLK)" x="-73.66" y="0" length="middle" function="clk"/>
+<pin name="PG8(SPI6_NSS,SPDIF_RX2,USART6_RTS,ETH_PPS_OUT,FMC_SDCLK,LCD_G7)" x="-73.66" y="-2.54" length="middle" function="clk"/>
+<pin name="PG9(SPI1_MISO,SPDIF_RX3,USART6_RX,QUADSPI_BK2_IO2,SAI2_FS_B,SDMMC2_D0,FMC_NE2/FMC_NCE,DCMI_VSYNC)" x="-73.66" y="-5.08" length="middle"/>
+</symbol>
+<symbol name="STM32F767ZIT6_SECTION9">
+<wire x1="-12.7" y1="10.16" x2="15.24" y2="10.16" width="0.41" layer="94"/>
+<wire x1="15.24" y1="10.16" x2="15.24" y2="-10.16" width="0.41" layer="94"/>
+<wire x1="15.24" y1="-10.16" x2="-12.7" y2="-10.16" width="0.41" layer="94"/>
+<wire x1="-12.7" y1="-10.16" x2="-12.7" y2="10.16" width="0.41" layer="94"/>
+<text x="-12.7116" y="12.7116" size="2.54232" layer="95">&gt;NAME</text>
+<text x="-12.7187" y="-15.2624" size="2.54374" layer="96">&gt;VALUE</text>
+<pin name="PH0-OSC_IN" x="-17.78" y="2.54" length="middle"/>
+<pin name="PH1-OSC_OUT" x="-17.78" y="-2.54" length="middle"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="STM32F767ZIT6" prefix="U">
+<description>IC MCU 32BIT 2MB FLASH 144LQFP</description>
+<gates>
+<gate name="PWR_CONTR" symbol="STM32F767ZIT6_SECTION1" x="134.62" y="-38.1" swaplevel="1"/>
+<gate name="PA" symbol="STM32F767ZIT6_SECTION2" x="-208.28" y="60.96" swaplevel="2"/>
+<gate name="PB" symbol="STM32F767ZIT6_SECTION3" x="-193.04" y="0" swaplevel="3"/>
+<gate name="PC" symbol="STM32F767ZIT6_SECTION4" x="-203.2" y="-60.96" swaplevel="4"/>
+<gate name="PD" symbol="STM32F767ZIT6_SECTION5" x="12.7" y="60.96" swaplevel="5"/>
+<gate name="PE" symbol="STM32F767ZIT6_SECTION6" x="0" y="0" swaplevel="6"/>
+<gate name="PF" symbol="STM32F767ZIT6_SECTION7" x="-10.16" y="-60.96" swaplevel="7"/>
+<gate name="PG" symbol="STM32F767ZIT6_SECTION8" x="187.96" y="60.96" swaplevel="8"/>
+<gate name="PH" symbol="STM32F767ZIT6_SECTION9" x="132.08" y="10.16" swaplevel="9"/>
+</gates>
+<devices>
+<device name="" package="QFP50P2200X2200X160-144N">
+<connects>
+<connect gate="PA" pin="PA0-WKUP(TIM2_CH1/TIM2_ETR,TIM5_CH1,TIM8_ETR,USART2_CTS,UART4_TX,SAI2_SD_B,ETH_MII_CRS,ADC1_IN0,ADC2_IN0,ADC3_IN0,WKUP1)" pad="34"/>
+<connect gate="PA" pin="PA1(TIM2_CH2,TIM5_CH2,USART2_RTS,UART4_RX,QUADSPI_BK1_IO3,SAI2_MCLK_B,ETH_MII_RX_CLK/ETH_RMII_REF_CLK,LCD_R2)" pad="35"/>
+<connect gate="PA" pin="PA10(TIM1_CH3,USART1_RX,LCD_B4,OTG_FS_ID,MDIOS_MDIO,DCMI_D1,LCD_B1)" pad="102"/>
+<connect gate="PA" pin="PA11(TIM1_CH4,SPI2_NSS/I2S2_WS,UART4_RX,USART1_CTS,CAN1_RX,OTG_FS_DM,LCD_R4)" pad="103"/>
+<connect gate="PA" pin="PA12(TIM1_ETR,SPI2_SCK/I2S2_CK,UART4_TX,USART1_RTS,CAN1_TX,OTG_FS_DP,LCD_R5)" pad="104"/>
+<connect gate="PA" pin="PA13(JTMS-SWDIO)" pad="105"/>
+<connect gate="PA" pin="PA14(JTCK-SWCLK)" pad="109"/>
+<connect gate="PA" pin="PA15(JTDI,TIM2_CH1/TIM2_ETR,HDMI_CEC,SPI_NSS/I2S1_WS,SPI3_NSS/I2S3_WS,SPI6_NSS,UART4_RTS,CAN3_TX,UART7_TX)" pad="110"/>
+<connect gate="PA" pin="PA2(TIM2_CH3,TIM5_CH3,TIM9_CH1,USART2_TX,SAI2_SCK_B,ETH_MDIO,MDIOS_MDIO,LCD_R1,ADC1_IN2,ADC2_IN2,ADC3_IN2,WKUP2)" pad="36"/>
+<connect gate="PA" pin="PA3(TIM2_CH4,TIM5_CH4,TIM9_CH2,USART2_RX,LCD_B2,OTG_HS_ULPI_D0,ETH_MII_COL,LCD_B5,ADC1_IN3,ADC2_IN3,ADC3_IN3)" pad="37"/>
+<connect gate="PA" pin="PA4(SPI1_NSS/I2S1_WS,SPI3_NSS/I2S3_WS,USART2_CK,SPI6_NSS,OTG_HS_SOF,DCMI_HSYNC,LCD_VSYNC,ADC1_IN4,ADC2_IN4,DAC_OUT1)" pad="40"/>
+<connect gate="PA" pin="PA5(TIM2_CH1/TIM2_ETR,TIM8_CH1N,SPI1_SCK/I2S1_CK,SPI6_SCK,OTG_HS_ULPI_CK,LCD_R4,ADC1_IN5,ADC2_IN5,DAC_OUT2)" pad="41"/>
+<connect gate="PA" pin="PA6(TIM1_BKIN,TIM3_CH1,TIM6_BKIN,SPI1_MISO,SPI6_MISO,TIM13_CH1,MDIOS_MDC,DCMI_PIXCLK,LCD_G2,ADC1_IN6,ADC2_IN6)" pad="42"/>
+<connect gate="PA" pin="PA7(TIM1_CH1N,TIM3_CH2,TIM8_CH1N,SPI1_MOSI/I2S1_SD,SPI6_MOSI,TIM14_CH1,ETH_MII_RX_DV/ETH_RMII_CRS_DV,FMC_SDNWE)" pad="43"/>
+<connect gate="PA" pin="PA8(MCO1,TIM1_CH1,TIM8_BKIN2,I2C3_SCL,USART1_CK,OTG_FS_SOF,CAN3_RX,UART7_RX,LCD_B3,LCD_R6)" pad="100"/>
+<connect gate="PA" pin="PA9(TIM1_CH2,I2C3_SMBA,SPI2_SCK/I2S2_CK,USART1_TX,DCMI_D0,LCD_R5)" pad="101"/>
+<connect gate="PB" pin="PB0(TIM1_CH2N,TIM3_CH3,TIM8_CH2N,DFSDM1_CKOUT,UART4_CTS,LCD_R3,OTG_HS_ULPI_D1,ETH_MII_RXD2,LCD_G1,ADC1_IN8,ADC2_IN8)" pad="46"/>
+<connect gate="PB" pin="PB1(TIM1_CH3N,TIM3_CH4,TIM8_CH3N,DFSDM1_DATIN1,LCD_R6,OTG_HS_ULPI_D2,ETH_MII_RXD3,LCD_G0,ADC1_IN9,ADC2_IN9)" pad="47"/>
+<connect gate="PB" pin="PB10(TIM2_CH3,I2C2_SCL,SPI_SCK/I2S2_CK,DFSDM1_DATIN7,USART3_TX,QUADSPI_BK1_NCS,OTG_HS_ULPI_D3,ETH_MII_RX_ER,LCD_G4)" pad="69"/>
+<connect gate="PB" pin="PB11(TIM2_CH4,I2C2_SDA,DFSDM1_CKIN7,USART3_RX,OTG_HS_ULPI_D4,ETH_MII_TX_EN/ETH_RMII_TX,DSI_TE,LCD_G5)" pad="70"/>
+<connect gate="PB" pin="PB12(TIM1_BKIN,I2C2_SMBA,SPI2_NSS/I2S2_WS,DFSDM1_DATIN1,USART3_CK,UART5_RX,CAN2_RX,OTG_HS_ULPI_D5,ETH_MII_TXD0/ETH_RMII_TXD0,OTG_HS_ID)" pad="73"/>
+<connect gate="PB" pin="PB13(TIM1_CH1N,SPI2_SCK/I2S2_CK,DFSDM1_CKIN1,USART3_CTS,UART5_TX,CAN2_TX,OTG_HS_ULPI_D6,ETH_MII_TXD1/ETH_RMII_TXD1)" pad="74"/>
+<connect gate="PB" pin="PB14(TIM1_CH2N,TIM8_CH2N,USART1_TX,SPI2_MISO,DFSDM1_DATIN2,USART3_RTS,UART4_RTS,TIM12_CH1,SDMMC2_D0,OTG_HS_DM)" pad="75"/>
+<connect gate="PB" pin="PB15(RTC_REFIN,TIM1_CH3N,TIM8_CH3N,USART1_RX,SPI2_MOSI/I2S2_SD,DFSDM1_CKIN2,UART4_CTS,TIM12_CH2,SDMMC2_D1,OTG_HS_DP)" pad="76"/>
+<connect gate="PB" pin="PB2(SAI1_SD_A,SPI3_MOSI/I2S3_SD,QUADSPI_CLK,DFSDM1_CKIN1)" pad="48"/>
+<connect gate="PB" pin="PB3(JTDO/TRACESWO,TIM2_CH2,SPI1_SCK/I2S1_CK,SPI3_SCK/I2S3_CK,SPI6_SCK,SDMMC2_D2,CAN3_RX,UART7_RX)" pad="133"/>
+<connect gate="PB" pin="PB4(NJTRST,TIM3_CH1,SPI1_MISO,SPI3_MISO,SPI2_NSS/I2S2_WS,SPI6_MISO,SDMMC2_D3,CAN3_TX,UART7_TX)" pad="134"/>
+<connect gate="PB" pin="PB5(UART5_RX,TIM3_CH2,I2C1_SMBA,SPI1_MOSI/I2S1_SD,SPI3_MOSI/I2S3_SD,SPI6_MOSI,CAN2_RX,OTG_HS_ULPI_D7,ETH_PPS_OUT,FMC_SDCKE1,DCMI_D10,LCD_G7)" pad="135"/>
+<connect gate="PB" pin="PB6(UART5_TX,TIM4_CH1,HDMI_CEC,I2C1_SCL,DFSDM1_DATIN5,USART1_TX,CAN2_TX,QUADSPI_BK1_NCS,I2C4_SCL,FMC_SDNE1,DCMI_D5)" pad="136"/>
+<connect gate="PB" pin="PB7(TIM4_CH2,I2C1_SDA,DFSDM1_CKIN5,USART1_RX,I2C4_SDA,FMC_NL,DCMI_VSYNC)" pad="137"/>
+<connect gate="PB" pin="PB8(I2C4_SCL,TIM4_CH3,TIM10_CH1,I2C1_SCL,DFSDM1_CKIN7,UART5_RX,CAN1_RX,SDMMC2_D4,ETH_MII_TXD3,SDMMC1_D4,DCMI_D6,LCD_B6)" pad="139"/>
+<connect gate="PB" pin="PB9(I2C4_SDA,TIM4_CH4,TIM11_CH1,I2C1_SDA,SPI2_NSS/I2S2_WS,DFSDM1_DATIN7,UART5_TX,CAN1_TX,SDMMC2_D5,I2C4_SMBA,SDMMC1_D5,DCMI_D7,LCD_B7)" pad="140"/>
+<connect gate="PC" pin="PC0(DFSDM1_CKIN0,DFSDM1_DATIN4,SAI2_FS_B,OTG_HS_ULPI_STP,FMC_SDNWE,LCD_R5,ADC1_IN10,ADC2_IN10,ADC3_IN10)" pad="26"/>
+<connect gate="PC" pin="PC1(TRACED0,DFSDM1_DATIN0,SAI2_MOSI/I2S2_SD,SAI1_SD_A,DFSDM1_CKIN4,ETH_MDC,MDIOS_MDC,ADC1_IN11,ADC2_IN11,ADC3_IN11,RTC_TAMP3)" pad="27"/>
+<connect gate="PC" pin="PC10(DFSDM1_CKIN5,SPI3_SCK/I2S3_CK,USART3_TX,UART4_TX,QUADSPI_BK1_IO1,SDMMC1_D2,DCMI_D8,LCD_R2)" pad="111"/>
+<connect gate="PC" pin="PC11(DFSDM1_DATIN5,SPI3_MISO,USART3_RX,UART4_RX,QUADSPI_BK2_NCS,SDMMC1_D3,DCMI_D4)" pad="112"/>
+<connect gate="PC" pin="PC12(TRACED3,SPI3_MOSI/I2S3_SD,USART3_CK,UART5_TX,SDMMC1_CK,DCMI_D9)" pad="113"/>
+<connect gate="PC" pin="PC13(RTC_TAMP2/RTS_TS/WKUP5)" pad="7"/>
+<connect gate="PC" pin="PC14-OSC32_IN" pad="8"/>
+<connect gate="PC" pin="PC15-OSC32_OUT" pad="9"/>
+<connect gate="PC" pin="PC2(DFSDM1_CKIN1,SPI2_MISO,DFSDM1_CKOUT,OTG_HS_ULPI_DIR,ETH_MII_TXD2,FMC_SDNE0,ADC1_IN12,ADC2_IN12,ADC3_IN13)" pad="28"/>
+<connect gate="PC" pin="PC3(DFSDM1_DATIN1,SPI2_MOSI/I2S2_SD,OTG_HS_ULPI_NXT,ETH_MII_TX_CLK,FMC_SDCKE0,ADC1_IN13,ADC2_IN13,ADC3_IN13)" pad="29"/>
+<connect gate="PC" pin="PC4(DFSDM1_CKIN2,I2S1_MCK,SPDIF_RX2,ETH_MII_RXD0/ETH_RMII_RXD0,FMC_SDNE0,ADC1_IN14,ADC2_IN14)" pad="44"/>
+<connect gate="PC" pin="PC5(DFSDM1_DATIN2,SPDIF_RX3,ETH_MII_RXD1/ETH_RMII_RXD1,FMC_SDCKE0,ADC1_IN15,ADC2_IN15)" pad="45"/>
+<connect gate="PC" pin="PC6(TIM3_CH1,TIM8_CH1,I2S2_MCK,DFSDM1_CKIN3,USART6_TX,TMC_NWAIT,SDMMC2_D6,SDMMC1_D6,DCMI_D0,LCD_HSYNC)" pad="96"/>
+<connect gate="PC" pin="PC7(TIM3_CH2,TIM8_CH2,I2S3_MCK,DFSDM1_DATIN3,USART6_RX,FMC_NE1,SDMMC2_D7,SDMMC1_D7,DCMI_D1,LCD_G6)" pad="97"/>
+<connect gate="PC" pin="PC8(TRACED1,TIM3_CH3,TIM8_CH3,UART5_RTS,USART6_CK,FMC_NE2/FMC_NCE,SDMMC1_D0,DCMI_D2)" pad="98"/>
+<connect gate="PC" pin="PC9(MCO2,TIM3_CH4,TIM8_CH4,I2S3_SDA,I2S_CKIN,UART5_CTS,QUADSPI_BK1_IO0,LCD_G3,SDMMC12_D1,DCMI_D3,LCD_B2)" pad="99"/>
+<connect gate="PD" pin="PD0(DFSDN1_CKIN6,DFSDM1_DATIN7,UART4_RX,CAN1_RX,FMC_D2)" pad="114"/>
+<connect gate="PD" pin="PD1(DFSDN1_DATIN6,DFSDM1_CKIN7,UART4_TX,CAN1_TX,FMC_D3)" pad="115"/>
+<connect gate="PD" pin="PD10(DFSDM1_CKOUT,USART3_CK,FMC_D15,LCD_B3)" pad="79"/>
+<connect gate="PD" pin="PD11(I2C4_SMBA,USART3_CTS,QUADSPI_BK1_IO0,SAI2_SD_A,FMC_A16/FMC_CLE)" pad="80"/>
+<connect gate="PD" pin="PD12(TIM4_CH1,LPTIM1_IN1,I2C4_SCL,USART3_RTS,QUADSPI_BK1_IO1,SAI2_FS_A,FMC_A17/FMC_ALE)" pad="81"/>
+<connect gate="PD" pin="PD13(TIM4_CH2,LPTIM1_OUT,I2C4_SDA,QUADSPI_BK_IO3,SAI2_SCK_A,FMC_A18)" pad="82"/>
+<connect gate="PD" pin="PD14(TIM4_CH3,UART8_CTS,FMC_D0)" pad="85"/>
+<connect gate="PD" pin="PD15(TIM4_CH4,UART8_RTS,FMC_D1)" pad="86"/>
+<connect gate="PD" pin="PD2(TRACED2,TIM3_ETR,UART5_RX,SDMMC1_CMD,DCMI_D11)" pad="116"/>
+<connect gate="PD" pin="PD3(DFSDM1_CKOUT,SPI2_SCK/I2S2_CK,DFSDM1_DATIN0,USART2_CTS,FMC_CLK,DCMI_D5,LCD_G7)" pad="117"/>
+<connect gate="PD" pin="PD4(DFSDM1_CKIN0,USART2_RTS,FMC_NOE)" pad="118"/>
+<connect gate="PD" pin="PD5(USART2_TX,FMC_NWE)" pad="119"/>
+<connect gate="PD" pin="PD6(DFSDM1_CKIN4,SPI4_MOSI/I2S3_SD,SAI1_SD_A,USART2_RX,DFSDM1_DATIN1,SDMMC2_CK,FMC_NWAIT,DCMI_D10,LCD_B2)" pad="122"/>
+<connect gate="PD" pin="PD7(DFSDM1_DATIN4,SPI4_MOSI/I2S1_SD,DFSDM1_CKIN1,USART2_CK,SPDIF_RX0,SDMMC2_CMD,FMC_NE1)" pad="123"/>
+<connect gate="PD" pin="PD8(DFSDM1_CKIN3,USART3_TX,SPDIF_RX1,FMC_D13)" pad="77"/>
+<connect gate="PD" pin="PD9(DFSDM1_DATIN3,USART3_RX,FMC_D14)" pad="78"/>
+<connect gate="PE" pin="PE0(TIM4_ETR,LPTIM1_ETR,UART8_RX,SAI2_MCLK_A,FMC_NBL0,DCMI_D2)" pad="141"/>
+<connect gate="PE" pin="PE1(LPTIM1_IN2,UART8_TX,FMC_NBL1,DCMI_D3)" pad="142"/>
+<connect gate="PE" pin="PE10(TIM1_CH2N,DFSDM1_DATIN4,UART7_CTS,QUADSPI_BK2_IO3,FMC_D7)" pad="63"/>
+<connect gate="PE" pin="PE11(TIM1_CH2,SPI4_NSS,DFSDM1_CKIN4,SAI2_SD_B,FMC_D8,LCD_G3)" pad="64"/>
+<connect gate="PE" pin="PE12(TIM1_CH3N,SPI4_SCK,DFSDM1_DATIN5,SAI2_SCK_B,FMC_D9,LCD_B4)" pad="65"/>
+<connect gate="PE" pin="PE13(TIM1_CH3,SPI4_MISO,DFSDM1_CKIN5,SAI2_FS_B,FMC_D10,LCD_DE)" pad="66"/>
+<connect gate="PE" pin="PE14(TIM1_CH4,SPI4_MOSI,SAI2_MCLK_B,FMC_D11,LCD_CLK)" pad="67"/>
+<connect gate="PE" pin="PE15(TIM1_BKIN,FMC_D12,LCD_R7)" pad="68"/>
+<connect gate="PE" pin="PE2(TRACECLK,SP14_SCK,SAI1_MCLK_A,QUADSPI_BK1_IO2,ETH_MII_TXD3,FMC_A23)" pad="1"/>
+<connect gate="PE" pin="PE3(TRACED0,SAI1_SD_B,FMC_A19)" pad="2"/>
+<connect gate="PE" pin="PE4(TRACED1,SPI4_NSS,SAI1_FS_A,DFSDM1_DATIN3,FMC_A20,DCMI_D4,LCD_B0)" pad="3"/>
+<connect gate="PE" pin="PE5(TRACED2,TIM9_CH1,SPI4_MISO,SAI1_SCK_A,DFSDM1_CKIN3,FMC_A21,DCMI_D6,LCD_G0)" pad="4"/>
+<connect gate="PE" pin="PE6(TRACED3,TIM1_BKIN2,TIM9_CH2,SPI4_MOSI,SAI1_SD_A,SAI2_MCLK_B,FMC_A22,DCMI_D7,LCD_G1)" pad="5"/>
+<connect gate="PE" pin="PE7(TIM1_ETR,DFSDM1_DATIN2,UART7_RX,QUADSPI_BK2_IO0,FMC_D4)" pad="58"/>
+<connect gate="PE" pin="PE8(TIM1_CH1N,DFSDM1_CKIN2,UART7_TX,QUADSPI_BK2_IO1,FMC_D5)" pad="59"/>
+<connect gate="PE" pin="PE9(TIM1_CH1,DFSDM1_CKOUT,UART7_RTS,QUADSPI_BK2_IO2,FMC_D6)" pad="60"/>
+<connect gate="PF" pin="PF0(I2C2_SDA,FMC_A0)" pad="10"/>
+<connect gate="PF" pin="PF1(I2C2_SCL,FMC_A1)" pad="11"/>
+<connect gate="PF" pin="PF10(QUADSPI_CLK,DCMI_D11,LCD_DE,ADC3_IN8)" pad="22"/>
+<connect gate="PF" pin="PF11(SPI5_MOSI,SAI2_SD_B,FMC_SDNRAS,DCMI_D12)" pad="49"/>
+<connect gate="PF" pin="PF12(FMC_A6)" pad="50"/>
+<connect gate="PF" pin="PF13(I2C4_SMBA,DFSDM1_DATIN6,FMC_A7)" pad="53"/>
+<connect gate="PF" pin="PF14(I2C4_SCL,DFSDM1_CKIN6,FMC_A8)" pad="54"/>
+<connect gate="PF" pin="PF15(I2C4_SDA,FMC_A9)" pad="55"/>
+<connect gate="PF" pin="PF2(I2C2_SMBA,FCM_A2)" pad="12"/>
+<connect gate="PF" pin="PF3(FMC_A3,ADC3_IN9)" pad="13"/>
+<connect gate="PF" pin="PF4(FMC_A4,ADC3_IN14)" pad="14"/>
+<connect gate="PF" pin="PF5(FMC_A5,ADC3_IN15)" pad="15"/>
+<connect gate="PF" pin="PF6(TIM10_CH1,SPI5_NSS,SAI1_SD_B,UART7_RX,QUADSPI_BK1_IO3,ADC3_IN4)" pad="18"/>
+<connect gate="PF" pin="PF7(TIM11_CH1,SPI5_SCK,SAI1_MCK_B,UART7_TX,QUADSPI_BK1_IO2,ADC3_IN5)" pad="19"/>
+<connect gate="PF" pin="PF8(SPI5_MISO,SAI1_SCK_B,UART7_RTS,TIM13_CH1,QUADSPI_BK1_IO0,ADC3_IN6)" pad="20"/>
+<connect gate="PF" pin="PF9(SPI5_MOSI,SAI1_FS_B,UART7_CTS,TIM14_CH1,QUADSPI_BK1_IO1,ADC3_IN7)" pad="21"/>
+<connect gate="PG" pin="PG0(FMC_A10)" pad="56"/>
+<connect gate="PG" pin="PG1(FMC_A11)" pad="57"/>
+<connect gate="PG" pin="PG10(SPI1_NSS/I2S1_WS,LCD_G3,SAI2_SD_B,SDMMC2_D1,FMC_NE3,DCMI_D2,LCD_B2)" pad="125"/>
+<connect gate="PG" pin="PG11(SPI1_SCK/I2S1_CK,SPDIF_RX0,SDMMC2_D2,ETH_MII_TX_EN/ETH_RMII_TX_EN,DCMI_D3,LCD_B3)" pad="126"/>
+<connect gate="PG" pin="PG12(LPTIM1_IN1,SPI6_MISO,SPDIF_RX1,USART6_RTS,LCD_B4,SDMMC2_D3,FMC_NE4,LCD_B1)" pad="127"/>
+<connect gate="PG" pin="PG13(TRACED0,LPTIM1_OUT,SPI6_SCK,USART6_CTS,ETH_MII_TXD0/ETH_RMII_TXD0,FMC_A24,LCD_R0)" pad="128"/>
+<connect gate="PG" pin="PG14(TRACED1,LPTIM1_ETR,SPI6_MOSI,USART6_TX,QUADSPI_BK2_IO3,ETH_MII_TXD1/ETH_RMII_TXD1,FMC_A25,LCD_B0)" pad="129"/>
+<connect gate="PG" pin="PG15(USART6_CTS,FMC_SDNCAS,DCMI_D13)" pad="132"/>
+<connect gate="PG" pin="PG2(FMC_A12)" pad="87"/>
+<connect gate="PG" pin="PG3(FMC_A13)" pad="88"/>
+<connect gate="PG" pin="PG4(FMC_A14/FMC_BA0)" pad="89"/>
+<connect gate="PG" pin="PG5(FMC_A15/FMC_BA1)" pad="90"/>
+<connect gate="PG" pin="PG6(FMC_NE3,DCMI_D12,LCD_R7))" pad="91"/>
+<connect gate="PG" pin="PG7(SAI1_MCLK_A,USART6_CK,FMC_INT,DCMII_D13,LCD_CLK)" pad="92"/>
+<connect gate="PG" pin="PG8(SPI6_NSS,SPDIF_RX2,USART6_RTS,ETH_PPS_OUT,FMC_SDCLK,LCD_G7)" pad="93"/>
+<connect gate="PG" pin="PG9(SPI1_MISO,SPDIF_RX3,USART6_RX,QUADSPI_BK2_IO2,SAI2_FS_B,SDMMC2_D0,FMC_NE2/FMC_NCE,DCMI_VSYNC)" pad="124"/>
+<connect gate="PH" pin="PH0-OSC_IN" pad="23"/>
+<connect gate="PH" pin="PH1-OSC_OUT" pad="24"/>
+<connect gate="PWR_CONTR" pin="BOOT0(VPP)" pad="138"/>
+<connect gate="PWR_CONTR" pin="NRST" pad="25"/>
+<connect gate="PWR_CONTR" pin="PDR_ON" pad="143"/>
+<connect gate="PWR_CONTR" pin="VBAT" pad="6"/>
+<connect gate="PWR_CONTR" pin="VCAP_1" pad="71"/>
+<connect gate="PWR_CONTR" pin="VCAP_2" pad="106"/>
+<connect gate="PWR_CONTR" pin="VDD" pad="17 30 39 52 62 72 84 108 131 144"/>
+<connect gate="PWR_CONTR" pin="VDDA" pad="33"/>
+<connect gate="PWR_CONTR" pin="VDDSDMMC" pad="121"/>
+<connect gate="PWR_CONTR" pin="VDDUSB" pad="95"/>
+<connect gate="PWR_CONTR" pin="VREFP" pad="32"/>
+<connect gate="PWR_CONTR" pin="VSS" pad="16 38 51 61 83 94 107 120 130"/>
+<connect gate="PWR_CONTR" pin="VSSA" pad="31"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="Digi-Key_Purchase_URL" value="https://www.digikey.com.tr/product-detail/en/stmicroelectronics/STM32F767ZIT6/497-16521-ND/6004736?utm_source=snapeda&amp;utm_medium=aggregator&amp;utm_campaign=symbol"/>
+<attribute name="Description" value="
+High-performance and DSP with FPU, ARM Cortex-M7 MCU with 2 Mbytes Flash, 216 MHz CPU, Art Accelerator, L1 cache, SDR...
+"/>
+<attribute name="MF" value="STMicroelectronics"/>
+<attribute name="Digi-Key_Part_Number" value="497-16521-ND"/>
+<attribute name="MP" value="STM32F767ZIT6"/>
+<attribute name="Package" value="LQFP-144 STMicroelectronics"/>
+</technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
+</drawing>
+</eagle>
