@@ -1988,7 +1988,7 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 </package>
 </packages>
 <symbols>
-<symbol name="NUCLEO-L053R8_SECTION1">
+<symbol name="NUCLEO-410RE_SECTION1">
 <wire x1="-15.24" y1="25.4" x2="15.24" y2="25.4" width="0.254" layer="94"/>
 <wire x1="15.24" y1="25.4" x2="15.24" y2="-25.4" width="0.254" layer="94"/>
 <wire x1="15.24" y1="-25.4" x2="-15.24" y2="-25.4" width="0.254" layer="94"/>
@@ -2029,7 +2029,7 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <pin name="PC0_PB8/A5" x="20.32" y="-22.86" length="middle" direction="pas" rot="R180"/>
 <pin name="PA15" x="-20.32" y="2.54" length="middle" direction="pas"/>
 </symbol>
-<symbol name="NUCLEO-L053R8_SECTION2">
+<symbol name="NUCLEO-F410RE_SECTION2">
 <wire x1="-12.7" y1="25.4" x2="12.7" y2="25.4" width="0.254" layer="94"/>
 <wire x1="12.7" y1="25.4" x2="12.7" y2="-25.4" width="0.254" layer="94"/>
 <wire x1="12.7" y1="-25.4" x2="-12.7" y2="-25.4" width="0.254" layer="94"/>
@@ -2075,11 +2075,11 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="NUCLEO-L053R8" prefix="U">
+<deviceset name="NUCLEO-F410RE" prefix="U">
 <description>STM32 Nucleo-64 development board with STM32L053R8T6 MCU, supports Arduino and ST morpho connectivity</description>
 <gates>
-<gate name="CN7" symbol="NUCLEO-L053R8_SECTION1" x="-40.64" y="0" swaplevel="1"/>
-<gate name="CN10" symbol="NUCLEO-L053R8_SECTION2" x="40.64" y="0" swaplevel="2"/>
+<gate name="CN7" symbol="NUCLEO-410RE_SECTION1" x="-40.64" y="0" swaplevel="1"/>
+<gate name="CN10" symbol="NUCLEO-F410RE_SECTION2" x="40.64" y="0" swaplevel="2"/>
 </gates>
 <devices>
 <device name="" package="MODULE_NUCLEO-L053R8">
@@ -2188,7 +2188,7 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <part name="GND5" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND2" device="" value="GND"/>
 <part name="SUPPLY8" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="5V" device=""/>
 <part name="SUPPLY5" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="5V" device=""/>
-<part name="U2" library="NUCLEO-L053R8" deviceset="NUCLEO-L053R8" device=""/>
+<part name="U2" library="NUCLEO-L053R8" deviceset="NUCLEO-F410RE" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -2212,8 +2212,8 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 </instance>
 <instance part="SUPPLY8" gate="G$1" x="63.5" y="58.42"/>
 <instance part="SUPPLY5" gate="G$1" x="30.48" y="86.36"/>
-<instance part="U2" gate="CN7" x="152.4" y="73.66"/>
-<instance part="U2" gate="CN10" x="210.82" y="73.66"/>
+<instance part="U2" gate="CN7" x="157.48" y="68.58"/>
+<instance part="U2" gate="CN10" x="226.06" y="68.58"/>
 </instances>
 <busses>
 </busses>
@@ -2340,6 +2340,12 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <pinref part="U3" gate="U1" pin="VOUT"/>
 <wire x1="58.42" y1="50.8" x2="63.5" y2="50.8" width="0.1524" layer="91"/>
 <label x="63.5" y="50.8" size="1.778" layer="95"/>
+<wire x1="63.5" y1="50.8" x2="116.84" y2="50.8" width="0.1524" layer="91"/>
+<wire x1="116.84" y1="50.8" x2="116.84" y2="35.56" width="0.1524" layer="91"/>
+<wire x1="116.84" y1="35.56" x2="193.04" y2="35.56" width="0.1524" layer="91"/>
+<wire x1="193.04" y1="35.56" x2="193.04" y2="58.42" width="0.1524" layer="91"/>
+<pinref part="U2" gate="CN7" pin="PA0/A0"/>
+<wire x1="193.04" y1="58.42" x2="177.8" y2="58.42" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
